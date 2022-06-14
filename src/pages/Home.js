@@ -18,6 +18,18 @@ const Home = () => {
             <FiSearch className="text-black text-xl font-bold" />
             Hobi
           </button>
+          <button className="bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4">
+            <FiSearch className="text-black text-xl font-bold" />
+            Hobi
+          </button>
+          <button className="bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4">
+            <FiSearch className="text-black text-xl font-bold" />
+            Hobi
+          </button>
+          <button className="bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4">
+            <FiSearch className="text-black text-xl font-bold" />
+            Hobi
+          </button>
         </div>
         <div className="grid grid-cols-6 justify-between mt-[14px]">
           <CardProduct />
