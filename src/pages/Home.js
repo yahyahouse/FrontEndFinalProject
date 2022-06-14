@@ -10,6 +10,8 @@ const Home = () => {
       <CardProduct />
       <CardProduct />
       <CardProduct />
+      <CardProduct />
+      <CardProduct />
     </div>
   );
 };
