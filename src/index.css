@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.swiper-slide-prev img,
+.swiper-slide-next img {
+  height: 210px !important;
+  width: 100%;
+  margin-top: 22px;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
