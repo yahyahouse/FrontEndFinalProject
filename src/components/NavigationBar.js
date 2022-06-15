@@ -10,7 +10,7 @@ const NavigationBar = () => {
         <img src={Arrowleft} alt="img" />
       </Link>
       <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
-      <p className="text-sm font-normal leading-6">Lengkapi Info Akun</p>
+      <p className="text-base font-medium leading-6 ">Lengkapi Info Akun</p>
       <div className="sm:w-[100px] w-[24px]" />
     </nav>
   );

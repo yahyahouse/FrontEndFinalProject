@@ -9,7 +9,7 @@ const InfoProfile = () => {
   return (
     <div>
       <NavigationBar />
-      <section className="infoProfile flex items-start justify-center my-[40px]">
+      <section className="h-[580px] flex items-start justify-center my-[40px]">
         <Link className="sm:block hidden" to="/">
           <img src={Arrowleft} alt="img" className="" />
         </Link>
@@ -20,8 +20,8 @@ const InfoProfile = () => {
             </div>
           </Link>
           <form className="w-full h-full flex flex-col justify-between">
-            <div className="flex flex-col mb-3">
-              <label className="mb-1">Nama*</label>
+            <div className="flex flex-col my-3">
+              <label className="mb-1 font-medium">Nama*</label>
               <input
                 type="text"
                 className="border-2 border-gray-300 rounded-2xl h-[48px] px-5"
@@ -29,7 +29,7 @@ const InfoProfile = () => {
               />
             </div>
             <div className="flex flex-col mb-3">
-              <label className="mb-1">Kota*</label>
+              <label className="mb-1 font-medium">Kota*</label>
               <select
                 id="cars"
                 name="cars"
@@ -44,7 +44,7 @@ const InfoProfile = () => {
               </select>
             </div>
             <div className="flex flex-col mb-3">
-              <label className="mb-1">Alamat*</label>
+              <label className="mb-1 font-medium">Alamat*</label>
               <textarea
                 type="textarea"
                 className="border-2 border-gray-300 rounded-2xl h-[80px] py-1 px-5 resize-none"
@@ -52,7 +52,7 @@ const InfoProfile = () => {
               />
             </div>
             <div className="flex flex-col mb-3">
-              <label className="mb-1">No Handphone*</label>
+              <label className="mb-1 font-medium">No Handphone*</label>
               <input
                 type="text"
                 className="border-2 border-gray-300 rounded-2xl h-[48px] px-5"
@@ -61,7 +61,7 @@ const InfoProfile = () => {
             </div>
             <button
               type="submit"
-              className="min-h-[48px]  bg-purple-700 text-white rounded-2xl mt-5"
+              className="h-[48px]  bg-purple-700 text-white rounded-2xl mt-5 font-medium"
             >
               Simpan
             </button>
