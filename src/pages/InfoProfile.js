@@ -9,11 +9,11 @@ const InfoProfile = () => {
   return (
     <div>
       <NavigationBar />
-      <section className="infoProfile flex items-start justify-center mt-[40px]">
-        <Link to="/">
+      <section className="infoProfile flex items-start justify-center my-[40px]">
+        <Link className="sm:block hidden" to="/">
           <img src={Arrowleft} alt="img" className="" />
         </Link>
-        <div className="max-w-[568px] max-h-[552px] flex flex-col justify-between items-center mx-[78px]">
+        <div className="sm:mx-[78px] sm:w-[568px] sm:h-[552px] w-[328px] h-[552px] flex flex-col justify-between items-center ">
           <Link to="#">
             <div className="w-[96px] h-[96px] bg-purple-100 rounded-xl flex items-center justify-center">
               <img src={Camera} alt="img" />
@@ -47,7 +47,7 @@ const InfoProfile = () => {
               <label className="mb-1">Alamat*</label>
               <textarea
                 type="textarea"
-                className="border-2 border-gray-300 rounded-2xl h-[80px] py-1 px-5"
+                className="border-2 border-gray-300 rounded-2xl h-[80px] py-1 px-5 resize-none"
                 placeholder="Contoh: Jalan Ikan Hiu 33"
               />
             </div>
@@ -61,13 +61,13 @@ const InfoProfile = () => {
             </div>
             <button
               type="submit"
-              className="w-[568px] min-h-[48px] bg-purple-700 text-white rounded-2xl mt-5"
+              className="min-h-[48px]  bg-purple-700 text-white rounded-2xl mt-5"
             >
               Simpan
             </button>
           </form>
         </div>
-        <div className="w-[24px]" />
+        <div className="sm:w-[24px] w-0" />
       </section>
     </div>
   );
