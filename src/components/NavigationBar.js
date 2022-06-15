@@ -1,11 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+import Arrowleft from "../assets/img/fi_arrow-left.svg";
 
 const NavigationBar = () => {
   return (
-    <nav className="h-[84px] w-full shadow-md duration-[1s] px-[136px] flex items-center justify-between">
-      <div className="w-[100px] h-[34px] bg-purple-900" />
-      <p className="text-sm font-normal leading-6">Lengkapi Info Akun</p>
-      <div className="w-[100px]" />
+    <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-md duration-[1s] flex items-center justify-between">
+      <Link className="sm:hidden" to="/">
+        <img src={Arrowleft} alt="img" />
+      </Link>
+      <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
+      <p className="text-base font-medium leading-6 ">Lengkapi Info Akun</p>
+      <div className="sm:w-[100px] w-[24px]" />
     </nav>
   );
 };
