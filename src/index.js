@@ -2,16 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "../src/app/store.js";
-import "antd/dist/antd.min.css";
-import "./index.css";
-import App from "./App";
+import Routes from "./routes";
 import reportWebVitals from "./reportWebVitals";
+import "antd/dist/antd.min.css";
+import "./assets/css/index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Routes />
     </Provider>
   </React.StrictMode>
 );

@@ -1,5 +1,5 @@
 import React from "react";
-import banner from "../asset/banner-image.png";
+import banner from "../assets/img/banner-image.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
