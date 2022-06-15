@@ -9,10 +9,18 @@ const Banner = () => {
   return (
     <div className="w-full">
       <Swiper
-        slidesPerView={1.6}
+        slidesPerView={1}
         centeredSlides={true}
         loop={true}
         spaceBetween={16}
+        breakpoints={{
+          640: {
+            slidesPerView: 1.6,
+            centeredSlides: true,
+            loop: true,
+            spaceBetween: 16,
+          },
+        }}
         pagination={{
           clickable: true,
         }}

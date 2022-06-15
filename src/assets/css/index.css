@@ -16,12 +16,11 @@ code {
     monospace;
 }
 
-.swiper-slide-prev img,
+/* .swiper-slide-prev img,
 .swiper-slide-next img {
-  height: 210px !important;
   width: 100%;
-  margin-top: 22px;
-}
+} */
+
 
 .ant-pagination-item-active,
 .ant-pagination-item:hover {
