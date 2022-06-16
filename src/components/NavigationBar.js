@@ -71,7 +71,6 @@ const NavigationBar = () => {
           <FiSearch className="w-[19px] h-[19px] text-gray-900" />
         </button>
       </form>
-
       {/* <p className="text-sm font-normal leading-6">Lengkapi Info Akun</p> */}
       {/* <div className="w-[100px]" /> */}
       <button className="bg-purple-700 px-6 py-[14px] hidden md:flex items-center gap-2 rounded-xl text-white text-sm font-normal">
