@@ -79,7 +79,7 @@ const Home = () => {
             </Swiper>
           </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-y-3 mt-[14px]">
+        <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-y-3 mt-8 md:mt-[14px]">
           <CardProduct />
           <CardProduct />
           <CardProduct />
