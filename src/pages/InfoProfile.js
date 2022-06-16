@@ -9,17 +9,15 @@ const InfoProfile = () => {
   return (
     <div>
       <NavigationBar />
-      <section className="h-[580px] flex items-start justify-center my-[40px]">
+      <section className="flex justify-center py-6">
         <Link className="sm:block hidden" to="/">
-          <img src={Arrowleft} alt="img" className="" />
+          <img src={Arrowleft} alt="img" />
         </Link>
-        <div className="sm:mx-[78px] sm:w-[568px] sm:h-[552px] w-[328px] h-[552px] flex flex-col justify-between items-center ">
-          <Link to="#">
-            <div className="w-[96px] h-[96px] bg-purple-100 rounded-xl flex items-center justify-center">
-              <img src={Camera} alt="img" />
-            </div>
-          </Link>
-          <form className="w-full h-full flex flex-col justify-between">
+        <div className="sm:mx-[78px] sm:w-[568px] w-[328px] h-[552px] flex flex-col justify-between items-center duration-[1s]">
+          <div className="w-[96px] h-[96px] bg-purple-100 rounded-xl flex items-center justify-center">
+            <img src={Camera} alt="img" />
+          </div>
+          <form className="w-full flex flex-col justify-between">
             <div className="flex flex-col my-3">
               <label className="mb-1 font-medium">Nama*</label>
               <input
@@ -30,11 +28,7 @@ const InfoProfile = () => {
             </div>
             <div className="flex flex-col mb-3">
               <label className="mb-1 font-medium">Kota*</label>
-              <select
-                id="cars"
-                name="cars"
-                className="border-2 border-gray-300 rounded-2xl h-[48px] px-5"
-              >
+              <select className="border-2 border-gray-300 rounded-2xl h-[48px] px-5">
                 <option value="none" hidden>
                   Pilih Kota
                 </option>
