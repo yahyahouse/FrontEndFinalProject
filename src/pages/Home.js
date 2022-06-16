@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import NavigationBar from "../components/NavigationBar";
 
 const Home = () => {
   const handlePaginationChange = (page) => {
@@ -16,9 +17,10 @@ const Home = () => {
   };
   return (
     <div>
+      <NavigationBar />
       <Banner />
       <div className="w-full md:px-[136px] mt-10">
-        <div className="px-2">
+        <div className="px-2 mt-[228px] md:mt-2">
           <h3 className="text-base font-bold">Telusuri Category</h3>
           <div className="flex gap-4">
             <Swiper
