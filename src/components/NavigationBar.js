@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { FiSearch, FiDownload, FiMenu, FiX } from "react-icons/fi";
+import {
+  FiSearch,
+  FiDownload,
+  FiMenu,
+  FiX,
+  FiList,
+  FiBell,
+  FiUser,
+} from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
@@ -57,7 +65,7 @@ const NavigationBar = () => {
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
-  } else if (r === "") {
+  } else if (r === "" || r === "daftarJual") {
     return (
       <>
         <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-md duration-[1s] px-2 md:px-[136px] pt-9 md:py-[18px] flex items-center justify-between z-50">
@@ -109,10 +117,25 @@ const NavigationBar = () => {
           </form>
           {/* <p className="text-sm font-normal leading-6">Lengkapi Info Akun</p> */}
           {/* <div className="w-[100px]" /> */}
-          <button className="bg-purple-700 px-6 py-[14px] hidden md:flex items-center gap-2 rounded-xl text-white text-sm font-normal">
-            <FiDownload className="text-white text-xl font-bold -rotate-90" />
-            Masuk
-          </button>
+
+          {r === "daftarJual" ? (
+            <div className="flex gap-6">
+              <button>
+                <FiList className="text-2xl" />
+              </button>
+              <button>
+                <FiBell className="text-2xl" />
+              </button>
+              <button>
+                <FiUser className="text-2xl" />
+              </button>
+            </div>
+          ) : (
+            <button className="bg-purple-700 px-6 py-[14px] hidden md:flex items-center gap-2 rounded-xl text-white text-sm font-normal">
+              <FiDownload className="text-white text-xl font-bold -rotate-90" />
+              Masuk
+            </button>
+          )}
         </nav>
       </>
     );

@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import InfoProduk from "../pages/InfoProduk";
 import InfoProfile from "../pages/InfoProfile";
 import Login from "../pages/Login";
+import DaftarJual from "../pages/DaftarJual";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/infoprofile" element={<InfoProfile />} />
         <Route path="/infoproduk" element={<InfoProduk />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/daftarJual" element={<DaftarJual />} />
       </Routes>
     </BrowserRouter>
   );
