@@ -116,10 +116,12 @@ const NavigationBar = () => {
           </form>
           {/* <p className="text-sm font-normal leading-6">Lengkapi Info Akun</p> */}
           {/* <div className="w-[100px]" /> */}
-          <button className="bg-purple-700 px-6 py-[14px] hidden md:flex items-center gap-2 rounded-xl text-white text-sm font-normal">
-            <FiDownload className="text-white text-xl font-bold -rotate-90" />
-            Masuk
-          </button>
+          <Link to={"/login"}>
+            <button className="bg-purple-700 px-6 py-[14px] hidden md:flex items-center gap-2 rounded-xl text-white text-sm font-normal">
+              <FiDownload className="text-white text-xl font-bold -rotate-90" />
+              Masuk
+            </button>
+          </Link>
         </nav>
       </>
     );

@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import NavigationBar from "../components/NavigationBar";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const handlePaginationChange = (page) => {
@@ -112,10 +113,12 @@ const Home = () => {
         total={1000}
         onChange={handlePaginationChange}
       />
-      <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] drop-shadow-[0_0_10px_rgba(0, 0, 0, 0.15)]">
-        <FiPlus className="text-white text-xl font-bold" />
-        Jual
-      </button>
+      <Link to={"/infoproduk"}>
+        <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] drop-shadow-[0_0_10px_rgba(0, 0, 0, 0.15)]">
+          <FiPlus className="text-white text-xl font-bold" />
+          Jual
+        </button>
+      </Link>
     </div>
   );
 };

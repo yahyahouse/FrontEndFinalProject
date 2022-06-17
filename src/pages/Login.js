@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import LoginImg from "../assets/img/Loginimage.png";
 
 const Login = () => {
@@ -28,15 +29,19 @@ const Login = () => {
               type="password"
             />
           </div>
-          <button className="rounded-xl w-full my-5 py-2 bg-purple-700 rounded-md font-bold shadow-lg shadow-purple-500/50 hover:shadow-purple/40 text-white">
-            Masuk
-          </button>
+          <Link to={"/"}>
+            <button className="rounded-xl w-full my-5 py-2 bg-purple-700 rounded-md font-bold shadow-lg shadow-purple-500/50 hover:shadow-purple/40 text-white">
+              Masuk
+            </button>
+          </Link>
           <div>
             <p className="text-black text-center p-4">
               Belum punya akun?{" "}
-              <button className="text-purple-700 font-bold">
-                Daftar di sini
-              </button>
+              <Link to={"/register"}>
+                <button className="text-purple-700 font-bold">
+                  Daftar di sini
+                </button>
+              </Link>
             </p>
           </div>
         </form>
