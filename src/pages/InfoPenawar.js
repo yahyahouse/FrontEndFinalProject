@@ -5,10 +5,12 @@ import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import NavigationBar from "../components/NavigationBar";
 import Profile from "../assets/img/profile_infopenawar.png";
 import Card from "../assets/img/card_infopenawar.png";
+import Modal08 from "../components/Modal08";
 
 const InfoPenawar = () => {
   return (
     <div>
+      <Modal08 />
       <NavigationBar />
       <section className="flex justify-center py-[16px]">
         <Link className="sm:block hidden" to="/">
