@@ -1,4 +1,4 @@
-import React from "react";
+import React, {  useState } from "react";
 import { Link } from "react-router-dom";
 
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
@@ -7,10 +7,16 @@ import Profile from "../assets/img/profile_infopenawar.png";
 import Card from "../assets/img/card_infopenawar.png";
 import Modal08 from "../components/Modal08";
 
-const InfoPenawar = () => {
+function InfoPenawar() {
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal((prev) => !prev);
+  };
+
   return (
     <div>
-      <Modal08 />
+      <Modal08 showModal={showModal} setShowModal={setShowModal} />
       <NavigationBar />
       <section className="flex justify-center py-[16px]">
         <Link className="sm:block hidden" to="/">
@@ -51,24 +57,21 @@ const InfoPenawar = () => {
               </div>
             </div>
             <div className="sm:justify-end duration-[1s] flex justify-between">
-              <Link
-                to={"#"}
-                className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium"
-              >
+              <button className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium">
                 Tolak
-              </Link>
-              <Link
-                to={"#"}
+              </button>
+              <button
+                onClick={openModal}
                 className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
               >
                 Terima
-              </Link>
+              </button>
             </div>
           </div>
         </div>
       </section>
     </div>
   );
-};
+}
 
 export default InfoPenawar;
