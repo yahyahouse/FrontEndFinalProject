@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import NavigationBar from "../components/NavigationBar";
 import Profile from "../assets/img/profile_infopenawar.png";
 import Card from "../assets/img/card_infopenawar.png";
+import Modal08 from "../components/Modal08";
 
-const InfoPenawar = () => {
+function InfoPenawar() {
+  const [nav, setNav] = useState(false);
+
+  const handleNav = () => {
+    setNav(!nav);
+  };
+
   return (
     <div>
+      <Modal08 nav={nav} setNav={setNav} />
       <NavigationBar />
-      <section className="flex justify-center py-[16px]">
+      <section className="flex justify-center py-[16px] ">
         <Link className="sm:block hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
@@ -49,24 +57,22 @@ const InfoPenawar = () => {
               </div>
             </div>
             <div className="sm:justify-end duration-[1s] flex justify-between">
-              <Link
-                to={"#"}
-                className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium"
-              >
+              <button className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium">
                 Tolak
-              </Link>
-              <Link
-                to={"#"}
+              </button>
+              <button
+                // onClick={openModal}
+                onClick={handleNav}
                 className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
               >
                 Terima
-              </Link>
+              </button>
             </div>
           </div>
         </div>
       </section>
     </div>
   );
-};
+}
 
 export default InfoPenawar;
