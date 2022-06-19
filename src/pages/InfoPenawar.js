@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
@@ -8,17 +8,17 @@ import Card from "../assets/img/card_infopenawar.png";
 import Modal08 from "../components/Modal08";
 
 function InfoPenawar() {
-  const [showModal, setShowModal] = useState(false);
+  const [nav, setNav] = useState(false);
 
-  const openModal = () => {
-    setShowModal((prev) => !prev);
+  const handleNav = () => {
+    setNav(!nav);
   };
 
   return (
     <div>
-      <Modal08 showModal={showModal} setShowModal={setShowModal} />
+      <Modal08 nav={nav} setNav={setNav} />
       <NavigationBar />
-      <section className="flex justify-center py-[16px]">
+      <section className="flex justify-center py-[16px] ">
         <Link className="sm:block hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
@@ -61,7 +61,8 @@ function InfoPenawar() {
                 Tolak
               </button>
               <button
-                onClick={openModal}
+                // onClick={openModal}
+                onClick={handleNav}
                 className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
               >
                 Terima

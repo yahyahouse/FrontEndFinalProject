@@ -26,8 +26,12 @@ module.exports = {
           to: { transform: "translateY(0px)" },
         },
         modalout: {
-          from: { transform: "translateY(0)" },
-          to: { transform: "translateY(500vh)" },
+          from: { transform: "translateY(0px)" },
+          to: { transform: "translateY(300vh)" },
+        },
+        delay: {
+          from: { opacity: "1" },
+          to: { opacity: "0" },
         },
       },
     },
