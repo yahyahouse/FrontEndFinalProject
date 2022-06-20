@@ -3,7 +3,7 @@ import cardImage from "../assets/img/card-image.png";
 
 const cardProduct = () => {
   return (
-    <div className="shadow-md px-2 pt-2 pb-4 w-[182px]">
+    <div className="shadow-md px-2 pt-2 pb-4 w-full md:w-[182px]">
       <img src={cardImage} alt="cardImage" />
       <h3 className="mt-2 text-sm font-normal">Jam Tangan Casio</h3>
       <p className="mt-1 text-[10px] font-normal text-gray-900">Aksesoris</p>

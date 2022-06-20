@@ -16,7 +16,26 @@ module.exports = {
           700: "#D0D0D0",
         },
       },
+      animation: {
+        modalin: "modalin 1s ",
+        modalout: "modalout 5s ",
+      },
+      keyframes: {
+        modalin: {
+          from: { transform: "translateY(100vh)" },
+          to: { transform: "translateY(0px)" },
+        },
+        modalout: {
+          from: { transform: "translateY(0px)" },
+          to: { transform: "translateY(300vh)" },
+        },
+        delay: {
+          from: { opacity: "1" },
+          to: { opacity: "0" },
+        },
+      },
     },
   },
-  plugins: [],
+
+  plugins: [require("@tailwindcss/forms")],
 };
