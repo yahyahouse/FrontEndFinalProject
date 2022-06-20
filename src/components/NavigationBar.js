@@ -9,14 +9,16 @@ import {
   FiUser,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
-
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
+import Notifikasi from "./Notifikasi";
 
 const NavigationBar = () => {
   // state untuk responsive navbar toggle
   const [nav, setNav] = useState(false);
   // penampung quary yang diinputkan
   const [searchQuery, setSearchQUery] = useState("");
+  // state untuk notifikasi modal
+  const [notifikasi, setNotifikasi] = useState(false);
 
   // setting show hide side menu navbar
   const handleNav = () => {
@@ -27,6 +29,8 @@ const NavigationBar = () => {
   const handleChange = (e) => {
     setSearchQUery(e.target.value);
   };
+
+  // setting show hide notifikasi modal
 
   // handle api search
   const handleSubmit = (e) => {
@@ -68,7 +72,13 @@ const NavigationBar = () => {
   } else if (r === "" || r === "daftarJual") {
     return (
       <>
-        <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-2 md:px-[136px] pt-9 md:py-[18px] flex items-center justify-between z-50">
+        {/* Notifikasi di daftar jual */}
+        {r === "daftarJual" ? (
+          <Notifikasi notifikasi={notifikasi} setNotifikasi={setNotifikasi} />
+        ) : (
+          ""
+        )}
+        <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-2 md:px-[136px] pt-9 md:py-[18px] flex items-center justify-between z-10">
           <div className="hidden md:block w-[100px] h-[34px] bg-purple-900 mr-6" />
           {/* Menu Navbar Mobile */}
           {/* button toggle*/}
@@ -148,9 +158,12 @@ const NavigationBar = () => {
               <button>
                 <FiList className="text-2xl text-purple-900" />
               </button>
-              <button>
-                <FiBell className="text-2xl" />
-              </button>
+              <div className="relative">
+                <div className="w-2 h-2 rounded bg-red-500 mt-1 absolute -top-1 right-1"></div>
+                <button onMouseEnter={(e) => setNotifikasi(true)}>
+                  <FiBell className="text-2xl text-purple-900" />
+                </button>
+              </div>
               <button>
                 <FiUser className="text-2xl" />
               </button>

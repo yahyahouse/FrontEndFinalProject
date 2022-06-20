@@ -113,7 +113,7 @@ const DaftarJual = () => {
   );
 
   return (
-    <div>
+    <div className="pb-5">
       <NavigationBar />
       <div className="px-2 mt-4 md:px-[236px] md:mt-[120px]">
         <h2 className="hidden md:block text-[20px] font-bold">
