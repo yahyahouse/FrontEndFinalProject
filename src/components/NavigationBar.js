@@ -43,7 +43,7 @@ const NavigationBar = () => {
 
   if (r === "infoprofile") {
     return (
-      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-md duration-[1s] flex items-center justify-between">
+      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
         <Link className="sm:hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
@@ -54,7 +54,7 @@ const NavigationBar = () => {
     );
   } else if (r === "infoproduk") {
     return (
-      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-md duration-[1s] flex items-center justify-between">
+      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
         <Link className="sm:hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
@@ -68,7 +68,7 @@ const NavigationBar = () => {
   } else if (r === "" || r === "daftarJual") {
     return (
       <>
-        <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-md duration-[1s] px-2 md:px-[136px] pt-9 md:py-[18px] flex items-center justify-between z-50">
+        <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-2 md:px-[136px] pt-9 md:py-[18px] flex items-center justify-between z-50">
           <div className="hidden md:block w-[100px] h-[34px] bg-purple-900 mr-6" />
           {/* Menu Navbar Mobile */}
           {/* button toggle*/}
@@ -98,30 +98,55 @@ const NavigationBar = () => {
             </button>
           </div>
           {/* Menu Navbar Dekstop */}
-          <form
-            className="flex md:justify-start mr-auto w-full"
-            onSubmit={handleSubmit}
-          >
-            <input
-              className="w-full md:w-[410px] h-full py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tl-2xl rounded-bl-2xl focus:outline-none placeholder:text-sm placeholder:text-gray-900"
-              placeholder="Cari di sini ..."
-              value={searchQuery}
-              onChange={handleChange}
-            />
-            <button
-              type="submit"
-              className="py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tr-2xl rounded-br-2xl"
+
+          {r === "daftarJual" ? (
+            <div className="mr-auto">
+              <h2 className="md:hidden text-xl font-bold">Daftar Jual Saya</h2>
+              <form
+                className="hidden md:flex md:justify-start mr-auto w-full"
+                onSubmit={handleSubmit}
+              >
+                <input
+                  className="w-full md:w-[410px] h-full py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tl-2xl rounded-bl-2xl focus:outline-none placeholder:text-sm placeholder:text-gray-900"
+                  placeholder="Cari di sini ..."
+                  value={searchQuery}
+                  onChange={handleChange}
+                />
+                <button
+                  type="submit"
+                  className="py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tr-2xl rounded-br-2xl"
+                >
+                  <FiSearch className="w-[19px] h-[19px] text-gray-900" />
+                </button>
+              </form>
+            </div>
+          ) : (
+            <form
+              className="flex md:justify-start mr-auto w-full"
+              onSubmit={handleSubmit}
             >
-              <FiSearch className="w-[19px] h-[19px] text-gray-900" />
-            </button>
-          </form>
+              <input
+                className="w-full md:w-[410px] h-full py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tl-2xl rounded-bl-2xl focus:outline-none placeholder:text-sm placeholder:text-gray-900"
+                placeholder="Cari di sini ..."
+                value={searchQuery}
+                onChange={handleChange}
+              />
+              <button
+                type="submit"
+                className="py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tr-2xl rounded-br-2xl"
+              >
+                <FiSearch className="w-[19px] h-[19px] text-gray-900" />
+              </button>
+            </form>
+          )}
+
           {/* <p className="text-sm font-normal leading-6">Lengkapi Info Akun</p> */}
           {/* <div className="w-[100px]" /> */}
 
           {r === "daftarJual" ? (
-            <div className="flex gap-6">
+            <div className="hidden md:flex gap-6">
               <button>
-                <FiList className="text-2xl" />
+                <FiList className="text-2xl text-purple-900" />
               </button>
               <button>
                 <FiBell className="text-2xl" />

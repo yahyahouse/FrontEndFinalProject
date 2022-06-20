@@ -80,30 +80,17 @@ const Home = () => {
           </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-y-3 mt-8 md:mt-[14px]">
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
+          <CardProduct cardWidth={"182px"} />
+          <CardProduct cardWidth={"182px"} />
+          <CardProduct cardWidth={"182px"} />
+          <CardProduct cardWidth={"182px"} />
+          <CardProduct cardWidth={"182px"} />
+          <CardProduct cardWidth={"182px"} />
+          <CardProduct cardWidth={"182px"} />
+          <CardProduct cardWidth={"182px"} />
+          <CardProduct cardWidth={"182px"} />
+          <CardProduct cardWidth={"182px"} />
+          <CardProduct cardWidth={"182px"} />
         </div>
       </div>
       <Pagination
