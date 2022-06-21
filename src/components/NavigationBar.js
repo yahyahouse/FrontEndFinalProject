@@ -10,7 +10,7 @@ import {
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
-import Notifikasi from "./Notifikasi";
+import ModalNotifikasi from "./ModalNotifikasi";
 
 const NavigationBar = () => {
   // state untuk responsive navbar toggle
@@ -19,6 +19,9 @@ const NavigationBar = () => {
   const [searchQuery, setSearchQUery] = useState("");
   // state untuk notifikasi modal
   const [notifikasi, setNotifikasi] = useState(false);
+
+  // data dummy status user sudah login
+  const [logged, setlogged] = useState(true);
 
   // setting show hide side menu navbar
   const handleNav = () => {
@@ -45,6 +48,7 @@ const NavigationBar = () => {
   );
   console.log(r);
 
+  // Navbar Info Profile
   if (r === "infoprofile") {
     return (
       <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
@@ -56,6 +60,7 @@ const NavigationBar = () => {
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
+    // Navbar Info Produk
   } else if (r === "infoproduk") {
     return (
       <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
@@ -69,12 +74,24 @@ const NavigationBar = () => {
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
-  } else if (r === "" || r === "daftarJual") {
+    // Navbar Home | Daftar Jual
+  } else if (r === "" || r === "daftarJual" || r === "notifikasi") {
     return (
-      <>
-        {/* Notifikasi di daftar jual */}
+      <div className="relative">
+        {/* Notifikasi daftar jual */}
         {r === "daftarJual" ? (
-          <Notifikasi notifikasi={notifikasi} setNotifikasi={setNotifikasi} />
+          <div
+            onMouseEnter={(e) => setNotifikasi(notifikasi)}
+            onMouseLeave={(e) => setNotifikasi(false)}
+            className={
+              notifikasi ? "block absolute -top-12 right-40 z-30" : "hidden"
+            }
+          >
+            <ModalNotifikasi
+              shadow={"0_0_4px_rgba(0,0,0,0.15)"}
+              rounded={"2xl"}
+            />
+          </div>
         ) : (
           ""
         )}
@@ -88,6 +105,15 @@ const NavigationBar = () => {
           >
             <FiMenu className="w-6 h-6" />
           </button>
+          {r === "daftarJual" ? (
+            <h2 className="md:hidden text-xl font-bold mr-auto">
+              Daftar Jual Saya
+            </h2>
+          ) : r === "notifikasi" ? (
+            <h2 className="md:hidden text-xl font-bold mr-auto">Notifikasi</h2>
+          ) : (
+            ""
+          )}
           {/* sidebar */}
           <div
             className={
@@ -99,61 +125,64 @@ const NavigationBar = () => {
             <div className="flex mt-8 gap-10">
               <h3 className="text-sm font-bold text-black">Second Hand</h3>
               <button onClick={handleNav}>
-                <FiX className="text-lg text-black font-bold" />
+                <FiX className="text-2xl text-black font-bold" />
               </button>
             </div>
-            <button className="mt-[18px] flex bg-purple-700 px-6 py-[14px] items-center gap-2 rounded-xl text-white text-sm font-normal">
-              <FiDownload className="text-white text-xl font-bold -rotate-90" />
-              Masuk
-            </button>
-          </div>
-          {/* Menu Navbar Dekstop */}
-
-          {r === "daftarJual" ? (
-            <div className="mr-auto">
-              <h2 className="md:hidden text-xl font-bold">Daftar Jual Saya</h2>
-              <form
-                className="hidden md:flex md:justify-start mr-auto w-full"
-                onSubmit={handleSubmit}
-              >
-                <input
-                  className="w-full md:w-[410px] h-full py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tl-2xl rounded-bl-2xl focus:outline-none placeholder:text-sm placeholder:text-gray-900"
-                  placeholder="Cari di sini ..."
-                  value={searchQuery}
-                  onChange={handleChange}
-                />
-                <button
-                  type="submit"
-                  className="py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tr-2xl rounded-br-2xl"
+            {logged ? (
+              <div>
+                <Link to="/daftarJual">
+                  <h3 className="text-sm font-normal text-black mt-5">
+                    Daftar Jual
+                  </h3>
+                </Link>
+                <Link
+                  to="/notifikasi"
+                  className="cursor-pointer"
+                  onClick={(e) => setNotifikasi(true)}
                 >
-                  <FiSearch className="w-[19px] h-[19px] text-gray-900" />
-                </button>
-              </form>
-            </div>
-          ) : (
-            <form
-              className="flex md:justify-start mr-auto w-full"
-              onSubmit={handleSubmit}
-            >
-              <input
-                className="w-full md:w-[410px] h-full py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tl-2xl rounded-bl-2xl focus:outline-none placeholder:text-sm placeholder:text-gray-900"
-                placeholder="Cari di sini ..."
-                value={searchQuery}
-                onChange={handleChange}
-              />
-              <button
-                type="submit"
-                className="py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tr-2xl rounded-br-2xl"
-              >
-                <FiSearch className="w-[19px] h-[19px] text-gray-900" />
+                  <h3 className="text-sm font-normal text-black mt-4">
+                    Notifikasi
+                  </h3>
+                </Link>
+                <h3 className="text-sm font-normal text-black mt-4">
+                  Akun Saya
+                </h3>
+              </div>
+            ) : (
+              <button className="mt-[18px] flex bg-purple-700 px-6 py-[14px] items-center gap-2 rounded-xl text-white text-sm font-normal">
+                <FiDownload className="text-white text-xl font-bold -rotate-90" />
+                Masuk
               </button>
-            </form>
-          )}
+            )}
+          </div>
+          {/* // Menu Navbar Dekstop */}
+          <form
+            className={
+              r === "daftarJual" || r === "notifikasi"
+                ? "hidden md:flex md:justify-start mr-auto w-full"
+                : "flex md:justify-start mr-auto w-full"
+            }
+            onSubmit={handleSubmit}
+          >
+            <input
+              className="w-full md:w-[410px] h-full py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tl-2xl rounded-bl-2xl focus:outline-none placeholder:text-sm placeholder:text-gray-900"
+              placeholder="Cari di sini ..."
+              value={searchQuery}
+              onChange={handleChange}
+            />
+            <button
+              type="submit"
+              className="py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tr-2xl rounded-br-2xl"
+            >
+              <FiSearch className="w-[19px] h-[19px] text-gray-900" />
+            </button>
+          </form>
+          {/* )} */}
 
           {/* <p className="text-sm font-normal leading-6">Lengkapi Info Akun</p> */}
           {/* <div className="w-[100px]" /> */}
 
-          {r === "daftarJual" ? (
+          {r === "daftarJual" || r === "notifikasi" ? (
             <div className="hidden md:flex gap-6">
               <button>
                 <FiList className="text-2xl text-purple-900" />
@@ -175,7 +204,7 @@ const NavigationBar = () => {
             </button>
           )}
         </nav>
-      </>
+      </div>
     );
   } else {
     return (

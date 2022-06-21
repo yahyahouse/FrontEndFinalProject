@@ -4,6 +4,7 @@ import sellerProfile from "../assets/img/sellerProfile.png";
 import { Tabs } from "antd";
 import { FiBox, FiHeart, FiDollarSign, FiChevronRight } from "react-icons/fi";
 import CardProduct from "../components/CardProduct";
+import ModalNotifikasi from "../components/ModalNotifikasi";
 import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
@@ -146,7 +147,13 @@ const DaftarJual = () => {
               title: "Diminati",
               icon: <FiHeart className="text-xl" />,
               navRight: <FiChevronRight className="text-xl" />,
-              content: "data 2",
+              content: (
+                <ModalNotifikasi
+                  width={"full"}
+                  shadow={"0_0_4px_rgba(0,0,0,0.15)"}
+                  rounded={"2xl"}
+                />
+              ),
             })}
             {customDekstopTabPane({
               key: 3,
@@ -170,7 +177,13 @@ const DaftarJual = () => {
               key: 2,
               title: "Diminati",
               icon: <FiHeart />,
-              content: "Tab 2",
+              content: (
+                <ModalNotifikasi
+                  border={"border-b"}
+                  borderColor={"border-gray-500"}
+                  rounded={"none"}
+                />
+              ),
             })}
             {customMobileTabPane({
               key: 3,

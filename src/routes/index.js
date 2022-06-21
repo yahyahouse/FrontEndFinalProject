@@ -6,6 +6,7 @@ import InfoProduk from "../pages/InfoProduk";
 import InfoProfile from "../pages/InfoProfile";
 import Login from "../pages/Login";
 import DaftarJual from "../pages/DaftarJual";
+import Notifikasi from "../pages/Notifikasi";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/infoproduk" element={<InfoProduk />} />
         <Route path="/login" element={<Login />} />
         <Route path="/daftarJual" element={<DaftarJual />} />
+        <Route path="/notifikasi" element={<Notifikasi />}></Route>
       </Routes>
     </BrowserRouter>
   );

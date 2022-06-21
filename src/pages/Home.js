@@ -17,6 +17,13 @@ const Home = () => {
   };
   return (
     <div>
+      {/* <div
+        className={
+          nav
+            ? "bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 w-full h-full z-50"
+            : ""
+        }
+      ></div> */}
       <NavigationBar />
       <Banner />
       <div className="w-full md:px-[136px] mt-10">
