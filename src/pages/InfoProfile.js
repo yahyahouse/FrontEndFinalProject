@@ -1,11 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ImageUploading from "react-images-uploading";
 
 import Camera from "../assets/img/fi_camera.svg";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import NavigationBar from "../components/NavigationBar";
 
 const InfoProfile = () => {
+  // IMAGE UPLOADING
+  const [images, setImages] = React.useState([]);
+  const maxNumber = 4;
+
+  const onChange = (imageList, addUpdateIndex) => {
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
+
   return (
     <div>
       <NavigationBar />
@@ -13,12 +23,52 @@ const InfoProfile = () => {
         <Link className="sm:block hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
-        <div className="sm:mx-[78px] sm:w-[568px] w-[328px] h-[552px] flex flex-col justify-between items-center duration-[1s]">
-          <div className="w-[96px] h-[96px] bg-purple-100 rounded-xl flex items-center justify-center">
-            <img src={Camera} alt="img" />
-          </div>
-          <form className="w-full flex flex-col justify-between">
-            <div className="flex flex-col my-3">
+        <div className="sm:mx-[78px] sm:w-[568px] w-[328px] h-[552px] flex flex-col justify-between items-center duration-[1s] ">
+          <ImageUploading
+            multiple
+            value={images}
+            onChange={onChange}
+            maxNumber={maxNumber}
+            dataURLKey="data_url"
+          >
+            {({
+              imageList,
+              onImageUpload,
+              onImageUpdate,
+              onImageRemove,
+              isDragging,
+              dragProps,
+            }) => (
+              <div>
+                <div className="w-full flex items-center justify-center ">
+                  <button
+                    className="w-[96px] h-[96px] bg-purple-100 rounded-xl flex items-center justify-center mb-3"
+                    onClick={onImageUpload}
+                    {...dragProps}
+                  >
+                    <img className="z-50" src={Camera} alt="plus" />
+                  </button>
+                </div>
+                <div className="flex">
+                  &nbsp;
+                  {imageList.map((image, index) => (
+                    <div
+                      key={index}
+                      className="w-[96px] h-[96px] overflow-hidden flex items-center justify-center cursor-pointer mr-3"
+                    >
+                      <div
+                        onClick={() => onImageRemove(index)}
+                        className="absolute hover:bg-black opacity-30 w-[96px] h-[96px]"
+                      />
+                      <img src={image["data_url"]} alt="" width="100" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </ImageUploading>
+          <form className="w-full flex flex-col justify-between ">
+            <div className="flex flex-col mb-3">
               <label className="mb-1 font-medium">Nama*</label>
               <input
                 type="text"
