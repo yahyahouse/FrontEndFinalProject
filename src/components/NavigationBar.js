@@ -147,10 +147,12 @@ const NavigationBar = () => {
                 </Link>
               </div>
             ) : (
-              <button className="mt-[18px] flex bg-purple-700 px-6 py-[14px] items-center gap-2 rounded-xl text-white text-sm font-normal">
-                <FiDownload className="text-white text-xl font-bold -rotate-90" />
-                Masuk
-              </button>
+              <Link to={"/login"}>
+                <button className="mt-[18px] flex bg-purple-700 px-6 py-[14px] items-center gap-2 rounded-xl text-white text-sm font-normal">
+                  <FiDownload className="text-white text-xl font-bold -rotate-90" />
+                  Masuk
+                </button>
+              </Link>
             )}
           </div>
           {/* // Menu Navbar Dekstop */}
@@ -222,10 +224,12 @@ const NavigationBar = () => {
               </div>
             </div>
           ) : (
-            <button className="bg-purple-700 px-6 py-[14px] hidden md:flex items-center gap-2 rounded-xl text-white text-sm font-normal">
-              <FiDownload className="text-white text-xl font-bold -rotate-90" />
-              Masuk
-            </button>
+            <Link to={"/login"}>
+              <button className="bg-purple-700 px-6 py-[14px] hidden md:flex items-center gap-2 rounded-xl text-white text-sm font-normal">
+                <FiDownload className="text-white text-xl font-bold -rotate-90" />
+                Masuk
+              </button>
+            </Link>
           )}
         </nav>
       </div>
