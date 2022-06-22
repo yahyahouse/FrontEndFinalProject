@@ -42,7 +42,7 @@ const NavigationBar = () => {
     console.log(searchQuery);
   };
 
-  // if else
+  // pengkondisian
   const r = window.location.pathname.substring(
     1,
     window.location.pathname.lastIndexOf("/") + 50
@@ -230,7 +230,10 @@ const NavigationBar = () => {
         </nav>
       </div>
     );
-  } else {
+  }
+  // HOME END
+  // DEFAULT START
+  else {
     return (
       <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-md duration-[1s] flex items-center justify-between">
         <Link className="sm:hidden" to="/">
@@ -241,6 +244,7 @@ const NavigationBar = () => {
       </nav>
     );
   }
+  // DEFAULT END
 };
 
 export default NavigationBar;
