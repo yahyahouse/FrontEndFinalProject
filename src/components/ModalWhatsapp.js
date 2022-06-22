@@ -6,7 +6,7 @@ import Close from "../assets/img/fi_x.svg";
 import { Link } from "react-router-dom";
 import { FaWhatsapp } from "react-icons/fa";
 
-const Modal08 = ({ nav, setNav }) => {
+const ModalWhatsapp = ({ nav, setNav }) => {
   const handleNav = () => {
     setNav(!nav);
   };
@@ -24,7 +24,7 @@ const Modal08 = ({ nav, setNav }) => {
         className={
           nav
             ? "w-full h-[100vh] sm:items-center sm:justify-center items-end flex fixed bottom-[0] ease-in-out duration-[1s]"
-            : "w-full h-[100vh] sm:items-center sm:justify-center items-end flex fixed bottom-[-100%] ease-in-out duration-[1s]"
+            : "w-full h-[100vh] sm:items-center sm:justify-center items-end flex fixed bottom-[-200%] ease-in-out duration-[1s]"
         }
       >
         <div className="sm:rounded-2xl sm:w-[360px] duration-[1s] bg-white w-full flex flex-col items-center rounded-t-[16px] shadow-sm">
@@ -93,4 +93,4 @@ const Modal08 = ({ nav, setNav }) => {
   );
 };
 
-export default Modal08;
+export default ModalWhatsapp;
