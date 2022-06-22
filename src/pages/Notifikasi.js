@@ -6,13 +6,7 @@ const Notifikasi = () => {
   return (
     <div className="px-2">
       <NavigationBar />
-      <ModalNotifikasi
-        width={"full"}
-        border={"border-b"}
-        borderColor={"border-gray-500"}
-        marginT={"120px"}
-        paddingX={"236px"}
-      />
+      <ModalNotifikasi width={"full"} marginT={"120px"} paddingX={"236px"} />
     </div>
   );
 };

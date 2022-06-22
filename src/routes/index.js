@@ -7,6 +7,7 @@ import InfoProfile from "../pages/InfoProfile";
 import Login from "../pages/Login";
 import DaftarJual from "../pages/DaftarJual";
 import Notifikasi from "../pages/Notifikasi";
+import UserAccount from "../pages/UserAccount";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/daftarJual" element={<DaftarJual />} />
         <Route path="/notifikasi" element={<Notifikasi />}></Route>
+        <Route path="/userAccount" element={<UserAccount />}></Route>
       </Routes>
     </BrowserRouter>
   );

@@ -17,19 +17,12 @@ const Home = () => {
   };
   return (
     <div>
-      {/* <div
-        className={
-          nav
-            ? "bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 w-full h-full z-50"
-            : ""
-        }
-      ></div> */}
       <NavigationBar />
       <Banner />
       <div className="w-full md:px-[136px] mt-10">
         <div className="px-2 mt-[228px] md:mt-2">
           <h3 className="text-base font-bold">Telusuri Category</h3>
-          <div className="flex gap-4">
+          <div>
             <Swiper
               slidesPerView={2.6}
               spaceBetween={20}
@@ -86,7 +79,7 @@ const Home = () => {
             </Swiper>
           </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-y-3 mt-8 md:mt-[14px]">
+        <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 mt-8 md:mt-10">
           <CardProduct cardWidth={"182px"} />
           <CardProduct cardWidth={"182px"} />
           <CardProduct cardWidth={"182px"} />

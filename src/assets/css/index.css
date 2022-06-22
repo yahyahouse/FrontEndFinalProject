@@ -94,8 +94,7 @@ code {
     background-color: #ffffff !important;
   }
 
-  .ant-tabs-tab #rc-tabs-2-tab-1,
-  .ant-tabs-tab #rc-tabs-2-tab-2 {
+  .ant-tabs-nav-list .ant-tabs-tab .ant-tabs-tab-btn {
     border-bottom: 1px solid #d0d0d0 !important;
     margin-top: -14px;
     padding-bottom: 14px;

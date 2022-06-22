@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import ModalNotifikasi from "./ModalNotifikasi";
+import DropdownAccount from "./DropdownAccount";
 
 const NavigationBar = () => {
   // state untuk responsive navbar toggle
@@ -19,6 +20,8 @@ const NavigationBar = () => {
   const [searchQuery, setSearchQUery] = useState("");
   // state untuk notifikasi modal
   const [notifikasi, setNotifikasi] = useState(false);
+  // state untuk dropdown profile
+  const [dropdown, setDropdown] = useState(false);
 
   // data dummy status user sudah login
   const [logged, setlogged] = useState(true);
@@ -32,8 +35,6 @@ const NavigationBar = () => {
   const handleChange = (e) => {
     setSearchQUery(e.target.value);
   };
-
-  // setting show hide notifikasi modal
 
   // handle api search
   const handleSubmit = (e) => {
@@ -75,28 +76,25 @@ const NavigationBar = () => {
       </nav>
     );
     // Navbar Home | Daftar Jual
-  } else if (r === "" || r === "daftarJual" || r === "notifikasi") {
+  } else if (
+    r === "" ||
+    r === "daftarJual" ||
+    r === "notifikasi" ||
+    r === "userAccount"
+  ) {
     return (
-      <div className="relative">
-        {/* Notifikasi daftar jual */}
-        {r === "daftarJual" ? (
-          <div
-            onMouseEnter={(e) => setNotifikasi(notifikasi)}
-            onMouseLeave={(e) => setNotifikasi(false)}
-            className={
-              notifikasi ? "block absolute -top-12 right-40 z-30" : "hidden"
-            }
-          >
-            <ModalNotifikasi
-              shadow={"0_0_4px_rgba(0,0,0,0.15)"}
-              rounded={"2xl"}
-            />
-          </div>
-        ) : (
-          ""
-        )}
+      <div>
+        <div
+          className={
+            nav
+              ? "bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 w-full h-full z-50"
+              : ""
+          }
+        ></div>
         <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-2 md:px-[136px] pt-9 md:py-[18px] flex items-center justify-between z-10">
-          <div className="hidden md:block w-[100px] h-[34px] bg-purple-900 mr-6" />
+          <Link to="/">
+            <div className="hidden md:block w-[100px] h-[34px] bg-purple-900 mr-6" />
+          </Link>
           {/* Menu Navbar Mobile */}
           {/* button toggle*/}
           <button
@@ -111,6 +109,8 @@ const NavigationBar = () => {
             </h2>
           ) : r === "notifikasi" ? (
             <h2 className="md:hidden text-xl font-bold mr-auto">Notifikasi</h2>
+          ) : r === "userAccount" ? (
+            <h2 className="md:hidden text-xl font-bold mr-auto">Akun Saya</h2>
           ) : (
             ""
           )}
@@ -135,18 +135,16 @@ const NavigationBar = () => {
                     Daftar Jual
                   </h3>
                 </Link>
-                <Link
-                  to="/notifikasi"
-                  className="cursor-pointer"
-                  onClick={(e) => setNotifikasi(true)}
-                >
+                <Link to="/notifikasi" className="cursor-pointer">
                   <h3 className="text-sm font-normal text-black mt-4">
                     Notifikasi
                   </h3>
                 </Link>
-                <h3 className="text-sm font-normal text-black mt-4">
-                  Akun Saya
-                </h3>
+                <Link to="/userAccount" className="cursor-pointer">
+                  <h3 className="text-sm font-normal text-black mt-4">
+                    Akun Saya
+                  </h3>
+                </Link>
               </div>
             ) : (
               <button className="mt-[18px] flex bg-purple-700 px-6 py-[14px] items-center gap-2 rounded-xl text-white text-sm font-normal">
@@ -158,7 +156,7 @@ const NavigationBar = () => {
           {/* // Menu Navbar Dekstop */}
           <form
             className={
-              r === "daftarJual" || r === "notifikasi"
+              r === "daftarJual" || r === "notifikasi" || r === "userAccount"
                 ? "hidden md:flex md:justify-start mr-auto w-full"
                 : "flex md:justify-start mr-auto w-full"
             }
@@ -184,18 +182,44 @@ const NavigationBar = () => {
 
           {r === "daftarJual" || r === "notifikasi" ? (
             <div className="hidden md:flex gap-6">
-              <button>
-                <FiList className="text-2xl text-purple-900" />
-              </button>
+              <div>
+                <button>
+                  <FiList className="text-2xl text-purple-900" />
+                </button>
+              </div>
               <div className="relative">
-                <div className="w-2 h-2 rounded bg-red-500 mt-1 absolute -top-1 right-1"></div>
+                <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1 absolute -top-1 right-1"></div>
                 <button onMouseEnter={(e) => setNotifikasi(true)}>
                   <FiBell className="text-2xl text-purple-900" />
                 </button>
+                {/* Notifikasi daftar jual */}
+                <div
+                  onMouseEnter={(e) => setNotifikasi(notifikasi)}
+                  onMouseLeave={(e) => setNotifikasi(false)}
+                  className={
+                    notifikasi ? "block fixed top-16 right-40 z-30" : "hidden"
+                  }
+                >
+                  <ModalNotifikasi
+                    shadow={"0_0_4px_rgba(0,0,0,0.15)"}
+                    rounded={"2xl"}
+                  />
+                </div>
               </div>
-              <button>
-                <FiUser className="text-2xl" />
-              </button>
+              <div>
+                <button onMouseEnter={(e) => setDropdown(true)}>
+                  <FiUser className="text-2xl" />
+                </button>
+                <div
+                  onMouseEnter={(e) => setDropdown(true)}
+                  onMouseLeave={(e) => setDropdown(false)}
+                  className={
+                    dropdown ? "block fixed top-16 right-32 z-30" : "hidden"
+                  }
+                >
+                  <DropdownAccount />
+                </div>
+              </div>
             </div>
           ) : (
             <button className="bg-purple-700 px-6 py-[14px] hidden md:flex items-center gap-2 rounded-xl text-white text-sm font-normal">

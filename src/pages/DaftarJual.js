@@ -5,6 +5,7 @@ import { Tabs } from "antd";
 import { FiBox, FiHeart, FiDollarSign, FiChevronRight } from "react-icons/fi";
 import CardProduct from "../components/CardProduct";
 import ModalNotifikasi from "../components/ModalNotifikasi";
+import { EmptyData } from "../components/EmptyData";
 import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
@@ -105,7 +106,7 @@ const DaftarJual = () => {
         ) : activeTab === "2" ? (
           <div>{content}</div>
         ) : activeTab === "3" ? (
-          <div>{content}</div>
+          <div className="mt-6">{content}</div>
         ) : (
           ""
         )}
@@ -147,20 +148,15 @@ const DaftarJual = () => {
               title: "Diminati",
               icon: <FiHeart className="text-xl" />,
               navRight: <FiChevronRight className="text-xl" />,
-              content: (
-                <ModalNotifikasi
-                  width={"full"}
-                  shadow={"0_0_4px_rgba(0,0,0,0.15)"}
-                  rounded={"2xl"}
-                />
-              ),
+              content: <ModalNotifikasi width={"full"} rounded={"2xl"} />,
             })}
+
             {customDekstopTabPane({
               key: 3,
               title: "Terjual",
               icon: <FiDollarSign className="text-xl" />,
               navRight: <FiChevronRight className="text-xl" />,
-              content: "data 3",
+              content: <EmptyData />,
             })}
           </Tabs>
         </div>
@@ -177,19 +173,13 @@ const DaftarJual = () => {
               key: 2,
               title: "Diminati",
               icon: <FiHeart />,
-              content: (
-                <ModalNotifikasi
-                  border={"border-b"}
-                  borderColor={"border-gray-500"}
-                  rounded={"none"}
-                />
-              ),
+              content: <ModalNotifikasi rounded={"none"} />,
             })}
             {customMobileTabPane({
               key: 3,
               title: "Terjual",
               icon: <FiDollarSign />,
-              content: "Tab 3",
+              content: <EmptyData />,
             })}
           </Tabs>
         </div>
