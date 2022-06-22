@@ -1,11 +1,10 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Modal from "../components/ModalStatus";
 import Home from "../pages/Home";
 import InfoPenawar from "../pages/InfoPenawar";
 import InfoProduk from "../pages/InfoProduk";
-import InfoProfile from "../pages/InfoProfile"; 
+import InfoProfile from "../pages/InfoProfile";
 import Login from "../pages/Login";
 import DaftarJual from "../pages/DaftarJual";
 import Notifikasi from "../pages/Notifikasi";
