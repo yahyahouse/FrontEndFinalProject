@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Modal from "../components/ModalStatus";
 import Home from "../pages/Home";
 import InfoPenawar from "../pages/InfoPenawar";
 import InfoProduk from "../pages/InfoProduk";
-import InfoProfile from "../pages/InfoProfile"; 
+import InfoProfile from "../pages/InfoProfile";
 import Login from "../pages/Login";
 import DaftarJual from "../pages/DaftarJual";
 import Notifikasi from "../pages/Notifikasi";
 import UserAccount from "../pages/UserAccount";
+import Register from "../pages/Register";
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
         <Route path="/daftarJual" element={<DaftarJual />} />
         <Route path="/notifikasi" element={<Notifikasi />}></Route>
         <Route path="/userAccount" element={<UserAccount />}></Route>
+        <Route path="/register" element={<Register />}></Route>
       </Routes>
     </BrowserRouter>
   );
