@@ -13,8 +13,6 @@ import { useLocation } from "react-router-dom";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import ModalNotifikasi from "./ModalNotifikasi";
 import DropdownAccount from "./DropdownAccount";
-import { getStatus } from "../features/authSlice";
-import { useSelector } from "react-redux";
 
 const NavigationBar = () => {
   const location = useLocation();
