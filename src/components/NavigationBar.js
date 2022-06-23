@@ -9,11 +9,15 @@ import {
   FiUser,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import ModalNotifikasi from "./ModalNotifikasi";
 import DropdownAccount from "./DropdownAccount";
+import { getStatus } from "../features/authSlice";
+import { useSelector } from "react-redux";
 
 const NavigationBar = () => {
+  const location = useLocation();
   // state untuk responsive navbar toggle
   const [nav, setNav] = useState(false);
   // penampung quary yang diinputkan
@@ -23,8 +27,13 @@ const NavigationBar = () => {
   // state untuk dropdown profile
   const [dropdown, setDropdown] = useState(false);
 
-  // data dummy status user sudah login
-  const [logged, setlogged] = useState(true);
+  // cek apakah user sudah login
+  const userLogged =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
+
+  console.log(userLogged);
 
   // setting show hide side menu navbar
   const handleNav = () => {
@@ -43,14 +52,14 @@ const NavigationBar = () => {
   };
 
   // pengkondisian
-  const r = window.location.pathname.substring(
-    1,
-    window.location.pathname.lastIndexOf("/") + 50
-  );
-  console.log(r);
+  // const r = window.location.pathname.substring(
+  //   1,
+  //   window.location.pathname.lastIndexOf("/") + 50
+  // );
+  // console.log(r);
 
   // Navbar Info Profile
-  if (r === "infoprofile") {
+  if (location.pathname === "/infoprofile") {
     return (
       <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
         <Link className="sm:hidden" to="/">
@@ -62,7 +71,7 @@ const NavigationBar = () => {
       </nav>
     );
     // Navbar Info Produk
-  } else if (r === "infoproduk") {
+  } else if (location.pathname === "/infoproduk") {
     return (
       <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
         <Link className="sm:hidden" to="/">
@@ -77,10 +86,10 @@ const NavigationBar = () => {
     );
     // Navbar Home | Daftar Jual
   } else if (
-    r === "" ||
-    r === "daftarJual" ||
-    r === "notifikasi" ||
-    r === "userAccount"
+    location.pathname === "/" ||
+    location.pathname === "/daftarJual" ||
+    location.pathname === "/notifikasi" ||
+    location.pathname === "/userAccount"
   ) {
     return (
       <div>
@@ -103,13 +112,13 @@ const NavigationBar = () => {
           >
             <FiMenu className="w-6 h-6" />
           </button>
-          {r === "daftarJual" ? (
+          {location.pathname === "/daftarJual" ? (
             <h2 className="md:hidden text-xl font-bold mr-auto">
               Daftar Jual Saya
             </h2>
-          ) : r === "notifikasi" ? (
+          ) : location.pathname === "/notifikasi" ? (
             <h2 className="md:hidden text-xl font-bold mr-auto">Notifikasi</h2>
-          ) : r === "userAccount" ? (
+          ) : location.pathname === "/userAccount" ? (
             <h2 className="md:hidden text-xl font-bold mr-auto">Akun Saya</h2>
           ) : (
             ""
@@ -128,7 +137,7 @@ const NavigationBar = () => {
                 <FiX className="text-2xl text-black font-bold" />
               </button>
             </div>
-            {logged ? (
+            {userLogged ? (
               <div>
                 <Link to="/daftarJual">
                   <h3 className="text-sm font-normal text-black mt-5">
@@ -158,7 +167,9 @@ const NavigationBar = () => {
           {/* // Menu Navbar Dekstop */}
           <form
             className={
-              r === "daftarJual" || r === "notifikasi" || r === "userAccount"
+              location.pathname === "/daftarJual" ||
+              location.pathname === "/notifikasi" ||
+              location.pathname === "/userAccount"
                 ? "hidden md:flex md:justify-start mr-auto w-full"
                 : "flex md:justify-start mr-auto w-full"
             }
@@ -182,7 +193,10 @@ const NavigationBar = () => {
           {/* <p className="text-sm font-normal leading-6">Lengkapi Info Akun</p> */}
           {/* <div className="w-[100px]" /> */}
 
-          {r === "daftarJual" || r === "notifikasi" ? (
+          {(location.pathname === "/" ||
+            location.pathname === "/daftarJual" ||
+            location.pathname === "/notifikasi") &&
+          userLogged ? (
             <div className="hidden md:flex gap-6">
               <div>
                 <button>
