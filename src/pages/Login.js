@@ -18,7 +18,7 @@ const Login = () => {
   const [passwordShow, setPasswordShow] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [account, setAccount] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -33,7 +33,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (account.username && account.password) {
+    if (account.email && account.password) {
       dispatch(userLogin(account));
     }
     setSubmitted(true);
@@ -68,16 +68,16 @@ const Login = () => {
           <div className="flex flex-col text-black py-2">
             <label className="text-xs">Email</label>
             <input
-              id="username"
+              id="email"
               className="rounded-2xl px-4 mt-2 text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm"
               placeholder="Contoh: johndee@gmail.com"
               type="text"
-              value={account.username}
+              value={account.email}
               onChange={handleInputAccount}
             />
-            {submitted && !account.username ? (
+            {submitted && !account.email ? (
               <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
-                Pelase fill the username !
+                Pelase fill the email !
               </p>
             ) : (
               ""

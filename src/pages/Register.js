@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import LoginImg from "../assets/img/Loginimage.png";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const Register = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
   const [passwordShow, setPasswordShow] = useState(false);
   const [submitted, setSubmitted] = useState(false);
