@@ -3,6 +3,10 @@ import { FiEdit3, FiSettings, FiDownload } from "react-icons/fi";
 import profilePicture from "../assets/img/fi_camera.svg";
 
 const DropdownAccount = () => {
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.reload(true);
+  };
   return (
     <div>
       <img
@@ -13,7 +17,7 @@ const DropdownAccount = () => {
         height={96}
       />
       <div className="py-4 bg-white md:shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl">
-        <div className="hover:bg-gray-500">
+        <div className="hover:bg-gray-500 cursor-pointer">
           <div className="px-4 pt-4">
             <div className="pb-4 flex gap-5 border-b border-gray-500">
               <FiEdit3 className="text-purple-900 text-lg" />{" "}
@@ -21,7 +25,7 @@ const DropdownAccount = () => {
             </div>
           </div>
         </div>
-        <div className="hover:bg-gray-500">
+        <div className="hover:bg-gray-500 cursor-pointer">
           <div className="px-4 pt-4">
             <div className="pb-4 flex gap-5 border-b border-gray-500">
               <FiSettings className="text-purple-900 text-lg" />{" "}
@@ -29,7 +33,10 @@ const DropdownAccount = () => {
             </div>
           </div>
         </div>
-        <div className="hover:bg-gray-500">
+        <div
+          className="hover:bg-gray-500 cursor-pointer"
+          onClick={handleLogout}
+        >
           <div className="px-4 pt-4">
             <div className="pb-4 flex gap-5 border-b border-gray-500">
               <FiDownload className="text-purple-900 text-lg -rotate-90" />{" "}
