@@ -40,7 +40,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    statusLogin === "success" ? navigate("/") : navigate("/login");
+    statusLogin === "successLogin" ? navigate("/") : navigate("/login");
   }, [statusLogin, navigate]);
 
   return (

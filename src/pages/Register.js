@@ -1,36 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LoginImg from "../assets/img/Loginimage.png";
-// import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import {
+  userRegister,
+  getStatus,
+  getErorrMessage,
+  getSuccesMessage,
+} from "../features/authSlice";
 
 const Register = () => {
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const statusRegister = useSelector(getStatus);
+  const errorMessage = useSelector(getErorrMessage);
+  const succesMessage = useSelector(getSuccesMessage);
+  console.log(errorMessage);
 
   const [passwordShow, setPasswordShow] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [newData, setNewData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-  console.log(newData);
 
-  const handleInputNewData = (e) => {
-    setNewData({
-      ...newData,
-      [e.target.id]: e.target.value,
-    });
-  };
+  const [name, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  console.log(name, email, password);
 
   const handleRegister = (e) => {
     e.preventDefault();
-    if (newData.username && newData.email && newData.password) {
+    if (name && email && password) {
+      dispatch(
+        userRegister({
+          username: name,
+          email: email,
+          password: password,
+          role: ["SELLER", "BUYER"],
+        })
+      );
     }
     setSubmitted(true);
   };
+
+  useEffect(() => {
+    statusRegister === "successRegister"
+      ? setTimeout(() => navigate("/login"), 3000)
+      : navigate("/register");
+  }, [statusRegister, navigate]);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
       <div className="hidden sm:block bg-register bg-no-repeat">
@@ -42,17 +58,37 @@ const Register = () => {
           className="max-w-[450px] w-full mx-auto p-8 px-8 rounded-2xl"
         >
           <h2 className="text-black text-2xl font-bold py-4">Daftar</h2>
+          {errorMessage ? (
+            <div
+              class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+              role="alert"
+            >
+              <span class="font-medium">{errorMessage}!</span> Change to another
+              username or email
+            </div>
+          ) : succesMessage ? (
+            <div
+              class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+              role="alert"
+            >
+              <span class="font-medium">{succesMessage}!</span> Login for enter
+              the page.
+            </div>
+          ) : (
+            ""
+          )}
           <div className="flex flex-col text-black py-2">
             <label className="text-xs">Nama</label>
             <input
-              id="username"
+              id="name"
               className="rounded-2xl px-4 mt-2 text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm"
               placeholder="Nama Lengkap"
               type="text"
+              onChange={(e) => setUsername(e.target.value)}
             />
-            {submitted && !newData.username ? (
+            {submitted && !name ? (
               <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
-                Pelase fill the username !
+                Pelase fill the name !
               </p>
             ) : (
               ""
@@ -61,12 +97,13 @@ const Register = () => {
           <div className="flex flex-col text-black py-2">
             <label className="text-xs">Email</label>
             <input
-              id="username"
+              id="email"
               className="rounded-2xl px-4 mt-2 text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm"
               placeholder="Contoh: johndee@gmail.com"
               type="text"
+              onChange={(e) => setEmail(e.target.value)}
             />
-            {submitted && !newData.email ? (
+            {submitted && !email ? (
               <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
                 Pelase fill the email !
               </p>
@@ -82,6 +119,7 @@ const Register = () => {
                 className="rounded-2xl w-full px-4 mt-2 text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm"
                 placeholder="Masukkan Password"
                 type={passwordShow ? "text" : "password"}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <div
                 className="absolute flex items-center right-5 top-5 cursor-pointer"
@@ -93,7 +131,7 @@ const Register = () => {
                   <FiEyeOff className=" w-[19px] h-[19px] text-gray-900" />
                 )}
               </div>
-              {submitted && !newData.password ? (
+              {submitted && !password ? (
                 <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
                   Pelase fill the password !
                 </p>

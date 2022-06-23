@@ -5,6 +5,7 @@ import profilePicture from "../assets/img/fi_camera.svg";
 const DropdownAccount = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     window.location.reload(true);
   };
   return (
