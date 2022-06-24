@@ -71,13 +71,12 @@ const InfoProduk = () => {
               {({
                 imageList,
                 onImageUpload,
-                onImageUpdate,
                 onImageRemove,
                 isDragging,
                 dragProps,
               }) => (
                 <div className="">
-                  <button
+                  <div
                     className={
                       isDragging
                         ? "w-[96px] h-[96px] border-2 border-red-700 rounded-xl border-dashed flex items-center justify-center mb-3"
@@ -87,7 +86,7 @@ const InfoProduk = () => {
                     {...dragProps}
                   >
                     <img className="-z-50" src={plus} alt="plus" />
-                  </button>
+                  </div>
                   <div className="flex">
                     &nbsp;
                     {imageList.map((image, index) => (
@@ -116,14 +115,12 @@ const InfoProduk = () => {
                 Preview
               </button>
             </Link>
-            <Link to={"#"}>
-              <button
-                type="submit"
-                className="sm:w-[276px] w-[156px] h-[48px] rounded-2xl bg-purple-700 text-white font-medium text-xs duration-[1s]"
-              >
-                Terbitkan
-              </button>
-            </Link>
+            <button
+              type="submit"
+              className="sm:w-[276px] w-[156px] h-[48px] rounded-2xl bg-purple-700 text-white font-medium text-xs duration-[1s]"
+            >
+              Terbitkan
+            </button>
           </div>
         </form>
       </section>
