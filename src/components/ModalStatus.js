@@ -14,10 +14,10 @@ const ModalStatus = ({ isOpen, setIsOpen }) => {
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-300"
+            enter="ease-in-out duration-500"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave="ease-in duration-200"
+            leave="ease-in-out duration-500"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
@@ -27,12 +27,12 @@ const ModalStatus = ({ isOpen, setIsOpen }) => {
           <div className="fixed inset-0 overflow-y-auto">
             <Transition.Child
               as={Fragment}
-              enter="ease-out duration-500"
-              enterFrom="fixed bottom-[-200%] "
-              enterTo="fixed bottom-0 "
-              leave="ease-in duration-500"
-              leaveFrom="fixed bottom-0"
-              leaveTo="fixed bottom-[-200%]"
+              enter="ease-in-out duration-300"
+              enterFrom="sm:static sm:opacity-0 fixed bottom-[-200%]"
+              enterTo="sm:static sm:opacity-100 fixed bottom-0"
+              leave="ease-in-out duration-300"
+              leaveFrom="sm:static sm:opacity-100 fixed bottom-0"
+              leaveTo="sm:static sm:opacity-0 fixed bottom-[-200%]"
             >
               <Dialog.Panel className="w-full h-full sm:items-center justify-center items-end flex">
                 <div className="sm:w-[360px] sm:rounded-2xl justify-center items-end flex w-full rounded-t-2xl bg-white duration-[1s]">
