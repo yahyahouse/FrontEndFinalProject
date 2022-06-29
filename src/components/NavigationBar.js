@@ -31,8 +31,6 @@ const NavigationBar = () => {
       ? JSON.parse(localStorage.getItem("user"))
       : "";
 
-  console.log(userLogged);
-
   // setting show hide side menu navbar
   const handleNav = () => {
     setNav(!nav);
@@ -98,7 +96,7 @@ const NavigationBar = () => {
               : ""
           }
         ></div>
-        <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-2 md:px-[136px] pt-9 md:py-[18px] flex items-center justify-between z-10">
+        <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-4 md:px-[136px] pt-9 md:py-[18px] flex items-center justify-between z-10">
           <Link to="/">
             <div className="hidden md:block w-[100px] h-[34px] bg-purple-900 mr-6" />
           </Link>
@@ -173,18 +171,20 @@ const NavigationBar = () => {
             }
             onSubmit={handleSubmit}
           >
-            <input
-              className="w-full md:w-[410px] h-full py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tl-2xl rounded-bl-2xl focus:outline-none placeholder:text-sm placeholder:text-gray-900"
-              placeholder="Cari di sini ..."
-              value={searchQuery}
-              onChange={handleChange}
-            />
-            <button
-              type="submit"
-              className="py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tr-2xl rounded-br-2xl"
-            >
-              <FiSearch className="w-[19px] h-[19px] text-gray-900" />
-            </button>
+            <div className="relative w-full md:w-[444px]">
+              <input
+                className="w-full md:w-[410px] h-full py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-2xl focus:outline-none placeholder:text-sm placeholder:text-gray-900"
+                placeholder="Cari di sini ..."
+                value={searchQuery}
+                onChange={handleChange}
+              />
+              <button
+                type="submit"
+                className="absolute top-0 right-6 md:right-14 h-full rounded-tr-2xl rounded-br-2xl"
+              >
+                <FiSearch className="w-[19px] h-[19px] text-gray-900" />
+              </button>
+            </div>
           </form>
           {/* )} */}
 

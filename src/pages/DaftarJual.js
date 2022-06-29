@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import "../assets/css/daftarJual.css";
 import NavigationBar from "../components/NavigationBar";
 import sellerProfile from "../assets/img/sellerProfile.png";
 import { Tabs } from "antd";
@@ -8,16 +9,29 @@ import ModalNotifikasi from "../components/ModalNotifikasi";
 import { EmptyData } from "../components/EmptyData";
 import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductBySeller } from "../features/productSlice";
 
 const { TabPane } = Tabs;
 
 const DaftarJual = () => {
+  const dispatch = useDispatch();
+
+  const seller =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
+  console.log(seller);
   const [activeTab, setActiveTab] = useState("1");
   const dataDummy = [0, 1, 2, 3, 4, 5, 6, 7];
 
   const handleActiveTab = (activeKey) => {
     setActiveTab(activeKey);
   };
+
+  useEffect(() => {
+    dispatch(getProductBySeller(seller.username));
+  });
 
   // Tabs untuk dekstop view
   const customDekstopTabPane = ({
@@ -122,7 +136,13 @@ const DaftarJual = () => {
           Daftar Jual Saya
         </h2>
         <div className="w-full my-6 flex justify-between bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl items-center">
-          <img src={sellerProfile} alt="userProfile" width={48} height={48} />
+          <div className="flex gap-4 items-center">
+            <img src={sellerProfile} alt="userProfile" width={48} height={48} />
+            <div>
+              <h4 className="text-sm font-medium">{seller.username}</h4>
+              <p className="text-[10px] text-gray-900 mt-1">Kota</p>
+            </div>
+          </div>
           <button className="px-3 py h-[26px] border border-purple-700 rounded-lg font-medium text-xs">
             Edit
           </button>

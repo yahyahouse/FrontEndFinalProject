@@ -36,7 +36,7 @@ export const userRegister = createAsyncThunk(
 );
 
 const initialState = {
-  user: "",
+  user: {},
   status: "",
   role: "",
   erorr: "",
@@ -55,6 +55,7 @@ const authSlice = createSlice({
     [userLogin.fulfilled]: (state, action) => {
       state.status = "successLogin";
       state.user = action.payload;
+      console.log(action.payload, "di reducer");
       localStorage.setItem("user", JSON.stringify(action.payload));
       localStorage.setItem("token", JSON.stringify(action.payload.token));
     },
@@ -77,6 +78,7 @@ const authSlice = createSlice({
   },
 });
 
+export const getUser = (state) => state.auth.user;
 export const getStatus = (state) => state.auth.status;
 export const getErorrMessage = (state) => state.auth.error;
 export const getSuccesMessage = (state) => state.auth.succesMessage;

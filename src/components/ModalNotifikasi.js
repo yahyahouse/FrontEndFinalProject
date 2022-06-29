@@ -11,7 +11,7 @@ const ModalNotifikasi = ({
 }) => {
   return (
     <div
-      className={`py-4 bg-white md:px-[${paddingX}] md:mt-[${marginT}] rounded-${rounded} shadow-[${shadow}]`}
+      className={`py-4 bg-white md:px-[${paddingX}] md:mt-[${marginT}] rounded-${rounded} shadow-[${shadow}] [&>div:last-child>div>div]:border-none`}
     >
       <div className="hover:bg-gray-500">
         <div className="px-4 pt-4">

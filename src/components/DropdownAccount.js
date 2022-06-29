@@ -17,7 +17,7 @@ const DropdownAccount = () => {
         width={96}
         height={96}
       />
-      <div className="py-4 bg-white md:shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl">
+      <div className="py-4 bg-white md:shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl [&>div:last-child>div>div]:border-none">
         <div className="hover:bg-gray-500 cursor-pointer">
           <div className="px-4 pt-4">
             <div className="pb-4 flex gap-5 border-b border-gray-500">
