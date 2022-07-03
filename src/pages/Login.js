@@ -77,7 +77,7 @@ const Login = () => {
             />
             {submitted && !account.email ? (
               <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
-                Pelase fill the email !
+                Email harus diisi !
               </p>
             ) : (
               ""
@@ -107,7 +107,7 @@ const Login = () => {
             </div>
             {submitted && !account.password ? (
               <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
-                Pelase fill the password !
+                Password harus diisi !
               </p>
             ) : (
               ""

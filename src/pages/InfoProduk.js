@@ -13,32 +13,58 @@ const InfoProduk = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // IMAGE UPLOADING
-  const [name, setName] = useState();
-  const [price, setPrice] = useState();
-  const [address, setAdress] = useState();
-  const [description, setDescription] = useState();
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
-  console.log(images);
+  const [productId, setProductId] = useState("3");
   const user =
-    localStorage.getItem("user") !== "undefined"
+    localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
       : "";
+  const imagesFIle = [];
+  // console.log(imagesFIle);
+  // // console.log(images[0].file);
+  console.log(
+    name,
+    parseInt(price),
+    category,
+    description,
+    images,
+    parseInt(productId)
+  );
 
   const onChange = (imageList, addUpdateIndex) => {
-    console.log(imageList, addUpdateIndex);
+    console.log(imageList, addUpdateIndex, "list image");
     setImages(imageList);
   };
 
-  const handleAddProduct = (e) => {
+  images.forEach(function (item) {
+    imagesFIle.push(item.file);
+  });
+
+  // console.log(imagesFIle);
+
+  const handleAddProduct = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("productName", name);
-    data.append("productDescription", description);
-    data.append("productPrice", price);
-    data.append("address", address);
-    data.append("productImage", "0");
-    data.append("userId", user.userId);
-    dispatch(addProduct(data));
+    data.append("files", images[0].file);
+    data.append("product_name", name);
+    data.append("product_description", description);
+    data.append("product_price", parseInt(price));
+    data.append("product_category", category);
+    data.append("productId", parseInt(productId));
+    console.log(data);
+
+    try {
+      let response = await dispatch(
+        addProduct({ id: user.userId, dataProduct: data })
+      );
+      console.log(response);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
@@ -71,30 +97,27 @@ const InfoProduk = () => {
             />
           </div>
           <div className="flex flex-col mb-3">
-            <label className="mb-1 font-medium text-xs">Alamat</label>
-            {/* <select className="border-2 border-gray-300 rounded-2xl h-[48px] px-4 text-xs">
+            <label className="mb-1 font-medium text-xs">Kategori</label>
+            <select
+              onChange={(e) => setCategory(e.target.value)}
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4  text-xs"
+            >
               <option value="none" hidden>
                 Pilih Kategori
               </option>
-              <option value="1">Hobi</option>
-              <option value="1">Kendaraan</option>
-              <option value="1">Fashion</option>
-              <option value="1">Elektronik</option>
-              <option value="1">Aksesoris</option>
-            </select> */}
-            <input
-              type="text"
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4  text-xs"
-              placeholder="Alamat"
-              onChange={(e) => setAdress(e.target.value)}
-            />
+              <option value="Hobi">Hobi</option>
+              <option value="Kendaraan">Kendaraan</option>
+              <option value="Fashion">Fashion</option>
+              <option value="Elektronik">Elektronik</option>
+              <option value="Kesehatan">Kesehatan</option>
+            </select>
           </div>
           <div className="flex flex-col mb-3">
             <label className="mb-1 font-medium text-xs">Deskripsi</label>
             <textarea
               type="textarea"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] py-2 px-4 resize-none text-xs"
-              placeholder="Contoh: Jalan Ikan Hiu 33"
+              placeholder="Contoh: Masih mulus"
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>

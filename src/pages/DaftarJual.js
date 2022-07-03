@@ -18,7 +18,7 @@ const DaftarJual = () => {
   const dispatch = useDispatch();
 
   const seller =
-    localStorage.getItem("user") !== "undefined"
+    localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
       : "";
   console.log(seller);

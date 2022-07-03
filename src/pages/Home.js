@@ -60,7 +60,11 @@ const Home = () => {
                 <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
                   {allProducts &&
                     allProducts.map((item) => (
-                      <CardProduct cardWidth={"182px"} key={item._id} />
+                      <CardProduct
+                        cardWidth={"182px"}
+                        key={item._id}
+                        data={item}
+                      />
                     ))}
                 </div>
               </TabPane>
@@ -90,7 +94,7 @@ const Home = () => {
                 tab={
                   <span className="flex gap-2">
                     <FiSearch />
-                    Baju
+                    Fashion
                   </span>
                 }
                 key="4"
@@ -129,7 +133,7 @@ const Home = () => {
         total={1000}
         onChange={handlePaginationChange}
       />
-      <Link to={"/infoproduk"}>
+      <Link to="/infoproduk">
         <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] drop-shadow-[0_0_10px_rgba(0, 0, 0, 0.15)]">
           <FiPlus className="text-white text-xl font-bold" />
           Jual

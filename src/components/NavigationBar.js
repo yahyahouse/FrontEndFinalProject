@@ -27,7 +27,7 @@ const NavigationBar = () => {
 
   // cek apakah user sudah login
   const userLogged =
-    localStorage.getItem("user") !== "undefined"
+    localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
       : "";
 
@@ -246,12 +246,23 @@ const NavigationBar = () => {
         </nav>
       </div>
     );
+  } else if (location.pathname === "/settingaccount") {
+    return (
+      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
+        <Link className="sm:hidden" to="/">
+          <img src={Arrowleft} alt="img" />
+        </Link>
+        <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
+        <p className="text-base font-medium leading-6 ">Pengaturan Akun</p>
+        <div className="sm:w-[100px] w-[24px]" />
+      </nav>
+    );
   }
   // HOME END
   // DEFAULT START
   else {
     return (
-      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-md duration-[1s] flex items-center justify-between">
+      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
         <Link className="sm:hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>

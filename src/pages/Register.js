@@ -88,7 +88,7 @@ const Register = () => {
             />
             {submitted && !name ? (
               <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
-                Pelase fill the name !
+                Nama lengkap harus diisi !
               </p>
             ) : (
               ""
@@ -105,7 +105,7 @@ const Register = () => {
             />
             {submitted && !email ? (
               <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
-                Pelase fill the email !
+                Email harus diisi !
               </p>
             ) : (
               ""
@@ -133,7 +133,7 @@ const Register = () => {
               </div>
               {submitted && !password ? (
                 <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
-                  Pelase fill the password !
+                  Password harus diisi !
                 </p>
               ) : (
                 ""

@@ -64,13 +64,13 @@ const InfoProfile = () => {
             <label className="mb-1 font-medium">Nama*</label>
             <input
               type="text"
-              className="border-2 border-gray-300 rounded-2xl h-[48px] px-5"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
               placeholder="Nama"
             />
           </div>
           <div className="flex flex-col mb-3">
             <label className="mb-1 font-medium">Kota*</label>
-            <select className="border-2 border-gray-300 rounded-2xl h-[48px] px-5">
+            <select className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs">
               <option value="none" hidden>
                 Pilih Kota
               </option>
@@ -83,7 +83,7 @@ const InfoProfile = () => {
             <label className="mb-1 font-medium">Alamat*</label>
             <textarea
               type="textarea"
-              className="border-2 border-gray-300 rounded-2xl h-[80px] py-1 px-5 resize-none"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] px-4 text-xs"
               placeholder="Contoh: Jalan Ikan Hiu 33"
             />
           </div>
@@ -91,7 +91,7 @@ const InfoProfile = () => {
             <label className="mb-1 font-medium">No Handphone*</label>
             <input
               type="text"
-              className="border-2 border-gray-300 rounded-2xl h-[48px] px-5"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
               placeholder="Contoh: +628123456789"
             />
           </div>
