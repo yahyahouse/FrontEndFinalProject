@@ -26,12 +26,12 @@ function InfoPenawar() {
       <ModalStatus isOpen={isOpen} setIsOpen={setIsOpen} />
       <ModalWhatsapp nav={nav} setNav={setNav} />
       <NavigationBar />
-      <section className="flex justify-center py-[16px] ">
+      <section className="flex justify-center py-[16px] md:mt-10">
         <Link className="sm:block hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
         <div className="sm:w-[568px] sm:mx-[78px] duration-[1s] w-[328px]">
-          <div className="h-[80px] border rounded-2xl shadow-md flex items-center p-[16px] mb-[24px]">
+          <div className="h-[80px] border rounded-2xl shadow-[0_0_4px_rgba(0,0,0,0.15)] flex items-center p-[16px] mb-[24px]">
             <div className="rounded-xl h-[48px] w-[58px] overflow-hidden">
               <img src={Profile} alt="Profile" />
             </div>
