@@ -4,16 +4,6 @@ import axios from "axios";
 let token = JSON.parse(localStorage.getItem("token"));
 console.log(token);
 
-// axios.interceptors.request.use(
-//   (config) => {
-//     config.headers.authorization = `Bearer ${token}`;
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
-
 export const getAllProducts = createAsyncThunk(
   "product/getAllProducts",
   async () => {
@@ -29,8 +19,6 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
-//coba di stringify tokennya
-//coba perbaiki struktur header
 export const addProduct = createAsyncThunk(
   "product/addProduct",
   async (data) => {
@@ -47,16 +35,6 @@ export const addProduct = createAsyncThunk(
         }
       );
 
-      // const response = await axios({
-      //   method: "POST",
-      //   url: `https://dummyprojectbinar.herokuapp.com/product/seller/add-product/${data.userId}`,
-      //   data: data.formData,
-      //   headers: {
-      //     accept: "*/*",
-      //     "Content--Type": "multipart/form-data",
-      //     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      //   },
-      // });
       console.log(response, "add product");
     } catch (error) {
       console.log(error.message);
@@ -107,6 +85,15 @@ const productSice = createSlice({
       state.allProducts = action.payload;
     },
     [getAllProducts.rejected]: (state) => {
+      state.status = "rejected";
+    },
+    [addProduct.pending]: (state) => {
+      state.status = "loading";
+    },
+    [addProduct.fulfilled]: (state, action) => {
+      state.status = "success";
+    },
+    [addProduct.rejected]: (state) => {
       state.status = "rejected";
     },
   },

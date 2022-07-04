@@ -24,8 +24,9 @@ const InfoProduk = () => {
       ? JSON.parse(localStorage.getItem("user"))
       : "";
   const imagesFIle = [];
-  // console.log(imagesFIle);
-  // // console.log(images[0].file);
+  console.log(imagesFIle);
+  console.log(images);
+
   console.log(
     name,
     parseInt(price),
@@ -42,10 +43,10 @@ const InfoProduk = () => {
 
   images.forEach(function (item) {
     imagesFIle.push(item.file);
+    // console.log(item.file);
   });
 
-  // console.log(imagesFIle);
-
+  // https://stackoverflow.com/questions/55596514/handling-multiple-image-upload-with-react-js-laravel
   const handleAddProduct = async (e) => {
     e.preventDefault();
     const data = new FormData();
