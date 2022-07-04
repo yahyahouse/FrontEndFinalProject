@@ -4,9 +4,7 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -16,27 +14,7 @@ code {
     monospace;
 }
 
-/* .swiper-slide-prev img,
-.swiper-slide-next img {
-  width: 100%;
-} */
-
-.ant-pagination-item-active,
-.ant-pagination-item:hover {
-  background-color: #7126b5;
-  border: none;
-}
-.ant-pagination-item-active a,
-.ant-pagination-item a:hover {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.ant-pagination-prev .ant-pagination-item-link:hover,
-.ant-pagination-next .ant-pagination-item-link:hover,
-.ant-pagination-next .ant-pagination-item-link span:hover,
-.ant-pagination-options .ant-select .ant-select-selector:hover,
-.ant-pagination-options .ant-select .ant-select-selector:hover {
-  border-color: #7126b5;
-  color: #7126b5;
+/* untuk seluruh tabs */
+.ant-tabs-ink-bar {
+  background-color: transparent;
 }

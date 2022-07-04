@@ -1,110 +1,130 @@
-import React from "react";
+import React, { useEffect } from "react";
+import "../assets/css/home.css";
+import { Tabs } from "antd";
 import Banner from "../components/Banner";
 import CardProduct from "../components/CardProduct";
 import { FiSearch, FiPlus } from "react-icons/fi";
 import { Pagination } from "antd";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
 import NavigationBar from "../components/NavigationBar";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllProducts,
+  getAllDataProducts,
+  getAllDataProductsStatus,
+} from "../features/productSlice";
+
+const { TabPane } = Tabs;
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const allProducts = useSelector(getAllDataProducts);
+  const status = useSelector(getAllDataProductsStatus);
+  console.log(allProducts, "di home");
+  console.log(status);
+
+  // mengambil value tab kategori active
+  const onChange = (key) => {
+    console.log(key);
+  };
+
+  // mengambil value dari pagination yang active
   const handlePaginationChange = (page) => {
-    // mengambil value dari pagination yang active
     console.log(page);
   };
+
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
   return (
     <div>
       <NavigationBar />
       <Banner />
       <div className="w-full md:px-[136px] mt-10">
-        <div className="px-2 mt-[228px] md:mt-2">
-          <h3 className="text-base font-bold">Telusuri Category</h3>
-          <div className="flex gap-4">
-            <Swiper
-              slidesPerView={2.6}
-              spaceBetween={20}
-              breakpoints={{
-                640: {
-                  slidesPerView: 3,
-                },
-                768: {
-                  slidesPerView: 4,
-                },
-                1024: {
-                  slidesPerView: 6,
-                },
-              }}
-              modules={[]}
-              className="mySwiper"
-            >
-              <SwiperSlide>
-                <button className="bg-purple-700 px-7 py-3 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 hover:bg-purple-500">
-                  <FiSearch className="text-white text-xl font-bold" />
-                  Semua
-                </button>
-              </SwiperSlide>
-              <SwiperSlide>
-                <button className="group bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4 hover:bg-purple-700 hover:text-white">
-                  <FiSearch className="text-black text-xl font-bold group-hover:text-white" />
-                  Hobi
-                </button>
-              </SwiperSlide>
-              <SwiperSlide>
-                <button className="group bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4 hover:bg-purple-700 hover:text-white">
-                  <FiSearch className="text-black text-xl font-bold group-hover:text-white" />
-                  Kendaraan
-                </button>
-              </SwiperSlide>
-              <SwiperSlide>
-                <button className="group bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4 hover:bg-purple-700 hover:text-white">
-                  <FiSearch className="text-black text-xl font-bold group-hover:text-white" />
-                  Fashion
-                </button>
-              </SwiperSlide>
-              <SwiperSlide>
-                <button className="group bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4 hover:bg-purple-700 hover:text-white">
-                  <FiSearch className="text-black text-xl font-bold group-hover:text-white" />
-                  Aksesoris
-                </button>
-              </SwiperSlide>
-              <SwiperSlide>
-                <button className="group bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4 hover:bg-purple-700 hover:text-white">
-                  <FiSearch className="text-black text-xl font-bold group-hover:text-white" />
-                  Kesehatan
-                </button>
-              </SwiperSlide>
-            </Swiper>
+        <div className="px-4 mt-[228px] md:mt-2">
+          <div className="category-product">
+            <h3 className="text-base font-bold -mb-5 md:mb-4">
+              Telusuri Category
+            </h3>
+
+            <Tabs defaultActiveKey="1" onChange={onChange}>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Semua
+                  </span>
+                }
+                key="1"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                  {allProducts &&
+                    allProducts.map((item) => (
+                      <CardProduct
+                        cardWidth={"182px"}
+                        key={item._id}
+                        data={item}
+                      />
+                    ))}
+                </div>
+              </TabPane>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Hobi
+                  </span>
+                }
+                key="2"
+              >
+                Content of Tab Pane 2
+              </TabPane>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Kendaraan
+                  </span>
+                }
+                key="3"
+              >
+                Content of Tab Pane 3
+              </TabPane>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Fashion
+                  </span>
+                }
+                key="4"
+              >
+                Content of Tab Pane 3
+              </TabPane>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Elektronik
+                  </span>
+                }
+                key="5"
+              >
+                Content of Tab Pane 3
+              </TabPane>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Kesehatan
+                  </span>
+                }
+                key="6"
+              >
+                Content of Tab Pane 3
+              </TabPane>
+            </Tabs>
           </div>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-y-3 mt-8 md:mt-[14px]">
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
         </div>
       </div>
       <Pagination
@@ -113,7 +133,7 @@ const Home = () => {
         total={1000}
         onChange={handlePaginationChange}
       />
-      <Link to={"/infoproduk"}>
+      <Link to="/infoproduk">
         <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] drop-shadow-[0_0_10px_rgba(0, 0, 0, 0.15)]">
           <FiPlus className="text-white text-xl font-bold" />
           Jual
