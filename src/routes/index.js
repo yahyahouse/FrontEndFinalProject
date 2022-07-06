@@ -30,7 +30,7 @@ function App() {
         <Route path="/settingaccount" element={<SettingAccount />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/detailproduk" element={<DetailProduk />} />
-        <Route path="/buyerdetail" element={<BuyerDetail />} />
+        <Route path="/buyerdetail/:id" element={<BuyerDetail />} />
         <Route path="/modaldetail" element={<ModalDetailProduk />} />
       </Routes>
     </BrowserRouter>
