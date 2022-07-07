@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserById } from "../features/userSlice";
 import { Link } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
 
@@ -7,6 +9,21 @@ import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import NavigationBar from "../components/NavigationBar";
 
 const InfoProfile = () => {
+  const dispatch = useDispatch();
+  const users = useSelector(getUserById);
+  console.log(users);
+  console.log("cobain");
+
+  useEffect(() => {
+    dispatch(getUserById());
+  }, [dispatch]);
+
+  const [newData, setNewData] = useState({
+    firstName: users.first_name,
+    lastName: users.last_name,
+    email: users.email,
+  });
+
   // IMAGE UPLOADING
   const [images, setImages] = React.useState([]);
   const maxNumber = 4;
@@ -18,6 +35,7 @@ const InfoProfile = () => {
 
   return (
     <div>
+      {/* {getUser && getUser.map((item) => <p>{item.username}</p>)} */}
       <NavigationBar />
       <section className="flex justify-center py-6">
         <Link className="sm:block hidden" to="/">

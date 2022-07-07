@@ -19,6 +19,21 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
+export const getProductsFilter = createAsyncThunk(
+  "product/getProductsFilter",
+  async () => {
+    try {
+      const response = await axios.get(
+        `https://dummyprojectbinar.herokuapp.com/home-page/show-products`
+      );
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
 export const addProduct = createAsyncThunk(
   "product/addProduct",
   async (data) => {
