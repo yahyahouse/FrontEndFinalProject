@@ -18,6 +18,28 @@ export const getAllProducts = createAsyncThunk(
     }
   }
 );
+export const getDetailProduct = createAsyncThunk(
+  "product/getDetailProduct",
+  async (idProduct) => {
+    console.log(idProduct);
+    try {
+      const response = await axios.get(
+        `https://dummyprojectbinar.herokuapp.com/product/buyer/get-detail-product/${idProduct}`,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+      console.log(response, "detail product");
+      return response.data[0];
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
 
 export const getProductsFilter = createAsyncThunk(
   "product/getProductsFilter",
@@ -49,7 +71,6 @@ export const addProduct = createAsyncThunk(
           },
         }
       );
-
       console.log(response, "add product");
     } catch (error) {
       console.log(error.message);
@@ -73,6 +94,7 @@ export const getProductBySeller = createAsyncThunk(
         }
       );
       console.log(response, "get by seller");
+      return response.data;
     } catch (error) {
       console.log(error.message);
     }
@@ -81,7 +103,12 @@ export const getProductBySeller = createAsyncThunk(
 
 const initialState = {
   allProducts: [],
-  status: "",
+  detailProduct: [],
+  sellerProducts: [],
+  getAllProductStatus: "",
+  getDetailProductStatus: "",
+  addProductStatus: "",
+  getProductBySellerStatus: "",
   erorr: "",
   succesMessage: "",
 };
@@ -92,28 +119,52 @@ const productSice = createSlice({
   reducers: {},
   extraReducers: {
     [getAllProducts.pending]: (state) => {
-      state.status = "loading";
+      state.getALLProductStatus = "loading";
     },
     [getAllProducts.fulfilled]: (state, action) => {
       // console.log(action.payload.docs.limit);
-      state.status = "succes";
+      state.getALLProductStatus = "succes";
       state.allProducts = action.payload;
     },
     [getAllProducts.rejected]: (state) => {
-      state.status = "rejected";
+      state.getALLProductStatus = "rejected";
+    },
+    [getDetailProduct.pending]: (state) => {
+      state.getDetailProductStatus = "loading";
+    },
+    [getDetailProduct.fulfilled]: (state, action) => {
+      state.getDetailProductStatus = "succes";
+      state.detailProduct = action.payload;
+    },
+    [getDetailProduct.rejected]: (state) => {
+      state.getDetailProductStatus = "rejected";
     },
     [addProduct.pending]: (state) => {
-      state.status = "loading";
+      state.addProductStatus = "loading";
     },
     [addProduct.fulfilled]: (state, action) => {
-      state.status = "success";
+      state.addProductStatus = "Produk berhasil ditambahkan";
     },
     [addProduct.rejected]: (state) => {
-      state.status = "rejected";
+      state.addProductStatus = "rejected";
+    },
+
+    [getProductBySeller.pending]: (state) => {
+      state.getProductBySellerStatus = "loading";
+    },
+    [getProductBySeller.fulfilled]: (state, action) => {
+      state.getProductBySellerStatus = "success";
+      state.sellerProducts = action.payload;
+    },
+    [getProductBySeller.rejected]: (state) => {
+      state.getProductBySellerStatus = "rejected";
     },
   },
 });
 
 export const getAllDataProducts = (state) => state.product.allProducts;
-export const getAllDataProductsStatus = (state) => state.product.status;
+export const getDetailDataProducts = (state) => state.product.detailProduct;
+export const getSellerProducts = (state) => state.product.sellerProducts;
+export const getllProductStatus = (state) => state.product.getAllProductStatus;
+export const getAddProductStatus = (state) => state.product.addProductStatus;
 export default productSice.reducer;
