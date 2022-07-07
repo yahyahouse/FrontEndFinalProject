@@ -14,7 +14,10 @@ const ProdukImage = ({ imageDetail }) => {
   console.log(imageDetail);
   const location = useLocation();
 
-  const imagePreview = JSON.parse(localStorage.getItem("imagePreview"));
+  const imagePreview =
+    localStorage.getItem("imagePreview") !== null
+      ? JSON.parse(localStorage.getItem("imagePreview"))
+      : "";
   console.log(imagePreview.image0);
   return (
     <div>

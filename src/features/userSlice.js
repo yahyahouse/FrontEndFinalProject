@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-let token = JSON.parse(localStorage.getItem("token"));
-console.log(token);
-
 // ADLI START
 export const getUserById = createAsyncThunk("user/getUserById", async () => {
   try {

@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-console.log(JSON.parse(localStorage.getItem("token")));
-
 export const addOffer = createAsyncThunk("offer/addOffer", async (data) => {
   console.log(data);
   try {
