@@ -1,40 +1,30 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import plus from "../assets/img/fi_plus.svg";
 import NavigationBar from "../components/NavigationBar";
 import { addProduct } from "../features/productSlice";
-import { getUser } from "../features/authSlice";
 
 const InfoProduk = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // IMAGE UPLOADING
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
-  const [productId, setProductId] = useState("3");
+  const [productId, setProductId] = useState("1");
   const user =
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
       : "";
   const imagesFIle = [];
-  console.log(imagesFIle);
-  console.log(images);
-
-  console.log(
-    name,
-    parseInt(price),
-    category,
-    description,
-    images,
-    parseInt(productId)
-  );
+  // console.log(imagesFIle);
+  // console.log(images);
 
   const onChange = (imageList, addUpdateIndex) => {
     console.log(imageList, addUpdateIndex, "list image");
@@ -45,6 +35,17 @@ const InfoProduk = () => {
     imagesFIle.push(item.file);
     // console.log(item.file);
   });
+
+  const handlePreview = () => {
+    // const objImage = URL.createObjectURL(images[0].file);
+    // localStorage.setItem("image", objImage);
+    let objImage = {};
+    for (let i = 0; i < images.length; i++) {
+      objImage["image" + i] = URL.createObjectURL(images[i].file);
+    }
+    console.log(objImage, "obj image");
+    localStorage.setItem("imagePreview", JSON.stringify(objImage));
+  };
 
   // https://stackoverflow.com/questions/55596514/handling-multiple-image-upload-with-react-js-laravel
   const handleAddProduct = async (e) => {
@@ -59,10 +60,8 @@ const InfoProduk = () => {
     console.log(data);
 
     try {
-      let response = await dispatch(
-        addProduct({ id: user.userId, dataProduct: data })
-      );
-      console.log(response);
+      await dispatch(addProduct({ id: user.userId, dataProduct: data }));
+      navigate("/daftarJual");
     } catch (error) {
       console.error(error.message);
     }
@@ -170,10 +169,21 @@ const InfoProduk = () => {
             </ImageUploading>
           </div>
           <div className="flex justify-between">
-            <Link to={"#"}>
+            <Link
+              to="/detailproduk"
+              state={{
+                image: images,
+                name: name,
+                description: description,
+                price: price,
+                category: category,
+                productId: productId,
+              }}
+            >
               <button
                 type="submit"
                 className="sm:w-[276px] w-[156px] h-[48px] rounded-2xl border-2 border-purple-700 text-black font-medium text-xs duration-[1s]"
+                onClick={handlePreview}
               >
                 Preview
               </button>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../assets/css/daftarJual.css";
+import { Alert } from "antd";
 import NavigationBar from "../components/NavigationBar";
 import sellerProfile from "../assets/img/sellerProfile.png";
 import { Tabs } from "antd";
@@ -10,28 +11,38 @@ import { EmptyData } from "../components/EmptyData";
 import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductBySeller } from "../features/productSlice";
+import {
+  getProductBySeller,
+  getAddProductStatus,
+  getSellerProducts,
+} from "../features/productSlice";
 
 const { TabPane } = Tabs;
 
 const DaftarJual = () => {
   const dispatch = useDispatch();
+  const sellerProducts = useSelector(getSellerProducts);
+  console.log(sellerProducts);
+  const addProductstatus = useSelector(getAddProductStatus);
+  console.log(addProductstatus);
 
   const seller =
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
       : "";
-  console.log(seller);
   const [activeTab, setActiveTab] = useState("1");
-  const dataDummy = [0, 1, 2, 3, 4, 5, 6, 7];
+
+  const onClose = (e) => {
+    console.log(e, "I was closed.");
+  };
 
   const handleActiveTab = (activeKey) => {
     setActiveTab(activeKey);
   };
 
   useEffect(() => {
-    dispatch(getProductBySeller(seller.username));
-  });
+    dispatch(getProductBySeller(seller.userId));
+  }, [dispatch, seller.userId]);
 
   // Tabs untuk dekstop view
   const customDekstopTabPane = ({
@@ -73,11 +84,16 @@ const DaftarJual = () => {
               </div>
             </button>
           </Link>
-          {dataDummy.map((i) => (
-            <div key={i} className="w-full">
-              {content}
-            </div>
-          ))}
+          {sellerProducts &&
+            sellerProducts.map((item) => (
+              <CardProduct
+                cardWidth={"206px"}
+                imgHeight={"120px"}
+                imgFit={"object-contain"}
+                key={item.productId}
+                data={item}
+              />
+            ))}
         </div>
       ) : activeTab === "2" ? (
         <div>{content}</div>
@@ -111,11 +127,16 @@ const DaftarJual = () => {
                 </div>
               </button>
             </Link>
-            {dataDummy.map((i) => (
-              <div key={i} className="w-full">
-                {content}
-              </div>
-            ))}
+            {sellerProducts &&
+              sellerProducts.map((item) => (
+                <CardProduct
+                  cardWidth={"206px"}
+                  imgHeight={"120px"}
+                  imgFit={"object-containt"}
+                  key={item.productId}
+                  data={item}
+                />
+              ))}
           </div>
         ) : activeTab === "2" ? (
           <div>{content}</div>
@@ -131,6 +152,17 @@ const DaftarJual = () => {
   return (
     <div className="pb-5">
       <NavigationBar />
+      {addProductstatus === "Produk berhasil ditambahkan" ? (
+        <Alert
+          message={addProductstatus}
+          type="success"
+          closable
+          onClose={onClose}
+          className="w-[500px] flex mx-auto -mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+        />
+      ) : (
+        ""
+      )}
       <div className="px-2 mt-4 md:px-[236px] md:mt-[120px]">
         <h2 className="hidden md:block text-[20px] font-bold">
           Daftar Jual Saya
@@ -160,7 +192,7 @@ const DaftarJual = () => {
               title: "Semua Produk",
               icon: <FiBox className="text-xl" />,
               navRight: <FiChevronRight className="text-xl" />,
-              content: <CardProduct cardWidth={"206px"} />,
+              content: <CardProduct cardWidth={"182px"} />,
             })}
 
             {customDekstopTabPane({
