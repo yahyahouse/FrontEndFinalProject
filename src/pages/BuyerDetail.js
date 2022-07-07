@@ -21,7 +21,7 @@ function BuyerDetail() {
   console.log(detailProduct, "detail produk");
 
   const { id } = useParams();
-  console.log(id);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleNav = () => {
