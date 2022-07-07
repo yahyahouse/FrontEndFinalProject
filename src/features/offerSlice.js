@@ -21,13 +21,28 @@ export const addOffer = createAsyncThunk("offer/addOffer", async (data) => {
   }
 });
 
-const initialState = {};
+const initialState = {
+  addOfferStatus: "",
+  successMessage: "",
+  error: "",
+};
 
 const offerSLice = createSlice({
   name: "offer",
   initialState,
   reducers: {},
-  extraReducers: {},
+  extraReducers: {
+    [addOffer.pending]: (state) => {
+      state.addOfferStatus = "loading";
+    },
+    [addOffer.fulfilled]: (state, action) => {
+      state.addOfferStatus = "success";
+    },
+    [addOffer.rejected]: (state) => {
+      state.addOfferStatus = "rejected";
+    },
+  },
 });
 
+export const getAddOfferStatus = (state) => state.offer.addOfferStatus;
 export default offerSLice.reducer;
