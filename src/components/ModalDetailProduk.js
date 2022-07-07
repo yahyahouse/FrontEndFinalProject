@@ -1,15 +1,54 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Fragment, useState } from "react";
 import Card from "../assets/img/card_detailproduk.png";
-
 import Close from "../assets/img/fi_x.svg";
+import { useDispatch } from "react-redux/es/exports";
+import { addOffer } from "../features/offerSlice";
 
-const ModalDetailProduk = ({ isOpen, setIsOpen }) => {
+const ModalDetailProduk = ({
+  isOpen,
+  setIsOpen,
+  productId,
+  productName,
+  productPrice,
+}) => {
+  const dispatch = useDispatch();
+  console.log(JSON.parse(localStorage.getItem("token")));
+
+  // Data Post Offer
+  const user =
+    localStorage.getItem("user") !== null
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
+
+  const offerId = 1;
+  const [offerPrice, setOfferPrice] = useState("");
+  console.log(parseInt(offerPrice));
+
   function closeModal() {
     setIsOpen(!isOpen);
   }
 
+  const handleAddOffer = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(
+        addOffer({
+          path: {
+            userId: parseInt(user.userId),
+            productId: parseInt(productId),
+          },
+          data: {
+            offerId: parseInt(offerId),
+            offer_price: Number(offerPrice),
+            offerStatus: "Diminati",
+          },
+        })
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -71,39 +110,46 @@ const ModalDetailProduk = ({ isOpen, setIsOpen }) => {
                       <p className="text-sm text-justify font-semibold mb-[8px] w-full">
                         Masukkan Harga Tawarmu
                       </p>
-                      <p className="text-sm text-justify font-normal text-gray-900 mb-[16px] w-full">
+                      <p className="text-sm mt-2 text-justify font-normal text-gray-900 mb-[16px] w-full">
                         Harga tawaranmu akan diketahui penjual, jika penjual
                         cocok kamu akan segera dihubungi penjual.
                       </p>
-                      <div className="p-[16px] flex flex-col w-full rounded-2xl shadow-md mb-[24px] bg-gray-200">
+                      <div className="p-[16px] flex flex-col w-full rounded-2xl shadow-[0_0_4px_rgba(0,0,0,0.15)] mb-[24px] bg-gray-200">
                         <div className="flex">
                           <div className="rounded-xl h-[48px] w-[48px] overflow-hidden">
                             <img src={Card} alt="" />
                           </div>
                           <div className="pl-[16px] flex flex-col">
                             <p className="text-sm font-semibold ">
-                              Jam Tangan Casio
+                              {productName}
                             </p>
-                            <p className="text-sm font-normal">Rp 250.000</p>
+                            <p className="text-sm font-normal mt-1">
+                              {productPrice}
+                            </p>
                           </div>
                         </div>
                       </div>
-                      <p className="-ml-56 mb-1 font-semibold">Harga Tawar</p>
-                      <div className="p-[16px] flex flex-col border w-full rounded-2xl shadow-md mb-[24px]">
-                        <div className="flex">
-                          <div className="pl-[5px] flex flex-col">
-                            <p className="text-sm font-normal">Rp 0,00</p>
-                          </div>
-                        </div>
+                      <p className="flex mr-auto mb-1 text-sm font-normal">
+                        Harga Tawar
+                      </p>
+                      <div className="flex flex-col w-full mt-1 mb-[24px]">
+                        <form onSubmit={handleAddOffer}>
+                          <input
+                            type="text"
+                            placeholder="Rp 0,00"
+                            className="w-full border solid border-gray-700 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl px-4 py-3"
+                            onChange={(e) => setOfferPrice(e.target.value)}
+                          />
+                          <button
+                            type="submit"
+                            className="h-[48px] mt-6 rounded-2xl w-full bg-purple-700 text-white hover:text-white flex justify-center items-center mb-[20px]"
+                          >
+                            <p className="justify-center font-medium text-sm mx-[40px] hover:text-white">
+                              Kirim
+                            </p>
+                          </button>
+                        </form>
                       </div>
-                      <Link
-                        className="h-[48px] rounded-2xl w-full bg-purple-700 text-white flex justify-center items-center mb-[20px]"
-                        to={"#"}
-                      >
-                        <p className="justify-center font-medium text-sm mx-[40px]">
-                          Kirim
-                        </p>
-                      </Link>
                     </div>
                   </div>
                 </div>

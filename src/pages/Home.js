@@ -8,20 +8,14 @@ import { Pagination } from "antd";
 import NavigationBar from "../components/NavigationBar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllProducts,
-  getAllDataProducts,
-  getAllDataProductsStatus,
-} from "../features/productSlice";
+import { getAllProducts, getAllDataProducts } from "../features/productSlice";
 
 const { TabPane } = Tabs;
 
 const Home = () => {
   const dispatch = useDispatch();
   const allProducts = useSelector(getAllDataProducts);
-  const status = useSelector(getAllDataProductsStatus);
   console.log(allProducts, "di home");
-  console.log(status);
 
   // mengambil value tab kategori active
   const onChange = (key) => {
@@ -62,7 +56,9 @@ const Home = () => {
                     allProducts.map((item) => (
                       <CardProduct
                         cardWidth={"182px"}
-                        key={item._id}
+                        imgHeight={"100px"}
+                        imgFit={"object-contain"}
+                        key={item.productId}
                         data={item}
                       />
                     ))}
