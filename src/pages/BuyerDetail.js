@@ -30,8 +30,10 @@ function BuyerDetail() {
 
   return (
     <div>
-      <NavigationBar />
-      <div className="sm:flex sm:px-[236px] gap-[32px] sm:mt-10 relative">
+      <div className="hidden md:block">
+        <NavigationBar />
+      </div>
+      <div className="sm:flex sm:px-[236px] gap-[32px] mt-12 sm:mt-28 relative">
         <Link
           className="absolute top-[44px] left-[16px] z-50 bg-white rounded-full sm:hidden"
           to="/"
@@ -47,7 +49,7 @@ function BuyerDetail() {
             </div>
           </div>
         </div>
-        <div className="w-full sm:w-[336px] px-4 sm:px-0 absolute sm:static top-[344px] z-20 sm:z-0">
+        <div className="w-full sm:w-[336px] px-4 sm:px-0 absolute sm:static top-[312px] z-20 sm:z-0">
           <div className="container flex w-full -mt-10 z-50 sm:mt-0 static bg-white rounded-2xl">
             <div className="rounded-xl shadow-[0_0_4px_rgba(0,0,0,0.15)] p-5 w-full sm:w-auto">
               <p className="font-semibold">{detailProduct.productName}</p>
