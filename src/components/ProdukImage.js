@@ -113,23 +113,26 @@ const ProdukImage = ({ imageDetail }) => {
                   alt="productImage"
                 />
               </SwiperSlide>
-              <SwiperSlide
-                className={
-                  location.pathname === "detailproduk" && !imagePreview.image1
-                    ? "hidden"
-                    : ""
-                }
-              >
-                <img
-                  className="w-full h-[300px] object-cover"
-                  src={
-                    location.pathname === "/detailproduk"
-                      ? imagePreview.image1
-                      : produkimage
+              <div className="hidden">
+                <SwiperSlide
+                  className={
+                    location.pathname === "/detailproduk" &&
+                    !imagePreview.image1
+                      ? "hidden"
+                      : ""
                   }
-                  alt="productImage"
-                />
-              </SwiperSlide>
+                >
+                  <img
+                    className="w-full h-[300px] object-cover"
+                    src={
+                      location.pathname === "/detailproduk"
+                        ? imagePreview.image1
+                        : produkimage
+                    }
+                    alt="productImage"
+                  />
+                </SwiperSlide>
+              </div>
               <SwiperSlide
                 className={
                   location.pathname === "detailproduk" && !imagePreview.image2

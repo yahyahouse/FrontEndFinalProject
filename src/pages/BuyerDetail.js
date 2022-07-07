@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 function BuyerDetail() {
   const dispatch = useDispatch();
   const detailProduct = useSelector(getDetailDataProducts);
-  console.log(detailProduct);
+  console.log(detailProduct, "detail produk");
 
   const { id } = useParams();
   console.log(id);
@@ -71,7 +71,7 @@ function BuyerDetail() {
                 <img src={Image} alt="#" />
               </div>
               <div className="">
-                <p className="font-semibold">Nama Penjual</p>
+                <p className="font-semibold">{detailProduct.username}</p>
                 <p className="font-thin pt-2">Kota</p>
               </div>
             </div>
@@ -92,7 +92,13 @@ function BuyerDetail() {
           Saya Tertarik dan ingin nego
         </button>
       </div>
-      <ModalDetailProduk isOpen={isOpen} setIsOpen={setIsOpen} />
+      <ModalDetailProduk
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        productId={detailProduct.productId}
+        productName={detailProduct.productName}
+        productPrice={detailProduct.productPrice}
+      />
     </div>
   );
 }
