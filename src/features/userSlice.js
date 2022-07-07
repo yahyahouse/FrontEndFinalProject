@@ -17,6 +17,7 @@ export const getUserById = createAsyncThunk("user/getUserById", async () => {
       }
     );
     console.log(response, "get user by id");
+    return response.data[0];
   } catch (error) {
     console.log(error.message);
   }
@@ -24,7 +25,7 @@ export const getUserById = createAsyncThunk("user/getUserById", async () => {
 // ADLI END
 
 const initialState = {
-  allUsers: [],
+  detailUser: [],
   status: "",
   erorr: "",
   succesMessage: "",
@@ -40,6 +41,7 @@ const userSlice = createSlice({
     },
     [getUserById.fulfilled]: (state, action) => {
       state.status = "success";
+      state.detailUser = action.payload;
     },
     [getUserById.rejected]: (state) => {
       state.status = "rejected";
@@ -47,4 +49,5 @@ const userSlice = createSlice({
   },
 });
 
+export const detailUser = (state) => state.user.detailUser;
 export default userSlice.reducer;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById } from "../features/userSlice";
+import { getUserById, detailUser } from "../features/userSlice";
 import { Link } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
 
@@ -10,19 +10,31 @@ import NavigationBar from "../components/NavigationBar";
 
 const InfoProfile = () => {
   const dispatch = useDispatch();
-  const users = useSelector(getUserById);
-  console.log(users);
+  const getUser = useSelector(detailUser);
+  console.log(getUser);
   console.log("cobain");
 
   useEffect(() => {
     dispatch(getUserById());
   }, [dispatch]);
 
-  const [newData, setNewData] = useState({
-    firstName: users.first_name,
-    lastName: users.last_name,
-    email: users.email,
-  });
+  //  handlevalue input
+  constructor(props) {
+    super(props);
+    this.state = {value: ''};
+
+    this.handleChange = this.handleChange.bind(this); 
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  // const [newData, setNewData] = useState({
+  //   firstName: users.first_name,
+  //   lastName: users.last_name,
+  //   email: users.email,
+  // });
 
   // IMAGE UPLOADING
   const [images, setImages] = React.useState([]);
@@ -35,7 +47,6 @@ const InfoProfile = () => {
 
   return (
     <div>
-      {/* {getUser && getUser.map((item) => <p>{item.username}</p>)} */}
       <NavigationBar />
       <section className="flex justify-center py-6">
         <Link className="sm:block hidden" to="/">
@@ -83,18 +94,17 @@ const InfoProfile = () => {
             <input
               type="text"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              placeholder="Nama"
+              value={getUser.username}
+              name="username"
             />
           </div>
           <div className="flex flex-col mb-3">
             <label className="mb-1 font-medium">Kota*</label>
             <select className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs">
-              <option value="none" hidden>
-                Pilih Kota
-              </option>
-              <option value="1">test</option>
-              <option value="1">test</option>
-              <option value="1">test</option>
+              <option value={getUser.city}>{getUser.city}</option>
+              <option value="Bandung">Bandung</option>
+              <option value="Bekasi">Bekasi</option>
+              <option value="Surabaya">Surabaya</option>
             </select>
           </div>
           <div className="flex flex-col mb-3">
@@ -102,7 +112,8 @@ const InfoProfile = () => {
             <textarea
               type="textarea"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] px-4 text-xs"
-              placeholder="Contoh: Jalan Ikan Hiu 33"
+              placeholder={getUser.address}
+              value={getUser.address}
             />
           </div>
           <div className="flex flex-col mb-3">
@@ -110,7 +121,8 @@ const InfoProfile = () => {
             <input
               type="text"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              placeholder="Contoh: +628123456789"
+              placeholder={getUser.phone}
+              value={getUser.phone}
             />
           </div>
           <button
