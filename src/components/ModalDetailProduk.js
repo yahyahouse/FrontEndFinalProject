@@ -137,7 +137,7 @@ const ModalDetailProduk = ({
                           <input
                             type="text"
                             placeholder="Rp 0,00"
-                            className="w-full border solid border-gray-700 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl px-4 py-3"
+                            className="w-full border solid border-gray-700 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl px-4 py-3 placeholder:text-sm placeholder:text-gray-900"
                             onChange={(e) => setOfferPrice(e.target.value)}
                           />
                           <button

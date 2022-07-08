@@ -5,6 +5,7 @@ import Banner from "../components/Banner";
 import CardProduct from "../components/CardProduct";
 import { FiSearch, FiPlus } from "react-icons/fi";
 import { Pagination } from "antd";
+import { useState } from "react";
 import NavigationBar from "../components/NavigationBar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +14,9 @@ import { getAllProducts, getAllDataProducts } from "../features/productSlice";
 const { TabPane } = Tabs;
 
 const Home = () => {
+  const [category, setCategory] = useState("");
+  console.log(category);
+
   const dispatch = useDispatch();
   const allProducts = useSelector(getAllDataProducts);
   console.log(allProducts, "di home");
@@ -20,6 +24,7 @@ const Home = () => {
   // mengambil value tab kategori active
   const onChange = (key) => {
     console.log(key);
+    setCategory(key);
   };
 
   // mengambil value dari pagination yang active
@@ -28,13 +33,20 @@ const Home = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllProducts());
-  }, [dispatch]);
+    dispatch(
+      getAllProducts({
+        productName: "",
+        productCategory: category,
+        page: 1,
+        size: 12,
+      })
+    );
+  }, [dispatch, category]);
   return (
     <div>
       <NavigationBar />
       <Banner />
-      <div className="w-full md:px-[136px] mt-10">
+      <div className="w-full md:px-[136px] mt-10 min-h-screen">
         <div className="px-4 mt-[228px] md:mt-2">
           <div className="category-product">
             <h3 className="text-base font-bold -mb-5 md:mb-4">
@@ -49,15 +61,13 @@ const Home = () => {
                     Semua
                   </span>
                 }
-                key="1"
+                key=""
               >
                 <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                  {allProducts &&
-                    allProducts.map((item) => (
+                  {allProducts.products &&
+                    allProducts.products.map((item) => (
                       <CardProduct
                         cardWidth={"182px"}
-                        imgHeight={"100px"}
-                        imgFit={"object-contain"}
                         key={item.productId}
                         data={item}
                       />
@@ -71,9 +81,18 @@ const Home = () => {
                     Hobi
                   </span>
                 }
-                key="2"
+                key="Hobi"
               >
-                Content of Tab Pane 2
+                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                  {allProducts.products &&
+                    allProducts.products.map((item) => (
+                      <CardProduct
+                        cardWidth={"182px"}
+                        key={item.productId}
+                        data={item}
+                      />
+                    ))}
+                </div>
               </TabPane>
               <TabPane
                 tab={
@@ -82,9 +101,18 @@ const Home = () => {
                     Kendaraan
                   </span>
                 }
-                key="3"
+                key="Kendaraan"
               >
-                Content of Tab Pane 3
+                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                  {allProducts.products &&
+                    allProducts.products.map((item) => (
+                      <CardProduct
+                        cardWidth={"182px"}
+                        key={item.productId}
+                        data={item}
+                      />
+                    ))}
+                </div>
               </TabPane>
               <TabPane
                 tab={
@@ -93,9 +121,18 @@ const Home = () => {
                     Fashion
                   </span>
                 }
-                key="4"
+                key="Fashion"
               >
-                Content of Tab Pane 3
+                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                  {allProducts.products &&
+                    allProducts.products.map((item) => (
+                      <CardProduct
+                        cardWidth={"182px"}
+                        key={item.productId}
+                        data={item}
+                      />
+                    ))}
+                </div>
               </TabPane>
               <TabPane
                 tab={
@@ -104,9 +141,18 @@ const Home = () => {
                     Elektronik
                   </span>
                 }
-                key="5"
+                key="Elektronik"
               >
-                Content of Tab Pane 3
+                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                  {allProducts.products &&
+                    allProducts.products.map((item) => (
+                      <CardProduct
+                        cardWidth={"182px"}
+                        key={item.productId}
+                        data={item}
+                      />
+                    ))}
+                </div>
               </TabPane>
               <TabPane
                 tab={
@@ -115,9 +161,18 @@ const Home = () => {
                     Kesehatan
                   </span>
                 }
-                key="6"
+                key="Kesehatan"
               >
-                Content of Tab Pane 3
+                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                  {allProducts.products &&
+                    allProducts.products.map((item) => (
+                      <CardProduct
+                        cardWidth={"182px"}
+                        key={item.productId}
+                        data={item}
+                      />
+                    ))}
+                </div>
               </TabPane>
             </Tabs>
           </div>
