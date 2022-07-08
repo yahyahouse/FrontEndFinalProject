@@ -3,10 +3,10 @@ import axios from "axios";
 
 export const getAllProducts = createAsyncThunk(
   "product/getAllProducts",
-  async () => {
+  async (data) => {
     try {
       const response = await axios.get(
-        `https://dummyprojectbinar.herokuapp.com/home-page/show-products`
+        `https://dummyprojectbinar.herokuapp.com/home-page/get-product-page?productName=${data.productName}&productCategory=${data.productCategory}&page=${data.page}&size=${data.size}`
       );
       console.log(response);
       return response.data;
