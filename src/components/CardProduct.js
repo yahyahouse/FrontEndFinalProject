@@ -19,7 +19,11 @@ const CardProduct = ({ cardWidth, data }) => {
                 className={`w-[180px] h-[100px] object-cover rounded`}
               />
             ) : (
-              <img src={cardImage} alt="cardImage" className="w-full" />
+              <img
+                src={cardImage}
+                alt="cardImage"
+                className="w-[190px] h-[100px] object-cover rounded"
+              />
             )}
           </Link>
         ) : (

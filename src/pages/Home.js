@@ -45,7 +45,9 @@ const Home = () => {
   return (
     <div>
       <NavigationBar />
-      <Banner />
+      <div className="banner">
+        <Banner />
+      </div>
       <div className="w-full md:px-[136px] mt-10 min-h-screen">
         <div className="px-4 mt-[228px] md:mt-2">
           <div className="category-product">
