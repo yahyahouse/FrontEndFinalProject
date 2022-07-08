@@ -17,7 +17,7 @@ const InfoProduk = () => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
-  const [productId, setProductId] = useState("1");
+  const [productId, setProductId] = useState("2");
   const user =
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
@@ -137,7 +137,7 @@ const InfoProduk = () => {
                 isDragging,
                 dragProps,
               }) => (
-                <div className="flex gap-1">
+                <div className="sm:flex gap-1">
                   <div
                     className={
                       isDragging

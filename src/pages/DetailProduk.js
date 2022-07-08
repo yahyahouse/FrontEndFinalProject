@@ -38,7 +38,7 @@ const DetailProduk = () => {
   return (
     <div className="">
       <NavigationBar />
-      <div className="sm:flex sm:px-[236px] gap-[32px] sm:mt-10 relative">
+      <div className="sm:flex sm:px-[236px] gap-[32px] mt-[-84px] sm:mt-28 relative">
         <Link
           className="absolute top-[44px] left-[16px] z-50 bg-white rounded-full sm:hidden"
           to="/"
@@ -54,7 +54,7 @@ const DetailProduk = () => {
             </div>
           </div>
         </div>
-        <div className="w-full sm:w-[336px] px-4 sm:px-0 absolute sm:static top-[320px] z-20">
+        <div className="w-full sm:w-[336px] px-4 sm:px-0 absolute sm:static top-[320px] z-20 sm:z-0">
           <div className="container flex w-full -mt-10 z-50 sm:mt-0 static bg-white rounded-2xl">
             <div className="rounded-xl shadow-[0_0_4px_rgba(0,0,0,0.15)] p-5 w-full sm:w-auto">
               <p className="font-semibold">{dataProduct.state.name}</p>
@@ -88,14 +88,15 @@ const DetailProduk = () => {
           </div>
         </div>
       </div>
-      <div className="container block sm:hidden mt-[250px] sm:mt-0 px-4 ">
+      <div className="container block sm:hidden mt-[220px] sm:mt-0 px-4 ">
         <div className="border rounded-xl shadow-lg p-5 mt-10 ">
           <h1 className="pb-3 font-bold">Deskripsi</h1>
-          <p>{dataProduct.description}</p>
+          <p>{dataProduct.state.description}</p>
         </div>
       </div>
       <div className="flex justify-center">
         <button
+          onClick={handleAddProduct}
           className=" duration-[1s] w-[350px] px-6 py-[14px] rounded-2xl 
             bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-50"
         >
