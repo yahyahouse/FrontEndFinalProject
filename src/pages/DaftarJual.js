@@ -158,7 +158,7 @@ const DaftarJual = () => {
           type="success"
           closable
           onClose={onClose}
-          className="w-[500px] flex mx-auto -mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+          className="w-[340px] sm:w-[500px] flex mx-auto mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
         />
       ) : (
         ""
