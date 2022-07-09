@@ -17,7 +17,7 @@ const Banner = () => {
           spaceBetween={16}
           breakpoints={{
             640: {
-              slidesPerView: 1.6,
+              slidesPerView: 1.8,
               centeredSlides: true,
               loop: true,
               spaceBetween: 16,
