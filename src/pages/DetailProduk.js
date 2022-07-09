@@ -20,7 +20,9 @@ const DetailProduk = () => {
   const handleAddProduct = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("files", dataProduct.state.image[0].file);
+    dataProduct.state.image.forEach(function (file) {
+      data.append("files", file);
+    });
     data.append("product_name", dataProduct.state.name);
     data.append("product_description", dataProduct.state.description);
     data.append("product_price", parseInt(dataProduct.state.price));
