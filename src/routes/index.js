@@ -22,7 +22,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/infoprofile" element={<InfoProfile />} />
         <Route path="/infoproduk" element={<InfoProduk />} />
-        <Route path="/infopenawar" element={<InfoPenawar />} />
+        <Route
+          path="/infopenawar/:idProduk/:idPenawaran"
+          element={<InfoPenawar />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/daftarJual" element={<DaftarJual />} />
         <Route path="/notifikasi" element={<Notifikasi />}></Route>
