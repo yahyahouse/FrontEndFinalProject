@@ -75,6 +75,28 @@ export const addProduct = createAsyncThunk(
   }
 );
 
+export const updateProduct = createAsyncThunk(
+  "product/updateProduct",
+  async (data) => {
+    try {
+      const response = await axios.put(
+        `https://dummyprojectbinar.herokuapp.com/product/seller/update-product/${data.userId}/${data.productId}`,
+        data.dataProduct,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+      console.log(response, "update product");
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
 export const getProductBySeller = createAsyncThunk(
   "product/getProductBySeller",
   async (data) => {
