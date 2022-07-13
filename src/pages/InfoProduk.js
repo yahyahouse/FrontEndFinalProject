@@ -22,9 +22,9 @@ const InfoProduk = () => {
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
       : "";
-  const imagesFIle = [];
-  // console.log(imagesFIle);
-  // console.log(images);
+  const imagesFile = [];
+  console.log(imagesFile);
+  // // console.log(images);
 
   const onChange = (imageList, addUpdateIndex) => {
     console.log(imageList, addUpdateIndex, "list image");
@@ -32,16 +32,16 @@ const InfoProduk = () => {
   };
 
   images.forEach(function (item) {
-    imagesFIle.push(item.file);
-    // console.log(item.file);
+    imagesFile.push(item.file);
+    console.log(item.file);
   });
 
   const handlePreview = () => {
     // const objImage = URL.createObjectURL(images[0].file);
     // localStorage.setItem("image", objImage);
     let objImage = {};
-    for (let i = 0; i < images.length; i++) {
-      objImage["image" + i] = URL.createObjectURL(images[i].file);
+    for (let i = 0; i < imagesFile.length; i++) {
+      objImage["image" + i] = URL.createObjectURL(imagesFile[i]);
     }
     console.log(objImage, "obj image");
     localStorage.setItem("imagePreview", JSON.stringify(objImage));
@@ -51,7 +51,9 @@ const InfoProduk = () => {
   const handleAddProduct = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("files", images[0].file);
+    imagesFile.forEach(function (file) {
+      data.append("files", file);
+    });
     data.append("product_name", name);
     data.append("product_description", description);
     data.append("product_price", parseInt(price));
@@ -172,7 +174,7 @@ const InfoProduk = () => {
             <Link
               to="/detailproduk"
               state={{
-                image: images,
+                image: imagesFile,
                 name: name,
                 description: description,
                 price: price,

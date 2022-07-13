@@ -116,15 +116,15 @@ const productSice = createSlice({
   reducers: {},
   extraReducers: {
     [getAllProducts.pending]: (state) => {
-      state.getALLProductStatus = "loading";
+      state.getAllProductStatus = "loading";
     },
     [getAllProducts.fulfilled]: (state, action) => {
       // console.log(action.payload.docs.limit);
-      state.getALLProductStatus = "succes";
+      state.getAllProductStatus = "succes";
       state.allProducts = action.payload;
     },
     [getAllProducts.rejected]: (state) => {
-      state.getALLProductStatus = "rejected";
+      state.getAllProductStatus = "rejected";
     },
     [getDetailProduct.pending]: (state) => {
       state.getDetailProductStatus = "loading";
@@ -162,6 +162,6 @@ const productSice = createSlice({
 export const getAllDataProducts = (state) => state.product.allProducts;
 export const getDetailDataProducts = (state) => state.product.detailProduct;
 export const getSellerProducts = (state) => state.product.sellerProducts;
-export const getllProductStatus = (state) => state.product.getAllProductStatus;
+export const getAllProductStatus = (state) => state.product.getAllProductStatus;
 export const getAddProductStatus = (state) => state.product.addProductStatus;
 export default productSice.reducer;

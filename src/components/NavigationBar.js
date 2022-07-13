@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FiSearch,
   FiDownload,
@@ -14,6 +14,7 @@ import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import ModalNotifikasi from "./ModalNotifikasi";
 import DropdownAccount from "./DropdownAccount";
 import { getAllProducts } from "../features/productSlice";
+
 import { useDispatch } from "react-redux";
 
 const NavigationBar = () => {

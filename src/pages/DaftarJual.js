@@ -75,7 +75,7 @@ const DaftarJual = () => {
       }
     >
       {activeTab === "1" ? (
-        <div className="grid grid-cols-3 justify-between">
+        <div className="grid grid-cols-3 justify-between gap-y-6">
           <Link to="/infoProduk">
             <button className="w-full sm:w-[206px] sm:h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-700">
               <div className="text-gray-900">
@@ -118,7 +118,7 @@ const DaftarJual = () => {
         {activeTab === "1" ? (
           <div className="grid grid-cols-2 justify-between gap-5 mt-6">
             <Link to="/infoProduk">
-              <button className="w-full h-full flex justify-center items-center border-dashed border-2 rounded border-gray-700">
+              <button className="w-full h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-700">
                 <div className="text-gray-900">
                   <FiPlus className="mx-auto text-2xl" />
                   <span className="text-xs">Tambahkan Produk</span>
@@ -206,7 +206,9 @@ const DaftarJual = () => {
               title: "Terjual",
               icon: <FiDollarSign className="text-xl" />,
               navRight: <FiChevronRight className="text-xl" />,
-              content: <EmptyData />,
+              content: (
+                <EmptyData message="Belum ada produkmu yang diminati nih" />
+              ),
             })}
           </Tabs>
         </div>
@@ -229,7 +231,9 @@ const DaftarJual = () => {
               key: 3,
               title: "Terjual",
               icon: <FiDollarSign />,
-              content: <EmptyData />,
+              content: (
+                <EmptyData message="Belum ada produkmu yang diminati nih" />
+              ),
             })}
           </Tabs>
         </div>

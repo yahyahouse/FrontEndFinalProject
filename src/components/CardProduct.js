@@ -14,7 +14,7 @@ const CardProduct = ({ cardWidth, data }) => {
           <Link to={{ pathname: `buyerdetail/${data.productId}` }}>
             {data && data.url.length > 0 ? (
               <img
-                src={data.url}
+                src={data.url[0]}
                 alt="cardImage"
                 className={`w-[180px] h-[100px] object-cover rounded`}
               />
@@ -33,7 +33,7 @@ const CardProduct = ({ cardWidth, data }) => {
           <Link to={{ pathname: `infoproduk/${data.productId}` }}>
             {data && data.url.length > 0 ? (
               <img
-                src={data.url}
+                src={data.url[0]}
                 alt="cardImage"
                 className={`w-[190px] h-[100px] object-cover rounded`}
               />
