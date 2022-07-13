@@ -99,8 +99,8 @@ const NavigationBar = () => {
     location.pathname === "/daftarJual" ||
     location.pathname === "/notifikasi" ||
     location.pathname === "/userAccount" ||
-    location.pathname.includes("/buyerdetail") ||
-    location.pathname.includes("/detailproduk")
+    location.pathname.includes("/detailproduk") ||
+    location.pathname.includes("/previewproduk")
   ) {
     return (
       <div>
@@ -181,8 +181,8 @@ const NavigationBar = () => {
               location.pathname === "/daftarJual" ||
               location.pathname === "/notifikasi" ||
               location.pathname === "/userAccount" ||
-              location.pathname.includes("/buyerdetail") ||
-              location.pathname.includes("/detailproduk")
+              location.pathname.includes("/detailproduk") ||
+              location.pathname.includes("/previewproduk")
                 ? "hidden md:flex md:justify-start mr-auto w-full"
                 : "flex md:justify-start mr-auto w-full"
             }
@@ -211,8 +211,8 @@ const NavigationBar = () => {
           {(location.pathname === "/" ||
             location.pathname === "/daftarJual" ||
             location.pathname === "/notifikasi" ||
-            location.pathname.includes("/buyerdetail") ||
-            location.pathname.includes("/detailproduk")) &&
+            location.pathname.includes("/detailproduk") ||
+            location.pathname.includes("/previewproduk")) &&
           userLogged ? (
             <div className="hidden md:flex gap-6">
               <div>

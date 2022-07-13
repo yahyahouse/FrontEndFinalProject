@@ -11,7 +11,7 @@ const CardProduct = ({ cardWidth, data }) => {
     >
       <div>
         {location.pathname === "/" && data ? (
-          <Link to={{ pathname: `buyerdetail/${data.productId}` }}>
+          <Link to={{ pathname: `detailproduk/${data.productId}` }}>
             {data && data.url.length > 0 ? (
               <img
                 src={data.url[0]}

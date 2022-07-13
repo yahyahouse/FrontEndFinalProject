@@ -11,8 +11,8 @@ import Notifikasi from "../pages/Notifikasi";
 import UserAccount from "../pages/UserAccount";
 import Register from "../pages/Register";
 import SettingAccount from "../pages/SettingAccount";
-import DetailProduk from "../pages/DetailProduk";
-import BuyerDetail from "../pages/BuyerDetail";
+import PreviewProduk from "../pages/PreviewProduk";
+import BuyerDetail from "../pages/DetailProduk";
 import ModalDetailProduk from "../components/ModalDetailProduk";
 import UpdateProduk from "../pages/UpdateProduk";
 
@@ -34,8 +34,8 @@ function App() {
         <Route path="/userAccount" element={<UserAccount />}></Route>
         <Route path="/settingaccount" element={<SettingAccount />}></Route>
         <Route path="/register" element={<Register />}></Route>
-        <Route path="/detailproduk" element={<DetailProduk />} />
-        <Route path="/buyerdetail/:id" element={<BuyerDetail />} />
+        <Route path="/previewproduk" element={<PreviewProduk />} />
+        <Route path="/detailproduk/:id" element={<BuyerDetail />} />
         <Route path="/modaldetail" element={<ModalDetailProduk />} />
         <Route path="/updateproduk/:id" element={<UpdateProduk />} />
       </Routes>

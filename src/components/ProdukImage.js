@@ -21,7 +21,7 @@ const ProdukImage = ({ imageDetail }) => {
   console.log(imagePreview.image0);
   return (
     <div>
-      {location.pathname === "/detailproduk" ? (
+      {location.pathname === "/previewproduk" ? (
         <div>
           <div className="w-[600px] h-[436px] pl-2 md:block hidden ">
             <Swiper
@@ -36,7 +36,7 @@ const ProdukImage = ({ imageDetail }) => {
               <SwiperSlide>
                 <img
                   src={
-                    location.pathname === "/detailproduk"
+                    location.pathname === "/previewproduk"
                       ? imagePreview.image0
                       : produkimage
                   }
@@ -46,14 +46,14 @@ const ProdukImage = ({ imageDetail }) => {
               </SwiperSlide>
               <SwiperSlide
                 className={
-                  location.pathname === "/detailproduk" && !imagePreview.image1
+                  location.pathname === "/previewproduk" && !imagePreview.image1
                     ? "hidden"
                     : ""
                 }
               >
                 <img
                   src={
-                    location.pathname === "/detailproduk"
+                    location.pathname === "/previewproduk"
                       ? imagePreview.image1
                       : produkimage
                   }
@@ -63,14 +63,14 @@ const ProdukImage = ({ imageDetail }) => {
               </SwiperSlide>
               <SwiperSlide
                 className={
-                  location.pathname === "/detailproduk" && !imagePreview.image2
+                  location.pathname === "/previewproduk" && !imagePreview.image2
                     ? "hidden"
                     : ""
                 }
               >
                 <img
                   src={
-                    location.pathname === "/detailproduk"
+                    location.pathname === "/previewproduk"
                       ? imagePreview.image2
                       : produkimage
                   }
@@ -80,14 +80,14 @@ const ProdukImage = ({ imageDetail }) => {
               </SwiperSlide>
               <SwiperSlide
                 className={
-                  location.pathname === "/detailproduk" && !imagePreview.image3
+                  location.pathname === "/previewproduk" && !imagePreview.image3
                     ? "hidden"
                     : ""
                 }
               >
                 <img
                   src={
-                    location.pathname === "/detailproduk"
+                    location.pathname === "/previewproduk"
                       ? imagePreview.image3
                       : produkimage
                   }
@@ -109,7 +109,7 @@ const ProdukImage = ({ imageDetail }) => {
                 <img
                   className="w-full h-[300px] object-cover"
                   src={
-                    location.pathname === "/detailproduk"
+                    location.pathname === "/previewproduk"
                       ? imagePreview.image0
                       : produkimage
                   }
@@ -119,7 +119,7 @@ const ProdukImage = ({ imageDetail }) => {
               <div className="hidden">
                 <SwiperSlide
                   className={
-                    location.pathname === "/detailproduk" &&
+                    location.pathname === "/previewproduk" &&
                     !imagePreview.image1
                       ? "hidden"
                       : ""
@@ -128,7 +128,7 @@ const ProdukImage = ({ imageDetail }) => {
                   <img
                     className="w-full h-[300px] object-cover"
                     src={
-                      location.pathname === "/detailproduk"
+                      location.pathname === "/previewproduk"
                         ? imagePreview.image1
                         : produkimage
                     }
@@ -138,7 +138,7 @@ const ProdukImage = ({ imageDetail }) => {
               </div>
               <SwiperSlide
                 className={
-                  location.pathname === "detailproduk" && !imagePreview.image2
+                  location.pathname === "previewproduk" && !imagePreview.image2
                     ? "hidden"
                     : ""
                 }
@@ -146,7 +146,7 @@ const ProdukImage = ({ imageDetail }) => {
                 <img
                   className="w-full h-[300px] object-cover"
                   src={
-                    location.pathname === "/detailproduk"
+                    location.pathname === "/previewproduk"
                       ? imagePreview.image2
                       : produkimage
                   }
@@ -155,7 +155,7 @@ const ProdukImage = ({ imageDetail }) => {
               </SwiperSlide>
               <SwiperSlide
                 className={
-                  location.pathname === "detailproduk" && !imagePreview.image3
+                  location.pathname === "previewproduk" && !imagePreview.image3
                     ? "hidden"
                     : ""
                 }
@@ -163,7 +163,7 @@ const ProdukImage = ({ imageDetail }) => {
                 <img
                   className="w-full h-[300px] object-cover"
                   src={
-                    location.pathname === "/detailproduk"
+                    location.pathname === "/previewproduk"
                       ? imagePreview.image3
                       : produkimage
                   }
