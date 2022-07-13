@@ -1,15 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-let token = JSON.parse(localStorage.getItem("token"));
-console.log(token);
-
 export const getAllProducts = createAsyncThunk(
   "product/getAllProducts",
-  async () => {
+  async (data) => {
     try {
       const response = await axios.get(
-        `https://dummyprojectbinar.herokuapp.com/home-page/show-products`
+        `https://dummyprojectbinar.herokuapp.com/home-page/get-product-page?productName=${data.productName}&productCategory=${data.productCategory}&page=${data.page}&size=${data.size}`
       );
       console.log(response);
       return response.data;
@@ -78,6 +75,28 @@ export const addProduct = createAsyncThunk(
   }
 );
 
+export const updateProduct = createAsyncThunk(
+  "product/updateProduct",
+  async (data) => {
+    try {
+      const response = await axios.put(
+        `https://dummyprojectbinar.herokuapp.com/product/seller/update-product/${data.userId}/${data.productId}`,
+        data.dataProduct,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+      console.log(response, "update product");
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
 export const getProductBySeller = createAsyncThunk(
   "product/getProductBySeller",
   async (data) => {
@@ -119,15 +138,15 @@ const productSice = createSlice({
   reducers: {},
   extraReducers: {
     [getAllProducts.pending]: (state) => {
-      state.getALLProductStatus = "loading";
+      state.getAllProductStatus = "loading";
     },
     [getAllProducts.fulfilled]: (state, action) => {
       // console.log(action.payload.docs.limit);
-      state.getALLProductStatus = "succes";
+      state.getAllProductStatus = "succes";
       state.allProducts = action.payload;
     },
     [getAllProducts.rejected]: (state) => {
-      state.getALLProductStatus = "rejected";
+      state.getAllProductStatus = "rejected";
     },
     [getDetailProduct.pending]: (state) => {
       state.getDetailProductStatus = "loading";
@@ -165,6 +184,6 @@ const productSice = createSlice({
 export const getAllDataProducts = (state) => state.product.allProducts;
 export const getDetailDataProducts = (state) => state.product.detailProduct;
 export const getSellerProducts = (state) => state.product.sellerProducts;
-export const getllProductStatus = (state) => state.product.getAllProductStatus;
+export const getAllProductStatus = (state) => state.product.getAllProductStatus;
 export const getAddProductStatus = (state) => state.product.addProductStatus;
 export default productSice.reducer;

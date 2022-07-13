@@ -2,24 +2,28 @@ import React from "react";
 import cardImage from "../assets/img/card-image.png";
 import { Link, useLocation } from "react-router-dom";
 
-const CardProduct = ({ imgHeight, imgFit, cardWidth, data }) => {
+const CardProduct = ({ cardWidth, data }) => {
   console.log(data);
   const location = useLocation();
   return (
     <div
-      className={`shadow-[0_0_4px_rgba(0,0,0,0.15)] px-2 pt-2 pb-4 w-full  md:w-[${cardWidth}]]`}
+      className={`shadow-[0_0_4px_rgba(0,0,0,0.15)] px-2 pt-2 pb-4 w-full sm:w-[${cardWidth}]`}
     >
       <div>
         {location.pathname === "/" && data ? (
           <Link to={{ pathname: `buyerdetail/${data.productId}` }}>
             {data && data.url.length > 0 ? (
               <img
-                src={data.url}
+                src={data.url[0]}
                 alt="cardImage"
-                className={`w-full h-[${imgHeight}] ${imgFit} rounded`}
+                className={`w-[180px] h-[100px] object-cover rounded`}
               />
             ) : (
-              <img src={cardImage} alt="cardImage" className="w-full" />
+              <img
+                src={cardImage}
+                alt="cardImage"
+                className="w-[190px] h-[100px] object-cover rounded"
+              />
             )}
           </Link>
         ) : (
@@ -29,12 +33,16 @@ const CardProduct = ({ imgHeight, imgFit, cardWidth, data }) => {
           <Link to={{ pathname: `infoproduk/${data.productId}` }}>
             {data && data.url.length > 0 ? (
               <img
-                src={data.url}
+                src={data.url[0]}
                 alt="cardImage"
-                className={`w-full h-[${imgHeight}] ${imgFit} rounded`}
+                className={`w-[190px] h-[100px] object-cover rounded`}
               />
             ) : (
-              <img src={cardImage} alt="cardImage" className="w-full" />
+              <img
+                src={cardImage}
+                alt="cardImage"
+                className="w-[190px] h-[100px] object-cover rounded"
+              />
             )}
           </Link>
         ) : (

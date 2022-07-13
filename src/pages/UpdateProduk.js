@@ -1,30 +1,34 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import plus from "../assets/img/fi_plus.svg";
 import NavigationBar from "../components/NavigationBar";
-import { addProduct } from "../features/productSlice";
+import { updateProduct } from "../features/productSlice";
+import { useParams } from "react-router-dom";
 
-const InfoProduk = () => {
+function UpdateProduk () {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  // IMAGE UPLOADING
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
-  const [productId, setProductId] = useState("2");
+  const [updateId, setUpdateId] = useState("1");
+  const {id} = useParams(); 
+  console.log(id);
+  
   const user =
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
       : "";
-  const imagesFile = [];
-  console.log(imagesFile);
-  // // console.log(images);
+  const imagesFIle = [];
+  
+  
 
   const onChange = (imageList, addUpdateIndex) => {
     console.log(imageList, addUpdateIndex, "list image");
@@ -32,38 +36,25 @@ const InfoProduk = () => {
   };
 
   images.forEach(function (item) {
-    imagesFile.push(item.file);
-    console.log(item.file);
+    imagesFIle.push(item.file);
+    // console.log(item.file);
   });
 
-  const handlePreview = () => {
-    // const objImage = URL.createObjectURL(images[0].file);
-    // localStorage.setItem("image", objImage);
-    let objImage = {};
-    for (let i = 0; i < imagesFile.length; i++) {
-      objImage["image" + i] = URL.createObjectURL(imagesFile[i]);
-    }
-    console.log(objImage, "obj image");
-    localStorage.setItem("imagePreview", JSON.stringify(objImage));
-  };
-
-  // https://stackoverflow.com/questions/55596514/handling-multiple-image-upload-with-react-js-laravel
-  const handleAddProduct = async (e) => {
+  const handleUpdateProduct = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    imagesFile.forEach(function (file) {
-      data.append("files", file);
-    });
+    data.append("files", images[0].file);
     data.append("product_name", name);
     data.append("product_description", description);
+    data.append("product_status", "Available")
     data.append("product_price", parseInt(price));
     data.append("product_category", category);
-    data.append("productId", parseInt(productId));
     console.log(data);
 
     try {
-      await dispatch(addProduct({ id: user.userId, dataProduct: data }));
-      navigate("/daftarJual");
+      await dispatch(
+        updateProduct({ userId: user.userId, productId:id, dataProduct: data })
+      );
     } catch (error) {
       console.error(error.message);
     }
@@ -77,7 +68,7 @@ const InfoProduk = () => {
           <img src={Arrowleft} alt="img" />
         </Link>
         <form
-          onSubmit={handleAddProduct}
+          onSubmit={handleUpdateProduct}
           className="sm:w-[568px] sm:mx-[78px] h-[568px] w-[328px] flex flex-col justify-between duration-[1s]"
         >
           <div className="flex flex-col mb-3">
@@ -139,7 +130,7 @@ const InfoProduk = () => {
                 isDragging,
                 dragProps,
               }) => (
-                <div className="sm:flex gap-1">
+                <div className="flex gap-1">
                   <div
                     className={
                       isDragging
@@ -171,31 +162,22 @@ const InfoProduk = () => {
             </ImageUploading>
           </div>
           <div className="flex justify-between">
-            <Link
-              to="/detailproduk"
-              state={{
-                image: imagesFile,
-                name: name,
-                description: description,
-                price: price,
-                category: category,
-                productId: productId,
-              }}
-            >
+            <Link to={"#"}>
               <button
                 type="submit"
                 className="sm:w-[276px] w-[156px] h-[48px] rounded-2xl border-2 border-purple-700 text-black font-medium text-xs duration-[1s]"
-                onClick={handlePreview}
               >
                 Preview
               </button>
             </Link>
+          
             <button
               type="submit"
               className="sm:w-[276px] w-[156px] h-[48px] rounded-2xl bg-purple-700 text-white font-medium text-xs duration-[1s]"
             >
-              Terbitkan
+              Update
             </button>
+    
           </div>
         </form>
       </section>
@@ -203,4 +185,4 @@ const InfoProduk = () => {
   );
 };
 
-export default InfoProduk;
+export default UpdateProduk;

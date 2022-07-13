@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FiSearch,
   FiDownload,
@@ -13,9 +13,14 @@ import { useLocation } from "react-router-dom";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import ModalNotifikasi from "./ModalNotifikasi";
 import DropdownAccount from "./DropdownAccount";
+import { getAllProducts } from "../features/productSlice";
+
+import { useDispatch } from "react-redux";
 
 const NavigationBar = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+
   // state untuk responsive navbar toggle
   const [nav, setNav] = useState(false);
   // penampung quary yang diinputkan
@@ -37,22 +42,30 @@ const NavigationBar = () => {
   };
 
   // menerima setiap perubahan yang diinput
-  const handleChange = (e) => {
+  const handleSearchChange = (e) => {
     setSearchQUery(e.target.value);
-  };
-
-  // handle api search
-  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(searchQuery);
+    if (searchQuery !== "") {
+      dispatch(
+        getAllProducts({
+          productName: searchQuery,
+          productCategory: "",
+          page: 1,
+          size: 12,
+        })
+      );
+      window.innerWidth > 768 ? window.scrollTo(0, 320) : window.scrollTo(0, 0);
+    } else {
+      dispatch(
+        getAllProducts({
+          productName: "",
+          productCategory: "",
+          page: 1,
+          size: 12,
+        })
+      );
+    }
   };
-
-  // pengkondisian
-  // const r = window.location.pathname.substring(
-  //   1,
-  //   window.location.pathname.lastIndexOf("/") + 50
-  // );
-  // console.log(r);
 
   // Navbar Info Profile
   if (location.pathname === "/infoprofile") {
@@ -86,7 +99,8 @@ const NavigationBar = () => {
     location.pathname === "/daftarJual" ||
     location.pathname === "/notifikasi" ||
     location.pathname === "/userAccount" ||
-    location.pathname.includes("/buyerdetail")
+    location.pathname.includes("/buyerdetail") ||
+    location.pathname.includes("/detailproduk")
   ) {
     return (
       <div>
@@ -167,24 +181,25 @@ const NavigationBar = () => {
               location.pathname === "/daftarJual" ||
               location.pathname === "/notifikasi" ||
               location.pathname === "/userAccount" ||
-              location.pathname.includes("/buyerdetail")
+              location.pathname.includes("/buyerdetail") ||
+              location.pathname.includes("/detailproduk")
                 ? "hidden md:flex md:justify-start mr-auto w-full"
                 : "flex md:justify-start mr-auto w-full"
             }
-            onSubmit={handleSubmit}
+            onSubmit={handleSearchChange}
           >
             <div className="relative w-full md:w-[444px]">
               <input
                 className="w-full md:w-[410px] h-full py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-2xl focus:outline-none placeholder:text-sm placeholder:text-gray-900"
                 placeholder="Cari di sini ..."
                 value={searchQuery}
-                onChange={handleChange}
+                onChange={handleSearchChange}
               />
               <button
                 type="submit"
                 className="absolute top-0 right-6 md:right-14 h-full rounded-tr-2xl rounded-br-2xl"
               >
-                <FiSearch className="w-[19px] h-[19px] text-gray-900" />
+                <FiSearch className="w-[19px] h-[19px] text-gray-900 hover:text-purple-900" />
               </button>
             </div>
           </form>
@@ -196,7 +211,8 @@ const NavigationBar = () => {
           {(location.pathname === "/" ||
             location.pathname === "/daftarJual" ||
             location.pathname === "/notifikasi" ||
-            location.pathname.includes("/buyerdetail")) &&
+            location.pathname.includes("/buyerdetail") ||
+            location.pathname.includes("/detailproduk")) &&
           userLogged ? (
             <div className="hidden md:flex gap-6">
               <div>

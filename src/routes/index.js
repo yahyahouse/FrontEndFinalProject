@@ -14,6 +14,7 @@ import SettingAccount from "../pages/SettingAccount";
 import DetailProduk from "../pages/DetailProduk";
 import BuyerDetail from "../pages/BuyerDetail";
 import ModalDetailProduk from "../components/ModalDetailProduk";
+import UpdateProduk from "../pages/UpdateProduk";
 
 
 function App() {
@@ -23,7 +24,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/infoprofile" element={<InfoProfile />} />
         <Route path="/infoproduk" element={<InfoProduk />} />
-        <Route path="/infopenawar" element={<InfoPenawar />} />
+        <Route
+          path="/infopenawar/:idProduk/:idPenawaran"
+          element={<InfoPenawar />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/daftarJual" element={<DaftarJual />} />
         <Route path="/notifikasi" element={<Notifikasi />}></Route>
@@ -33,6 +37,7 @@ function App() {
         <Route path="/detailproduk" element={<DetailProduk />} />
         <Route path="/buyerdetail/:id" element={<BuyerDetail />} />
         <Route path="/modaldetail" element={<ModalDetailProduk />} />
+        <Route path="/updateproduk/:id" element={<UpdateProduk />} />
       </Routes>
     </BrowserRouter>
   );
