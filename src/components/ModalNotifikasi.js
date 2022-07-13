@@ -107,7 +107,7 @@ const ModalNotifikasi = ({
                   <div
                     className={`flex gap-12 w-${width} justify-between border-b border-gray-500 pb-4`}
                   >
-                    <div className="flex gap-4">
+                    <div className="flex gap-6">
                       <div>
                         <img
                           src={item.url[0]}

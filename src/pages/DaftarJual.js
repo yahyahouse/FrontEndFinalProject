@@ -8,6 +8,7 @@ import { FiBox, FiHeart, FiDollarSign, FiChevronRight } from "react-icons/fi";
 import CardProduct from "../components/CardProduct";
 import ModalNotifikasi from "../components/ModalNotifikasi";
 import { EmptyData } from "../components/EmptyData";
+import { ProdukTerjual } from "../components/ProdukTerjual";
 import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -206,9 +207,7 @@ const DaftarJual = () => {
               title: "Terjual",
               icon: <FiDollarSign className="text-xl" />,
               navRight: <FiChevronRight className="text-xl" />,
-              content: (
-                <EmptyData message="Belum ada produkmu yang diminati nih" />
-              ),
+              content: <ProdukTerjual />,
             })}
           </Tabs>
         </div>
@@ -231,9 +230,7 @@ const DaftarJual = () => {
               key: 3,
               title: "Terjual",
               icon: <FiDollarSign />,
-              content: (
-                <EmptyData message="Belum ada produkmu yang diminati nih" />
-              ),
+              content: <ProdukTerjual />,
             })}
           </Tabs>
         </div>

@@ -17,7 +17,7 @@ const InfoProduk = () => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
-  const [productId, setProductId] = useState("2");
+  const [productId, setProductId] = useState("3");
   const user =
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
