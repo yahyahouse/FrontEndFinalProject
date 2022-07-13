@@ -172,7 +172,7 @@ const InfoProduk = () => {
           </div>
           <div className="flex justify-between">
             <Link
-              to="/detailproduk"
+              to="/previewproduk"
               state={{
                 image: imagesFile,
                 name: name,
