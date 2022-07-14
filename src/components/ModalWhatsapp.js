@@ -76,8 +76,12 @@ const ModalWhatsapp = ({
                         Product Match
                       </p>
                       <div className=" flex mb-[16px]">
-                        <div className="rounded-xl h-[48px] w-[48px] overflow-hidden">
-                          <img src={Profile} alt="Profile" />
+                        <div>
+                          <img
+                            src={Profile}
+                            className="rounded-xl h-[48px] w-[48px] object-cover"
+                            alt="Profile"
+                          />
                         </div>
                         <div className="pl-[16px] flex flex-col">
                           <p className="text-sm font-medium mb-[5px]">
@@ -89,8 +93,12 @@ const ModalWhatsapp = ({
                         </div>
                       </div>
                       <div className="flex">
-                        <div className="rounded-xl h-[48px] w-[48px] object-cover">
-                          <img src={productImage} alt="Profile" />
+                        <div>
+                          <img
+                            src={productImage}
+                            className="rounded-xl h-[48px] w-[48px] object-cover"
+                            alt="Profile"
+                          />
                         </div>
                         <div className="pl-[16px] flex flex-col">
                           <p className="text-sm font-normal">{productName}</p>

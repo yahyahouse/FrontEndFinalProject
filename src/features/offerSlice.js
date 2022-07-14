@@ -5,7 +5,7 @@ export const addOffer = createAsyncThunk("offer/addOffer", async (data) => {
   console.log(data);
   try {
     const response = await axios.post(
-      `https://dummyprojectbinar.herokuapp.com/offer/buyer/add-offer/${data.path.userId}/${data.path.productId}?offerId=${data.data.offerId}&offer_price=${data.data.offer_price}&offerStatus=${data.data.offerStatus}`,
+      `https://dummyprojectbinar.herokuapp.com/offer/buyer/add-offer/${data.path.userId}/${data.path.productId}?offer_price=${data.data.offer_price}&offerStatus=${data.data.offerStatus}`,
       data.data,
       {
         headers: {
@@ -82,6 +82,30 @@ export const getSellerOfferDetail = createAsyncThunk(
       );
       console.log(response, "get seller offer detail");
       return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
+export const sellerAcceptedOffer = createAsyncThunk(
+  "offer/sellerAcceptedOffer",
+  async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.post(
+        `https://dummyprojectbinar.herokuapp.com/offer/seller/accepted-status/${data}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+      console.log(response, "seller accepted offer");
+      // return response.data;
     } catch (error) {
       console.log(error.message);
     }

@@ -12,9 +12,9 @@ const CardProduct = ({ cardWidth, data }) => {
       <div>
         {location.pathname === "/" && data ? (
           <Link to={{ pathname: `detailproduk/${data.productId}` }}>
-            {data && data.url.length > 0 ? (
+            {data && data.url ? (
               <img
-                src={data.url[0]}
+                src={data.url}
                 alt="cardImage"
                 className={`w-[180px] h-[100px] object-cover rounded`}
               />
@@ -30,10 +30,10 @@ const CardProduct = ({ cardWidth, data }) => {
           ""
         )}
         {location.pathname === "/daftarJual" && data ? (
-          <Link to={{ pathname: `infoproduk/${data.productId}` }}>
-            {data && data.url.length > 0 ? (
+          <Link to={{ pathname: `/updateproduk/${data.productId}` }}>
+            {data && data.url ? (
               <img
-                src={data.url[0]}
+                src={data.url}
                 alt="cardImage"
                 className={`w-[190px] h-[100px] object-cover rounded`}
               />

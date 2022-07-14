@@ -13,6 +13,7 @@ import {
   getSellerOfferDetail,
   getSellerOfferDetailData,
   getSellerOfferDetailStatus,
+  sellerAcceptedOffer,
 } from "../features/offerSlice";
 import { SyncLoader } from "react-spinners";
 
@@ -30,8 +31,14 @@ function InfoPenawar() {
   console.log(detailOffer);
   console.log(getDetailOfferStatus);
 
-  const handleNav = () => {
+  const handleAcceptedOffer = async (e) => {
+    e.preventDefault();
     setNav(!nav);
+    try {
+      dispatch(sellerAcceptedOffer(idPenawaran));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   function openModal() {
@@ -55,7 +62,7 @@ function InfoPenawar() {
         </div>
       ) : (
         <section className="flex justify-center py-[16px] md:mt-10">
-          <Link className="sm:block hidden" to="/">
+          <Link className="sm:block hidden" to="/daftarJual">
             <img src={Arrowleft} alt="img" />
           </Link>
           <div className="sm:w-[568px] sm:mx-[78px] duration-[1s] w-[328px]">
@@ -79,13 +86,19 @@ function InfoPenawar() {
             <div className="h-[155px] pb-4 flex flex-col justify-between border-b border-b-gray-700">
               <div className="flex">
                 <div className="Profile rounded-xl h-[48px] w-[58px] overflow-hidden flex items-center justify-center">
-                  <img
-                    src={
-                      detailOffer.length !== 0 ? detailOffer[0].url[0] : Card
-                    }
-                    alt="img"
-                    className="w-12 h-12 rounded-xl object-cover"
-                  />
+                  {detailOffer.length !== 0 ? (
+                    <img
+                      src={detailOffer[0].url ? detailOffer[0].url : Card}
+                      alt="img"
+                      className="w-12 h-12 rounded-xl object-cover"
+                    />
+                  ) : (
+                    <img
+                      src={Card}
+                      alt="img"
+                      className="w-12 h-12 rounded-xl object-cover"
+                    />
+                  )}
                 </div>
                 <div className="duration-[1s] w-full pl-[16px]">
                   <div className="flex justify-between">
@@ -130,7 +143,7 @@ function InfoPenawar() {
                   Tolak
                 </button>
                 <button
-                  onClick={handleNav}
+                  onClick={handleAcceptedOffer}
                   className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
                 >
                   Terima
@@ -142,7 +155,7 @@ function InfoPenawar() {
                   productName={detailOffer[0].productName}
                   productPrice={detailOffer[0].productPrice}
                   offerPrice={detailOffer[0].offerPrice}
-                  productImage={detailOffer[0].url[0]}
+                  productImage={detailOffer.url ? detailOffer.url : Card}
                 />
                 <ModalStatus isOpen={isOpen} setIsOpen={setIsOpen} />
                 {/* <button

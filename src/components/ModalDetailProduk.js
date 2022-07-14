@@ -40,7 +40,6 @@ const ModalDetailProduk = ({
             productId: parseInt(productId),
           },
           data: {
-            offerId: parseInt(offerId),
             offer_price: Number(offerPrice),
             offerStatus: "Diminati",
           },
