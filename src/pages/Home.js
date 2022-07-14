@@ -78,8 +78,8 @@ const Home = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                    {allProducts.products &&
-                      allProducts.products.map((item) => (
+                    {allProducts &&
+                      allProducts.map((item) => (
                         <CardProduct
                           cardWidth={"182px"}
                           key={item.productId}
@@ -104,8 +104,8 @@ const Home = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                    {allProducts.products &&
-                      allProducts.products.map((item) => (
+                    {allProducts &&
+                      allProducts.map((item) => (
                         <CardProduct
                           cardWidth={"182px"}
                           key={item.productId}
@@ -130,8 +130,8 @@ const Home = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                    {allProducts.products &&
-                      allProducts.products.map((item) => (
+                    {allProducts &&
+                      allProducts.map((item) => (
                         <CardProduct
                           cardWidth={"182px"}
                           key={item.productId}
@@ -156,8 +156,8 @@ const Home = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                    {allProducts.products &&
-                      allProducts.products.map((item) => (
+                    {allProducts &&
+                      allProducts.map((item) => (
                         <CardProduct
                           cardWidth={"182px"}
                           key={item.productId}
@@ -182,8 +182,8 @@ const Home = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                    {allProducts.products &&
-                      allProducts.products.map((item) => (
+                    {allProducts &&
+                      allProducts.map((item) => (
                         <CardProduct
                           cardWidth={"182px"}
                           key={item.productId}
@@ -208,8 +208,8 @@ const Home = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                    {allProducts.products &&
-                      allProducts.products.map((item) => (
+                    {allProducts &&
+                      allProducts.map((item) => (
                         <CardProduct
                           cardWidth={"182px"}
                           key={item.productId}

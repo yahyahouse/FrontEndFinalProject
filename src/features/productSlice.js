@@ -6,7 +6,7 @@ export const getAllProducts = createAsyncThunk(
   async (data) => {
     try {
       const response = await axios.get(
-        `https://dummyprojectbinar.herokuapp.com/home-page/get-product-page?productName=${data.productName}&productCategory=${data.productCategory}&page=${data.page}&size=${data.size}`
+        `https://dummyprojectbinar.herokuapp.com/home-page?productName=${data.productName}&productCategory=${data.productCategory}&page=${data.page}&size=${data.size}`
       );
       console.log(response);
       return response.data;
@@ -31,7 +31,7 @@ export const getDetailProduct = createAsyncThunk(
         }
       );
       console.log(response, "detail product");
-      return response.data[0];
+      return response.data;
     } catch (error) {
       console.log(error.message);
     }
@@ -143,7 +143,7 @@ const productSice = createSlice({
     [getAllProducts.fulfilled]: (state, action) => {
       // console.log(action.payload.docs.limit);
       state.getAllProductStatus = "succes";
-      state.allProducts = action.payload;
+      state.allProducts = action.payload.products;
     },
     [getAllProducts.rejected]: (state) => {
       state.getAllProductStatus = "rejected";
@@ -183,6 +183,8 @@ const productSice = createSlice({
 
 export const getAllDataProducts = (state) => state.product.allProducts;
 export const getDetailDataProducts = (state) => state.product.detailProduct;
+export const getDetailProductStatus = (state) =>
+  state.product.getDetailProductStatus;
 export const getSellerProducts = (state) => state.product.sellerProducts;
 export const getAllProductStatus = (state) => state.product.getAllProductStatus;
 export const getAddProductStatus = (state) => state.product.addProductStatus;

@@ -27,7 +27,7 @@ const PreviewProduk = () => {
     data.append("product_description", dataProduct.state.description);
     data.append("product_price", parseInt(dataProduct.state.price));
     data.append("product_category", dataProduct.state.category);
-    data.append("productId", parseInt(dataProduct.state.productId));
+    data.append("productStatus", "Available");
 
     try {
       await dispatch(addProduct({ id: user.userId, dataProduct: data }));

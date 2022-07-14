@@ -12,6 +12,7 @@ import {
 import productImage from "../assets/img/notifImage.png";
 import moment from "moment";
 import { EmptyData } from "./EmptyData";
+import Card from "../assets/img/card_infopenawar.png";
 
 const ModalNotifikasi = ({
   width,
@@ -34,7 +35,7 @@ const ModalNotifikasi = ({
   const sellerOfferHistory = useSelector(getSellerOfferHistoryData);
   const sellerGetOfferStatus = useSelector(getSellerOfferHistoryStatus);
   console.log(buyerOfferHistory);
-  console.log(sellerOfferHistory);
+  console.log(sellerOfferHistory, "seller get offer");
   console.log(buyerGetOfferStatus);
   console.log(sellerGetOfferStatus);
 
@@ -58,7 +59,7 @@ const ModalNotifikasi = ({
                 <div className="flex gap-4">
                   <div>
                     <img
-                      src={item.url[0]}
+                      src={item.url ? item.url : Card}
                       alt="productImage"
                       className="w-12 h-12 rounded-xl object-cover"
                     />
@@ -109,11 +110,19 @@ const ModalNotifikasi = ({
                   >
                     <div className="flex gap-6">
                       <div>
-                        <img
-                          src={item.url[0]}
-                          alt="productImage"
-                          className="w-12 h-12 rounded-xl object-cover"
-                        />
+                        {item.url ? (
+                          <img
+                            src={item.url}
+                            alt="productImage"
+                            className="w-12 h-12 rounded-xl object-cover"
+                          />
+                        ) : (
+                          <img
+                            src={productImage}
+                            alt="productImage"
+                            className="w-12 h-12 rounded-xl object-cover"
+                          />
+                        )}
                       </div>
                       <div>
                         <p className="text-[10px] text-gray-900">

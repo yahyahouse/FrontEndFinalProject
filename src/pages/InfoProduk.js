@@ -17,7 +17,7 @@ const InfoProduk = () => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
-  const [productId, setProductId] = useState("3");
+
   const user =
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
@@ -58,8 +58,7 @@ const InfoProduk = () => {
     data.append("product_description", description);
     data.append("product_price", parseInt(price));
     data.append("product_category", category);
-    data.append("productId", parseInt(productId));
-    console.log(data);
+    data.append("productStatus", "Available");
 
     try {
       await dispatch(addProduct({ id: user.userId, dataProduct: data }));
@@ -179,7 +178,7 @@ const InfoProduk = () => {
                 description: description,
                 price: price,
                 category: category,
-                productId: productId,
+                // productId: productId,
               }}
             >
               <button
