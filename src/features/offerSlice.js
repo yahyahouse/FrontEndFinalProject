@@ -88,6 +88,30 @@ export const getSellerOfferDetail = createAsyncThunk(
   }
 );
 
+export const sellerAcceptedOffer = createAsyncThunk(
+  "offer/sellerAcceptedOffer",
+  async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.post(
+        `https://dummyprojectbinar.herokuapp.com/offer/seller/accepted-status/${data}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+      console.log(response, "seller accepted offer");
+      // return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
 const initialState = {
   addOfferStatus: "",
   buyerOfferHistoryData: [],

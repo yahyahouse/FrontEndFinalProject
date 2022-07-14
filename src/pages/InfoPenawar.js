@@ -13,6 +13,7 @@ import {
   getSellerOfferDetail,
   getSellerOfferDetailData,
   getSellerOfferDetailStatus,
+  sellerAcceptedOffer,
 } from "../features/offerSlice";
 import { SyncLoader } from "react-spinners";
 
@@ -30,8 +31,14 @@ function InfoPenawar() {
   console.log(detailOffer);
   console.log(getDetailOfferStatus);
 
-  const handleNav = () => {
+  const handleAcceptedOffer = async (e) => {
+    e.preventDefault();
     setNav(!nav);
+    try {
+      dispatch(sellerAcceptedOffer(idPenawaran));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   function openModal() {
@@ -136,7 +143,7 @@ function InfoPenawar() {
                   Tolak
                 </button>
                 <button
-                  onClick={handleNav}
+                  onClick={handleAcceptedOffer}
                   className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
                 >
                   Terima
