@@ -230,23 +230,7 @@ function DetailProduk() {
             }
           />
         </div>
-      </div>
-      <div className="container block sm:hidden mt-[220px] sm:mt-0 px-4 ">
-        <div className="border rounded-xl shadow-lg p-5 mt-10 ">
-          <h1 className="pb-3 font-bold">Deskripsi</h1>
-          <p>{dataProduct.state.description}</p>
-        </div>
-      </div>
-      <div className="flex justify-center">
-        <button
-          type="submit"
-          onClick={handleAddProduct}
-          className=" duration-[1s] w-[350px] px-6 py-[14px] rounded-2xl 
-            bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-50"
-        >
-          Terbitkan
-        </button>
-      </div>
+      )}
     </div>
   );
 }
