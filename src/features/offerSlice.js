@@ -112,6 +112,29 @@ export const sellerAcceptedOffer = createAsyncThunk(
   }
 );
 
+export const getSellerProductSold = createAsyncThunk (
+  "offer/getSellerProductSold",
+  async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.get(
+        `https://dummyprojectbinar.herokuapp.com/offer/seller/get-product-sold/${data.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+      console.log(response, "get seller product sold");
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
 const initialState = {
   addOfferStatus: "",
   buyerOfferHistoryData: [],
@@ -120,7 +143,11 @@ const initialState = {
   sellerOfferHistoryStatus: "",
   sellerOfferDetailData: [],
   sellerOfferDetailStatus: "",
+
   sellerAcceptedOfferStatus: "",
+  getSellerProductSold:[],
+  getSellerProductSoldStatus:"",
+
   error: "",
 };
 
@@ -129,6 +156,7 @@ const offerSLice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // addOffer
     [addOffer.pending]: (state) => {
       state.addOfferStatus = "loading";
     },
@@ -138,6 +166,7 @@ const offerSLice = createSlice({
     [addOffer.rejected]: (state) => {
       state.addOfferStatus = "rejected";
     },
+    // buyer-offer-history
     [getBuyerOfferHistory.pending]: (state) => {
       state.buyerOfferHistoryStatus = "loading";
     },
@@ -148,6 +177,7 @@ const offerSLice = createSlice({
     [getBuyerOfferHistory.rejected]: (state) => {
       state.buyerOfferHistoryStatus = "rejected";
     },
+    // seller-offer-history
     [getSellerOfferHistory.pending]: (state) => {
       state.sellerOfferHistoryStatus = "loading";
     },
@@ -158,6 +188,7 @@ const offerSLice = createSlice({
     [getSellerOfferHistory.rejected]: (state) => {
       state.sellerOfferHistoryStatus = "rejected";
     },
+    // seller-offer-detail
     [getSellerOfferDetail.pending]: (state) => {
       state.sellerOfferDetailStatus = "loading";
     },
@@ -168,6 +199,7 @@ const offerSLice = createSlice({
     [getSellerOfferDetail.rejected]: (state) => {
       state.sellerOfferDetailStatus = "rejected";
     },
+
     [sellerAcceptedOffer.pending]: (state) => {
       state.sellerAcceptedOfferStatus = "loading";
     },
@@ -176,6 +208,18 @@ const offerSLice = createSlice({
     },
     [sellerAcceptedOffer.rejected]: (state) => {
       state.sellerAcceptedOfferStatus = "rejected";
+ },
+    // product-sold
+    [getSellerProductSold.pending]: (state) => {
+      state.getSellerProductSoldStatus = "loading";
+    },
+    [getSellerProductSold.fulfilled]: (state, action) => {
+      state.getSellerProductSoldStatus = "success";
+      state.getSellerProductSold = action.payload;
+    },
+    [getSellerProductSold.rejected]: (state) => {
+      state.getSellerProductSoldStatus = "rejected";
+
     },
   },
 });
@@ -195,5 +239,8 @@ export const getSellerOfferDetailStatus = (state) =>
   state.offer.sellerOfferDetailStatus;
 export const getSellerAcceptedOfferStatus = (state) =>
   state.offer.sellerAcceptedOfferStatus;
-
+export const getSellerProductSoldData = (state) =>
+  state.offer.getSellerProductSold;
+export const getSellerProductSoldStatus = (state) =>
+  state.offer.getSellerProductSoldStatus;
 export default offerSLice.reducer;
