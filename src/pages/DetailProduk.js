@@ -66,7 +66,7 @@ function DetailProduk() {
 
       {addOfferStatus === "success" ? (
         <Alert
-          message="Harga tawaranmu berhasil dikirim ke penjual add offer status"
+          message="Harga tawaranmu berhasil dikirim ke penjual"
           type="success"
           closable
           onClose={onClose}
@@ -142,7 +142,9 @@ function DetailProduk() {
                       : "Price kosong"}
                   </p>
                   {detailProduct ? (
-                    hasOffered || user.userId === detailProduct.userId ? (
+                    addOfferStatus === "success" ||
+                    hasOffered ||
+                    user.userId === detailProduct.userId ? (
                       <button
                         onClick={handleNav}
                         className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-gray-700 items-center text-white hidden sm:block "

@@ -14,6 +14,7 @@ export const addOffer = createAsyncThunk("offer/addOffer", async (data) => {
       }
     );
     console.log(response, "add offer");
+    return response.data;
   } catch (error) {
     console.log(error.message);
   }
@@ -112,7 +113,7 @@ export const sellerAcceptedOffer = createAsyncThunk(
   }
 );
 
-export const getSellerProductSold = createAsyncThunk (
+export const getSellerProductSold = createAsyncThunk(
   "offer/getSellerProductSold",
   async (data) => {
     console.log(data);
@@ -143,10 +144,9 @@ const initialState = {
   sellerOfferHistoryStatus: "",
   sellerOfferDetailData: [],
   sellerOfferDetailStatus: "",
-
   sellerAcceptedOfferStatus: "",
-  getSellerProductSold:[],
-  getSellerProductSoldStatus:"",
+  getSellerProductSold: [],
+  getSellerProductSoldStatus: "",
 
   error: "",
 };
@@ -208,7 +208,7 @@ const offerSLice = createSlice({
     },
     [sellerAcceptedOffer.rejected]: (state) => {
       state.sellerAcceptedOfferStatus = "rejected";
- },
+    },
     // product-sold
     [getSellerProductSold.pending]: (state) => {
       state.getSellerProductSoldStatus = "loading";
@@ -219,7 +219,6 @@ const offerSLice = createSlice({
     },
     [getSellerProductSold.rejected]: (state) => {
       state.getSellerProductSoldStatus = "rejected";
-
     },
   },
 });
