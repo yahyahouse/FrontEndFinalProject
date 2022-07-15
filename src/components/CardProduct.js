@@ -30,7 +30,15 @@ const CardProduct = ({ cardWidth, data }) => {
           ""
         )}
         {location.pathname === "/daftarJual" && data ? (
-          <Link to={{ pathname: `/updateproduk/${data.productId}` }}>
+          <Link
+            to={{ pathname: `/updateproduk/${data.productId}` }}
+            state={{
+              productName: data.productName,
+              productPrice: data.productPrice,
+              productCategory: data.productCategory,
+              productDescription: data.productDescription,
+            }}
+          >
             {data && data.url ? (
               <img
                 src={data.url}
