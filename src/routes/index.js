@@ -16,6 +16,7 @@ import BuyerDetail from "../pages/DetailProduk";
 import ModalDetailProduk from "../components/ModalDetailProduk";
 import UpdateProduk from "../pages/UpdateProduk";
 
+
 function App() {
   return (
     <BrowserRouter>
