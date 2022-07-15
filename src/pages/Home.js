@@ -9,7 +9,12 @@ import { useState } from "react";
 import NavigationBar from "../components/NavigationBar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts, getAllDataProducts } from "../features/productSlice";
+import {
+  getAllProducts,
+  getAllDataProducts,
+  getAllProductStatus,
+} from "../features/productSlice";
+import { SyncLoader } from "react-spinners";
 
 const { TabPane } = Tabs;
 
@@ -20,6 +25,8 @@ const Home = () => {
   const dispatch = useDispatch();
   const allProducts = useSelector(getAllDataProducts);
   console.log(allProducts, "di home");
+  const getProductStatus = useSelector(getAllProductStatus);
+  console.log(getProductStatus);
 
   // mengambil value tab kategori active
   const onChange = (key) => {
@@ -38,7 +45,7 @@ const Home = () => {
         productName: "",
         productCategory: category,
         page: 1,
-        size: 12,
+        size: 24,
       })
     );
   }, [dispatch, category]);
@@ -65,16 +72,22 @@ const Home = () => {
                 }
                 key=""
               >
-                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                  {allProducts.products &&
-                    allProducts.products.map((item) => (
-                      <CardProduct
-                        cardWidth={"182px"}
-                        key={item.productId}
-                        data={item}
-                      />
-                    ))}
-                </div>
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
               </TabPane>
               <TabPane
                 tab={
@@ -85,16 +98,22 @@ const Home = () => {
                 }
                 key="Hobi"
               >
-                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                  {allProducts.products &&
-                    allProducts.products.map((item) => (
-                      <CardProduct
-                        cardWidth={"182px"}
-                        key={item.productId}
-                        data={item}
-                      />
-                    ))}
-                </div>
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
               </TabPane>
               <TabPane
                 tab={
@@ -105,16 +124,22 @@ const Home = () => {
                 }
                 key="Kendaraan"
               >
-                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                  {allProducts.products &&
-                    allProducts.products.map((item) => (
-                      <CardProduct
-                        cardWidth={"182px"}
-                        key={item.productId}
-                        data={item}
-                      />
-                    ))}
-                </div>
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
               </TabPane>
               <TabPane
                 tab={
@@ -125,16 +150,22 @@ const Home = () => {
                 }
                 key="Fashion"
               >
-                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                  {allProducts.products &&
-                    allProducts.products.map((item) => (
-                      <CardProduct
-                        cardWidth={"182px"}
-                        key={item.productId}
-                        data={item}
-                      />
-                    ))}
-                </div>
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
               </TabPane>
               <TabPane
                 tab={
@@ -145,16 +176,22 @@ const Home = () => {
                 }
                 key="Elektronik"
               >
-                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                  {allProducts.products &&
-                    allProducts.products.map((item) => (
-                      <CardProduct
-                        cardWidth={"182px"}
-                        key={item.productId}
-                        data={item}
-                      />
-                    ))}
-                </div>
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
               </TabPane>
               <TabPane
                 tab={
@@ -165,16 +202,22 @@ const Home = () => {
                 }
                 key="Kesehatan"
               >
-                <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
-                  {allProducts.products &&
-                    allProducts.products.map((item) => (
-                      <CardProduct
-                        cardWidth={"182px"}
-                        key={item.productId}
-                        data={item}
-                      />
-                    ))}
-                </div>
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
               </TabPane>
             </Tabs>
           </div>

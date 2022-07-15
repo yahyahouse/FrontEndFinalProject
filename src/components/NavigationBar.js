@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FiSearch,
   FiDownload,
@@ -14,6 +14,7 @@ import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import ModalNotifikasi from "./ModalNotifikasi";
 import DropdownAccount from "./DropdownAccount";
 import { getAllProducts } from "../features/productSlice";
+
 import { useDispatch } from "react-redux";
 
 const NavigationBar = () => {
@@ -86,9 +87,7 @@ const NavigationBar = () => {
           <img src={Arrowleft} alt="img" />
         </Link>
         <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
-        <p className="text-base font-medium leading-6 ">
-          Lengkapi Detail Produk
-        </p>
+        <p className="font-normal text-sm">Lengkapi Detail Produk</p>
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
@@ -98,8 +97,8 @@ const NavigationBar = () => {
     location.pathname === "/daftarJual" ||
     location.pathname === "/notifikasi" ||
     location.pathname === "/userAccount" ||
-    location.pathname.includes("/buyerdetail") ||
-    location.pathname.includes("/detailproduk")
+    location.pathname.includes("/detailproduk") ||
+    location.pathname.includes("/previewproduk")
   ) {
     return (
       <div>
@@ -180,8 +179,8 @@ const NavigationBar = () => {
               location.pathname === "/daftarJual" ||
               location.pathname === "/notifikasi" ||
               location.pathname === "/userAccount" ||
-              location.pathname.includes("/buyerdetail") ||
-              location.pathname.includes("/detailproduk")
+              location.pathname.includes("/detailproduk") ||
+              location.pathname.includes("/previewproduk")
                 ? "hidden md:flex md:justify-start mr-auto w-full"
                 : "flex md:justify-start mr-auto w-full"
             }
@@ -210,8 +209,8 @@ const NavigationBar = () => {
           {(location.pathname === "/" ||
             location.pathname === "/daftarJual" ||
             location.pathname === "/notifikasi" ||
-            location.pathname.includes("/buyerdetail") ||
-            location.pathname.includes("/detailproduk")) &&
+            location.pathname.includes("/detailproduk") ||
+            location.pathname.includes("/previewproduk")) &&
           userLogged ? (
             <div className="hidden md:flex gap-6">
               <div>
@@ -275,21 +274,29 @@ const NavigationBar = () => {
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
-  }
-  // HOME END
-  // DEFAULT START
-  else {
+  } else if (location.pathname.includes("/updateproduk")) {
     return (
       <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
         <Link className="sm:hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
         <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
+        <p className="font-normal text-sm">Ubah Produk</p>
+        <div className="sm:w-[100px] w-[24px]" />
+      </nav>
+    );
+  } else {
+    return (
+      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
+        <Link className="sm:hidden" to="/">
+          <img src={Arrowleft} alt="img" />
+        </Link>
+        <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
+        <p className="font-normal text-sm">Info Penawar</p>
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
   }
-  // DEFAULT END
 };
 
 export default NavigationBar;

@@ -7,7 +7,15 @@ import Close from "../assets/img/fi_x.svg";
 import { Link } from "react-router-dom";
 import { FaWhatsapp } from "react-icons/fa";
 
-const ModalWhatsapp = ({ nav, setNav }) => {
+const ModalWhatsapp = ({
+  nav,
+  setNav,
+  username,
+  productName,
+  productPrice,
+  offerPrice,
+  productImage,
+}) => {
   const handleNav = () => {
     setNav(!nav);
   };
@@ -55,25 +63,29 @@ const ModalWhatsapp = ({ nav, setNav }) => {
                       alt="img"
                     />
                   </div>
-                  <div className="w-[360px] flex flex-col items-center px-[32px]">
+                  <div className="w-[360px] mt-4 flex flex-col items-center px-[32px]">
                     <p className="text-sm text-justify font-medium mb-[8px] w-full">
                       Yeay kamu berhasil mendapat harga yang sesuai
                     </p>
-                    <p className="text-sm text-justify font-normal text-gray-900 mb-[16px] w-full">
-                      Segera hubungi pembeli melalui whatsapp untuk transaksi
-                      selanjutnya
+                    <p className="text-sm font-normal text-start text-gray-900 mb-[16px] w-full">
+                      Segera hubungi pembeli melalui <br />
+                      whatsapp untuk transaksi selanjutnya
                     </p>
                     <div className="p-[16px] flex flex-col border w-full rounded-2xl shadow-md mb-[24px]">
                       <p className="text-center font-medium text-sm mb-[16px]">
                         Product Match
                       </p>
                       <div className=" flex mb-[16px]">
-                        <div className="rounded-xl h-[48px] w-[48px] overflow-hidden">
-                          <img src={Profile} alt="Profile" />
+                        <div>
+                          <img
+                            src={Profile}
+                            className="rounded-xl h-[48px] w-[48px] object-cover"
+                            alt="Profile"
+                          />
                         </div>
                         <div className="pl-[16px] flex flex-col">
                           <p className="text-sm font-medium mb-[5px]">
-                            Nama Pembeli
+                            {username}
                           </p>
                           <p className="text-[10px] leading-[14px] text-gray-900">
                             Kota
@@ -81,31 +93,30 @@ const ModalWhatsapp = ({ nav, setNav }) => {
                         </div>
                       </div>
                       <div className="flex">
-                        <div className="rounded-xl h-[48px] w-[48px] overflow-hidden">
-                          <img src={Card} alt="Profile" />
+                        <div>
+                          <img
+                            src={productImage}
+                            className="rounded-xl h-[48px] w-[48px] object-cover"
+                            alt="Profile"
+                          />
                         </div>
                         <div className="pl-[16px] flex flex-col">
-                          <p className="text-sm font-normal">
-                            Jam Tangan Casio
-                          </p>
+                          <p className="text-sm font-normal">{productName}</p>
                           <p className="text-sm font-normal line-through">
-                            Rp 250.000
+                            Rp {productPrice}
                           </p>
                           <p className="text-sm font-normal">
-                            Ditawar Rp 200.000
+                            Ditawar Rp {offerPrice}
                           </p>
                         </div>
                       </div>
                     </div>
-                    <Link
-                      className="h-[48px] rounded-2xl w-full bg-purple-700 text-white flex justify-center items-center mb-[20px]"
-                      to={"#"}
-                    >
+                    <button className="h-[48px] rounded-2xl w-full bg-purple-700 text-white flex justify-center items-center mb-[20px]">
                       <p className="justify-center font-medium text-sm mx-[40px]">
                         Hubungi via Whatsapp
                       </p>
                       <FaWhatsapp size={"20"} />
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </Dialog.Panel>

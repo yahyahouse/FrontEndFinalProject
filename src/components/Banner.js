@@ -14,20 +14,20 @@ const Banner = () => {
           slidesPerView={1}
           centeredSlides={true}
           loop={true}
-          spaceBetween={16}
+          spaceBetween={12}
           breakpoints={{
             640: {
-              slidesPerView: 1.6,
+              slidesPerView: 1.8,
               centeredSlides: true,
               loop: true,
-              spaceBetween: 16,
+              spaceBetween: 12,
             },
           }}
           pagination={{
             clickable: true,
           }}
           autoplay={{
-            delay: 2500,
+            delay: 3200,
             disableOnInteraction: false,
           }}
           modules={[Autoplay]}

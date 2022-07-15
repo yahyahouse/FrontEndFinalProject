@@ -21,7 +21,8 @@ const ModalDetailProduk = ({
       ? JSON.parse(localStorage.getItem("user"))
       : "";
 
-  const offerId = 1;
+  const offerId = 3;
+  const [submitted, setSubmitted] = useState(false);
   const [offerPrice, setOfferPrice] = useState("");
   console.log(parseInt(offerPrice));
 
@@ -31,24 +32,23 @@ const ModalDetailProduk = ({
 
   const handleAddOffer = async (e) => {
     e.preventDefault();
-    try {
-      await dispatch(
+    if (offerPrice < productPrice) {
+      dispatch(
         addOffer({
           path: {
             userId: parseInt(user.userId),
             productId: parseInt(productId),
           },
           data: {
-            offerId: parseInt(offerId),
             offer_price: Number(offerPrice),
             offerStatus: "Diminati",
           },
         })
       );
-    } catch (error) {
-      console.error(error.message);
     }
+    setSubmitted(true);
   };
+
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -140,6 +140,13 @@ const ModalDetailProduk = ({
                             className="w-full border solid border-gray-700 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl px-4 py-3 placeholder:text-sm placeholder:text-gray-900"
                             onChange={(e) => setOfferPrice(e.target.value)}
                           />
+                          {submitted && offerPrice >= productPrice ? (
+                            <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
+                              Harga tawar harus lebih kecil dari harga asli !
+                            </p>
+                          ) : (
+                            ""
+                          )}
                           <button
                             type="submit"
                             className="h-[48px] mt-6 rounded-2xl w-full bg-purple-700 text-white hover:text-white flex justify-center items-center mb-[20px]"
