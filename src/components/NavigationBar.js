@@ -87,9 +87,7 @@ const NavigationBar = () => {
           <img src={Arrowleft} alt="img" />
         </Link>
         <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
-        <p className="text-base font-medium leading-6 ">
-          Lengkapi Detail Produk
-        </p>
+        <p className="font-normal text-sm">Lengkapi Detail Produk</p>
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
@@ -276,21 +274,29 @@ const NavigationBar = () => {
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
-  }
-  // HOME END
-  // DEFAULT START
-  else {
+  } else if (location.pathname.includes("/updateproduk")) {
     return (
       <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
         <Link className="sm:hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
         <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
+        <p className="font-normal text-sm">Ubah Produk</p>
+        <div className="sm:w-[100px] w-[24px]" />
+      </nav>
+    );
+  } else {
+    return (
+      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
+        <Link className="sm:hidden" to="/">
+          <img src={Arrowleft} alt="img" />
+        </Link>
+        <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
+        <p className="font-normal text-sm">Info Penawar</p>
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
   }
-  // DEFAULT END
 };
 
 export default NavigationBar;

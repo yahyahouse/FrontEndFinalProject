@@ -5,7 +5,7 @@ import ProdukImage from "../components/ProdukImage";
 import Image from "../assets/img/image_detailproduk.png";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import { useDispatch } from "react-redux";
-import { addProduct } from "../features/productSlice";
+import { addProduct, updateProduct } from "../features/productSlice";
 
 const PreviewProduk = () => {
   const navigate = useNavigate();
@@ -30,7 +30,16 @@ const PreviewProduk = () => {
     data.append("productStatus", "Available");
 
     try {
-      await dispatch(addProduct({ id: user.userId, dataProduct: data }));
+      dataProduct.state.productId
+        ? await dispatch(
+            updateProduct({
+              userId: user.userId,
+              productId: dataProduct.state.productId,
+              dataProduct: data,
+            })
+          )
+        : await dispatch(addProduct({ id: user.userId, dataProduct: data }));
+
       navigate("/daftarJual");
     } catch (error) {
       console.error(error.message);

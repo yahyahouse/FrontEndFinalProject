@@ -45,7 +45,7 @@ const ModalNotifikasi = ({
   }, [dispatch, user.userId]);
 
   return location.pathname === "/" ||
-    location.pathname.includes("buyerdetail") ? (
+    location.pathname.includes("detailproduk") ? (
     <div
       className={`py-4 bg-white md:px-[${paddingX}] md:mt-[${marginT}] rounded-${rounded} shadow-[${shadow}] [&>div:last-child>div>div]:border-none`}
     >

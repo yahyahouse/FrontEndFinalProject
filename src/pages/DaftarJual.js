@@ -16,6 +16,8 @@ import {
   getProductBySeller,
   getAddProductStatus,
   getSellerProducts,
+  getUpdateProductStatus,
+  clearStatus,
 } from "../features/productSlice";
 
 const { TabPane } = Tabs;
@@ -26,6 +28,7 @@ const DaftarJual = () => {
   console.log(sellerProducts);
   const addProductstatus = useSelector(getAddProductStatus);
   console.log(addProductstatus);
+  const updateProductStatus = useSelector(getUpdateProductStatus);
 
   const seller =
     localStorage.getItem("user") !== null
@@ -34,7 +37,7 @@ const DaftarJual = () => {
   const [activeTab, setActiveTab] = useState("1");
 
   const onClose = (e) => {
-    console.log(e, "I was closed.");
+    dispatch(clearStatus());
   };
 
   const handleActiveTab = (activeKey) => {
@@ -89,7 +92,7 @@ const DaftarJual = () => {
               </div>
             </button>
           ) : (
-            <Link to="/infoProduk">
+            <Link to="/infoproduk">
               <button className="w-full sm:w-[206px] sm:h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-700">
                 <div className="text-gray-900">
                   <FiPlus className="mx-auto text-2xl" />
@@ -141,7 +144,7 @@ const DaftarJual = () => {
                 </div>
               </button>
             ) : (
-              <Link to="/infoProduk">
+              <Link to="/infoproduk">
                 <button className="w-full h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-700">
                   <div className="text-gray-900">
                     <FiPlus className="mx-auto text-2xl" />
@@ -181,7 +184,19 @@ const DaftarJual = () => {
           type="success"
           closable
           onClose={onClose}
-          className="w-[340px] sm:w-[500px] flex mx-auto mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+          className="w-[340px] sm:w-[500px] flex text-center mx-auto mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+        />
+      ) : (
+        ""
+      )}
+
+      {updateProductStatus === "Produk berhasil diubah" ? (
+        <Alert
+          message={updateProductStatus}
+          type="success"
+          closable
+          onClose={onClose}
+          className="w-[340px] sm:w-[500px] flex mx-auto text-center mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
         />
       ) : (
         ""

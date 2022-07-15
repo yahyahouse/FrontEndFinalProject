@@ -14,6 +14,7 @@ import {
   getSellerOfferDetailData,
   getSellerOfferDetailStatus,
   sellerAcceptedOffer,
+  getSellerAcceptedOfferStatus,
 } from "../features/offerSlice";
 import { SyncLoader } from "react-spinners";
 
@@ -28,6 +29,7 @@ function InfoPenawar() {
 
   const detailOffer = useSelector(getSellerOfferDetailData);
   const getDetailOfferStatus = useSelector(getSellerOfferDetailStatus);
+  const sellerAcceptedOfferStatus = useSelector(getSellerAcceptedOfferStatus);
   console.log(detailOffer);
   console.log(getDetailOfferStatus);
 
@@ -73,7 +75,7 @@ function InfoPenawar() {
               <div className="h-full w-full px-[16px] py-[3px] flex flex-col justify-between">
                 <p className="text-sm font-medium">
                   {detailOffer.length !== 0
-                    ? detailOffer[0].username
+                    ? detailOffer.username
                     : "Nama Pembeli"}
                 </p>
                 <p className="text-[10px] leading-[14px] text-gray-900">Kota</p>
@@ -88,7 +90,7 @@ function InfoPenawar() {
                 <div className="Profile rounded-xl h-[48px] w-[58px] overflow-hidden flex items-center justify-center">
                   {detailOffer.length !== 0 ? (
                     <img
-                      src={detailOffer[0].url ? detailOffer[0].url : Card}
+                      src={detailOffer.url ? detailOffer.url : Card}
                       alt="img"
                       className="w-12 h-12 rounded-xl object-cover"
                     />
@@ -109,7 +111,7 @@ function InfoPenawar() {
                       <p className="text-[10px] leading-[14px] font-normal text-gray-900">
                         {" "}
                         {moment
-                          .utc(detailOffer[0].localDateTime)
+                          .utc(detailOffer.localDateTime)
                           .local()
                           .format("MMMM DD, hh:mm")}
                       </p>
@@ -121,86 +123,72 @@ function InfoPenawar() {
                   </div>
                   <p className="text-sm font-normal mt-1">
                     {detailOffer.length !== 0
-                      ? detailOffer[0].productName
+                      ? detailOffer.productName
                       : "Jam Tangan"}
                   </p>
                   <p className="text-sm font-normal mt-1">
                     Rp{" "}
                     {detailOffer.length !== 0
-                      ? detailOffer[0].productPrice
+                      ? detailOffer.productPrice
                       : 200000}
                   </p>
                   <p className="text-sm font-normal mt-1">
                     Ditawar Rp{" "}
-                    {detailOffer.length !== 0
-                      ? detailOffer[0].offerPrice
-                      : 100000}
+                    {detailOffer.length !== 0 ? detailOffer.offerPrice : 100000}
                   </p>
                 </div>
               </div>
-              <div className="sm:justify-end duration-[1s] flex justify-between">
-                <button className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium">
-                  Tolak
-                </button>
-                <button
-                  onClick={handleAcceptedOffer}
-                  className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
-                >
-                  Terima
-                </button>
-                <ModalWhatsapp
-                  nav={nav}
-                  setNav={setNav}
-                  username={detailOffer[0].username}
-                  productName={detailOffer[0].productName}
-                  productPrice={detailOffer[0].productPrice}
-                  offerPrice={detailOffer[0].offerPrice}
-                  productImage={detailOffer.url ? detailOffer.url : Card}
-                />
-                <ModalStatus isOpen={isOpen} setIsOpen={setIsOpen} />
-                {/* <button
-                  onClick={openModal}
-                  className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium"
-                >
-                  Status
-                </button>
-                <button
-                  onClick={handleNav}
-                  className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
-                >
-                  Hubungi di <FaWhatsapp className="ml-2" />
-                </button> */}
+              <div>
+                {detailOffer.offerStatus === "Diterima" ||
+                sellerAcceptedOfferStatus === "Diterima" ? (
+                  <div className="sm:justify-end duration-[1s] flex justify-between">
+                    <button
+                      onClick={openModal}
+                      className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium"
+                    >
+                      Status
+                    </button>
+                    <button
+                      onClick={() => setNav(!nav)}
+                      className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
+                    >
+                      Hubungi di <FaWhatsapp className="ml-2" />
+                    </button>
+                    <ModalStatus isOpen={isOpen} setIsOpen={setIsOpen} />
+                    <ModalWhatsapp
+                      nav={nav}
+                      setNav={setNav}
+                      username={detailOffer.username}
+                      productName={detailOffer.productName}
+                      productPrice={detailOffer.productPrice}
+                      offerPrice={detailOffer.offerPrice}
+                      productImage={detailOffer.url ? detailOffer.url : Card}
+                    />
+                  </div>
+                ) : (
+                  <div className="sm:justify-end duration-[1s] flex justify-between">
+                    <button className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium">
+                      Tolak
+                    </button>
+                    <button
+                      onClick={handleAcceptedOffer}
+                      className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
+                    >
+                      Terima
+                    </button>
+                    <ModalWhatsapp
+                      nav={nav}
+                      setNav={setNav}
+                      username={detailOffer.username}
+                      productName={detailOffer.productName}
+                      productPrice={detailOffer.productPrice}
+                      offerPrice={detailOffer.offerPrice}
+                      productImage={detailOffer.url ? detailOffer.url : Card}
+                    />
+                  </div>
+                )}
               </div>
             </div>
-
-            {/* <div className="h-[155px] flex flex-col justify-between border-b border-b-gray-700 pb-[15px] mb-[15px]">
-            <div className="flex">
-              <div className="Profile rounded-xl h-[48px] w-[58px] overflow-hidden flex items-center justify-center">
-                <img src={Card} alt="img" />
-              </div>
-              <div className="duration-[1s] w-full pl-[16px]">
-                <div className="flex justify-between">
-                  <p className="text-[10px] leading-[14px] font-normal text-gray-900">
-                    Penawaran Produk
-                  </p>
-                  <p className="text-[10px] leading-[14px] font-normal text-gray-900">
-                    20 Apr, 14:04
-                  </p>
-                </div>
-                <p className="text-sm font-normal">Jam Tangan Casio</p>
-                <p className="text-sm font-normal">Rp 250.000</p>
-                <p className="text-sm font-normal">Ditawar Rp 200.000</p>
-              </div>
-            </div>
-            <div className="sm:justify-end duration-[1s] flex justify-between">
-              <button className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium">
-                Tolak
-              </button>
-              <button className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white">
-                Terima
-              </button>
-            </div>
-          </div> */}
           </div>
         </section>
       )}

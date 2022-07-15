@@ -111,15 +111,12 @@ const ModalWhatsapp = ({
                         </div>
                       </div>
                     </div>
-                    <Link
-                      className="h-[48px] rounded-2xl w-full bg-purple-700 text-white flex justify-center items-center mb-[20px]"
-                      to={"#"}
-                    >
+                    <button className="h-[48px] rounded-2xl w-full bg-purple-700 text-white flex justify-center items-center mb-[20px]">
                       <p className="justify-center font-medium text-sm mx-[40px]">
                         Hubungi via Whatsapp
                       </p>
                       <FaWhatsapp size={"20"} />
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </Dialog.Panel>

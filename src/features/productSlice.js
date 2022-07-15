@@ -79,7 +79,7 @@ export const updateProduct = createAsyncThunk(
   "product/updateProduct",
   async (data) => {
     try {
-      const response = await axios.put(
+      const response = await axios.post(
         `https://dummyprojectbinar.herokuapp.com/product/seller/update-product/${data.userId}/${data.productId}`,
         data.dataProduct,
         {
@@ -127,6 +127,7 @@ const initialState = {
   getAllProductStatus: "",
   getDetailProductStatus: "",
   addProductStatus: "",
+  updateProductStatus: "",
   getProductBySellerStatus: "",
   erorr: "",
   succesMessage: "",
@@ -135,7 +136,12 @@ const initialState = {
 const productSice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
+  reducers: {
+    clearStatus: (state) => {
+      state.addProductStatus = "";
+      state.updateProductStatus = "";
+    },
+  },
   extraReducers: {
     [getAllProducts.pending]: (state) => {
       state.getAllProductStatus = "loading";
@@ -147,6 +153,15 @@ const productSice = createSlice({
     },
     [getAllProducts.rejected]: (state) => {
       state.getAllProductStatus = "rejected";
+    },
+    [updateProduct.pending]: (state) => {
+      state.updateProductStatus = "loading";
+    },
+    [updateProduct.fulfilled]: (state, action) => {
+      state.updateProductStatus = "Produk berhasil diubah";
+    },
+    [updateProduct.rejected]: (state) => {
+      state.updateProductStatus = "rejected";
     },
     [getDetailProduct.pending]: (state) => {
       state.getDetailProductStatus = "loading";
@@ -188,4 +203,7 @@ export const getDetailProductStatus = (state) =>
 export const getSellerProducts = (state) => state.product.sellerProducts;
 export const getAllProductStatus = (state) => state.product.getAllProductStatus;
 export const getAddProductStatus = (state) => state.product.addProductStatus;
+export const getUpdateProductStatus = (state) =>
+  state.product.updateProductStatus;
+export const { clearStatus } = productSice.actions;
 export default productSice.reducer;

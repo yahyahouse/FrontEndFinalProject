@@ -71,7 +71,7 @@ export const getSellerOfferDetail = createAsyncThunk(
     console.log(data);
     try {
       const response = await axios.get(
-        `https://dummyprojectbinar.herokuapp.com/offer/buyer/get-diminati/${data.offerId}`,
+        `https://dummyprojectbinar.herokuapp.com/offer/get-detail-offer/${data.offerId}`,
         {
           headers: {
             Authorization: `Bearer ${JSON.parse(
@@ -120,6 +120,7 @@ const initialState = {
   sellerOfferHistoryStatus: "",
   sellerOfferDetailData: [],
   sellerOfferDetailStatus: "",
+  sellerAcceptedOfferStatus: "",
   error: "",
 };
 
@@ -167,6 +168,15 @@ const offerSLice = createSlice({
     [getSellerOfferDetail.rejected]: (state) => {
       state.sellerOfferDetailStatus = "rejected";
     },
+    [sellerAcceptedOffer.pending]: (state) => {
+      state.sellerAcceptedOfferStatus = "loading";
+    },
+    [sellerAcceptedOffer.fulfilled]: (state) => {
+      state.sellerAcceptedOfferStatus = "Diterima";
+    },
+    [sellerAcceptedOffer.rejected]: (state) => {
+      state.sellerAcceptedOfferStatus = "rejected";
+    },
   },
 });
 
@@ -183,4 +193,7 @@ export const getSellerOfferDetailData = (state) =>
   state.offer.sellerOfferDetailData;
 export const getSellerOfferDetailStatus = (state) =>
   state.offer.sellerOfferDetailStatus;
+export const getSellerAcceptedOfferStatus = (state) =>
+  state.offer.sellerAcceptedOfferStatus;
+
 export default offerSLice.reducer;
