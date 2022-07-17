@@ -5,8 +5,8 @@ import axios from "axios";
 export const getUserById = createAsyncThunk("user/getUserById", async (id) => {
   try {
     const response = await axios.get(
-      // `https://dummyprojectbinar.herokuapp.com/users/get-user-detail/${id}`
-      `https://dummyprojectbinar.herokuapp.com/users/get-user-detail/${id}`,
+      ` https://dummyprojectbinar.herokuapp.com/users/seller/get-user-detail/${id}`,
+      // `https://dummyprojectbinar.herokuapp.com/users/get-user-detail/${id}`,
       {
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
@@ -22,17 +22,17 @@ export const getUserById = createAsyncThunk("user/getUserById", async (id) => {
 
 export const userEdit = createAsyncThunk("auth/userEdit", async (data) => {
   try {
-    const response = await axios.put(
-      `https://dummyprojectbinar.herokuapp.com/users/public/update-users-profile`,
-      data,
+    const response = await axios.post(
+      `https://dummyprojectbinar.herokuapp.com/users/public/update-users-profile?userId=${data.userId}&username=${data.username}&address=${data.address}&city=${data.city}&phone=${data.phone}`,
+      data.data,
       {
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
         },
       }
     );
-    console.log(response, "edit");
-    return response.data.data;
+    console.log(response, "data berhasil diupdate");
+    return response.data;
   } catch (error) {
     console.log(error.message);
   }
