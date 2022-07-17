@@ -120,6 +120,52 @@ export const getProductBySeller = createAsyncThunk(
   }
 );
 
+export const updateProductToSold = createAsyncThunk(
+  "product/updateProductToSold",
+  async (data) => {
+    try {
+      const response = await axios.post(
+        `https://dummyprojectbinar.herokuapp.com/product/seller/product-status-sold/${data.userId}/${data.productId}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+      console.log(response, "update product to sold");
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
+export const getSellerProductSold = createAsyncThunk(
+  "product/getSellerProductSold",
+  async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.get(
+        `https://dummyprojectbinar.herokuapp.com/offer/seller/get-product-sold/${data.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+      console.log(response, "get seller product sold");
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
 const initialState = {
   allProducts: [],
   detailProduct: [],
@@ -129,6 +175,9 @@ const initialState = {
   addProductStatus: "",
   updateProductStatus: "",
   getProductBySellerStatus: "",
+  updateProductToSoldStatus: "",
+  getSellerProductSold: [],
+  getSellerProductSoldStatus: "",
   erorr: "",
   succesMessage: "",
 };
@@ -137,9 +186,10 @@ const productSice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    clearStatus: (state) => {
+    clearStatusProduct: (state) => {
       state.addProductStatus = "";
       state.updateProductStatus = "";
+      state.updateProductToSoldStatus = "";
     },
   },
   extraReducers: {
@@ -149,7 +199,9 @@ const productSice = createSlice({
     [getAllProducts.fulfilled]: (state, action) => {
       // console.log(action.payload.docs.limit);
       state.getAllProductStatus = "succes";
-      state.allProducts = action.payload.products;
+      state.allProducts = action.payload.products.filter(
+        (item) => item.productStatus === "Available"
+      );
     },
     [getAllProducts.rejected]: (state) => {
       state.getAllProductStatus = "rejected";
@@ -185,13 +237,43 @@ const productSice = createSlice({
 
     [getProductBySeller.pending]: (state) => {
       state.getProductBySellerStatus = "loading";
+      state.getSellerProductSoldStatus = "loading";
     },
     [getProductBySeller.fulfilled]: (state, action) => {
       state.getProductBySellerStatus = "success";
-      state.sellerProducts = action.payload;
+      state.getSellerProductSoldStatus = "success";
+      // filter available
+      state.sellerProducts = action.payload.filter(
+        (item) => item.productStatus === "Available"
+      );
+      // filter sold
+      state.getSellerProductSold = action.payload.filter(
+        (item) => item.productStatus === "Sold"
+      );
     },
     [getProductBySeller.rejected]: (state) => {
       state.getProductBySellerStatus = "rejected";
+      state.getSellerProductSoldStatus = "rejected";
+    },
+    [updateProductToSold.pending]: (state) => {
+      state.updateProductToSoldStatus = "loading";
+    },
+    [updateProductToSold.fulfilled]: (state) => {
+      state.updateProductToSoldStatus = "success";
+    },
+    [updateProductToSold.rejected]: (state) => {
+      state.updateProductToSoldStatus = "rejected";
+    },
+    // product-sold
+    [getSellerProductSold.pending]: (state) => {
+      state.getSellerProductSoldStatus = "loading";
+    },
+    [getSellerProductSold.fulfilled]: (state, action) => {
+      state.getSellerProductSoldStatus = "success";
+      state.getSellerProductSold = action.payload;
+    },
+    [getSellerProductSold.rejected]: (state) => {
+      state.getSellerProductSoldStatus = "rejected";
     },
   },
 });
@@ -205,5 +287,12 @@ export const getAllProductStatus = (state) => state.product.getAllProductStatus;
 export const getAddProductStatus = (state) => state.product.addProductStatus;
 export const getUpdateProductStatus = (state) =>
   state.product.updateProductStatus;
-export const { clearStatus } = productSice.actions;
+export const getUpdateProductToSoldStatus = (state) =>
+  state.product.updateProductToSoldStatus;
+export const getSellerProductSoldData = (state) =>
+  state.product.getSellerProductSold;
+export const getSellerProductSoldStatus = (state) =>
+  state.product.getSellerProductSoldStatus;
+
+export const { clearStatusProduct } = productSice.actions;
 export default productSice.reducer;

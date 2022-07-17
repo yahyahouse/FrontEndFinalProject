@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import productImage from "../assets/img/notifImage.png";
-import { getSellerProductSold, getSellerProductSoldData, getSellerOfferHistoryStatus, getSellerProductSoldStatus } from "../features/offerSlice";
-
+import {
+  getProductBySeller,
+  getSellerProductSoldData,
+  getSellerProductSoldStatus,
+} from "../features/productSlice";
+import { SyncLoader } from "react-spinners";
 
 export const ProdukTerjual = () => {
-  
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   const user =
     localStorage.getItem("user") !== null
@@ -20,12 +23,17 @@ export const ProdukTerjual = () => {
 
   useEffect(() => {
     // dispatch(getSellerProductSold(user.userId));
-    dispatch(getSellerProductSold({ userId: user.userId }));
+    // dispatch(getSellerProductSold({ userId: user.userId }));
+    dispatch(getProductBySeller(user.userId));
   }, [dispatch, user.userId]);
 
   return (
-    <div className="">
-      <div className="hover:bg-gray-500 cursor-pointer">
+    <div>
+      {sellerProductSoldStatus === "loading" ? (
+        <div className="flex mx-auto mt-32 justify-center">
+          <SyncLoader color="#7126B5" margin={2} size={12} />
+        </div>
+      ) : (
         <div className="px-4 pt-4">
           <div
             className={`flex gap-12 w-full justify-between border-b border-gray-500 pb-4`}
@@ -33,7 +41,9 @@ export const ProdukTerjual = () => {
             <div className="flex gap-6">
               <div>
                 <img
-                  src={productImage}
+                  src={
+                    sellerProductSold ? sellerProductSold[0].url : productImage
+                  }
                   alt="productImage"
                   className="w-12 h-12 rounded-xl object-cover"
                 />
@@ -41,10 +51,15 @@ export const ProdukTerjual = () => {
               <div>
                 <p className="text-[10px] text-gray-900">Penawaran produk</p>
                 <h3 className="mt-1 text-sm font-normal text-black">
-                  Jam Tangan casio
+                  {sellerProductSold
+                    ? sellerProductSold[0].productName
+                    : "JAm Tangan"}
                 </h3>
                 <h3 className="mt-1 text-sm font-normal text-black">
-                  Rp 200000
+                  Rp{" "}
+                  {sellerProductSold
+                    ? sellerProductSold[0].productPrice
+                    : "500000"}
                 </h3>
                 <h3 className="mt-1 text-sm font-normal text-black">
                   Ditawar Rp 100000
@@ -58,7 +73,7 @@ export const ProdukTerjual = () => {
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

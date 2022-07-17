@@ -16,6 +16,7 @@ import {
   getAddOfferStatus,
   getBuyerOfferHistory,
   getBuyerOfferHistoryData,
+  clearStatusOffer,
 } from "../features/offerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
@@ -31,35 +32,41 @@ function DetailProduk() {
   const detailProductStatus = useSelector(getDetailProductStatus);
   const addOfferStatus = useSelector(getAddOfferStatus);
   const buyerOfferHistory = useSelector(getBuyerOfferHistoryData);
-  // console.log(addOfferStatus, "add offer status");
+  console.log(addOfferStatus, "add offer status");
   console.log(detailProduct, "detail produk");
-  // console.log(buyerOfferHistory, "buyer offer");
+  console.log(buyerOfferHistory, "buyer offer");
   // console.log(user.userId, detailProduct.userId);
 
-  const [hasOffered, setHasOffered] = useState(false);
+  const [hasOffered, setHasOffered] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleNav = () => {
     setIsOpen(!isOpen);
   };
 
-  const onClose = (e) => {
-    console.log(e, "I was closed.");
+  const onClose = (e) => {};
+
+  //Mengecek jika buyer ini sudah pernah menawar produk ini
+  const checkHasOffered = () => {
+    let productOffered = buyerOfferHistory.filter(
+      (item) =>
+        item.productId === parseInt(id) &&
+        (item.offerStatus === "Diminati" || item.offerStatus === "Diterima")
+    );
+    productOffered.length !== 0 ? setHasOffered(true) : setHasOffered(false);
   };
 
   useEffect(() => {
+    dispatch(clearStatusOffer());
     dispatch(getBuyerOfferHistory(user.userId));
     dispatch(getDetailProduct(id));
-    // Mengecek jika buyer ini sudah pernah menawar produk ini
-    buyerOfferHistory.forEach(function (item) {
-      item.userId === user.userId && item.offerStatus === "Diminati"
-        ? setHasOffered(true)
-        : setHasOffered(false);
-    });
-  }, [dispatch, id, user.userId]);
+    checkHasOffered();
+  }, [dispatch, id]);
+
+  console.log(hasOffered, "hasoffered");
 
   return (
-    <div>
+    <div onLoad={checkHasOffered}>
       <div className="hidden md:block">
         <NavigationBar />
       </div>
@@ -70,7 +77,7 @@ function DetailProduk() {
           type="success"
           closable
           onClose={onClose}
-          className="w-[340px] sm:w-[520px] flex mx-auto mt-24 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+          className="w-[340px] sm:w-[520px] flex mx-auto text-center mt-24 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
         />
       ) : (
         ""
@@ -196,7 +203,9 @@ function DetailProduk() {
           </div>
           <div className="flex justify-center">
             {detailProduct ? (
-              hasOffered || user.userId === detailProduct.userId ? (
+              addOfferStatus === "success" ||
+              hasOffered ||
+              user.userId === detailProduct.userId ? (
                 <button
                   onClick={handleNav}
                   className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-gray-700 items-center text-white fixed bottom-5 sm:hidden z-50"
@@ -219,6 +228,7 @@ function DetailProduk() {
             )}
           </div>
           <ModalDetailProduk
+            checkHasOffered={checkHasOffered}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             productId={detailProduct ? detailProduct.productId : "Id kosong"}

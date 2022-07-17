@@ -8,6 +8,7 @@ import ModalWhatsapp from "../components/ModalWhatsapp";
 import { FaWhatsapp } from "react-icons/fa";
 import ModalStatus from "../components/ModalStatus";
 import moment from "moment";
+import { Alert } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getSellerOfferDetail,
@@ -15,7 +16,14 @@ import {
   getSellerOfferDetailStatus,
   sellerAcceptedOffer,
   getSellerAcceptedOfferStatus,
+  sellerRejectedOffer,
+  getSellerRejectedOfferStatus,
+  clearStatusOffer,
 } from "../features/offerSlice";
+import {
+  clearStatusProduct,
+  getUpdateProductToSoldStatus,
+} from "../features/productSlice";
 import { SyncLoader } from "react-spinners";
 
 function InfoPenawar() {
@@ -24,20 +32,32 @@ function InfoPenawar() {
   const [nav, setNav] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const { idPenawaran } = useParams();
-  console.log(idPenawaran);
+  const { idProduk, idPenawaran } = useParams();
+  console.log(idProduk, idPenawaran);
 
   const detailOffer = useSelector(getSellerOfferDetailData);
   const getDetailOfferStatus = useSelector(getSellerOfferDetailStatus);
-  const sellerAcceptedOfferStatus = useSelector(getSellerAcceptedOfferStatus);
-  console.log(detailOffer);
-  console.log(getDetailOfferStatus);
+  const acceptedOfferStatus = useSelector(getSellerAcceptedOfferStatus);
+  const rejectedOfferStatus = useSelector(getSellerRejectedOfferStatus);
+  const updateProductSoldStatus = useSelector(getUpdateProductToSoldStatus);
+  console.log(detailOffer.offerStatus);
+  console.log(acceptedOfferStatus);
+  console.log(rejectedOfferStatus);
 
   const handleAcceptedOffer = async (e) => {
     e.preventDefault();
-    setNav(!nav);
     try {
-      dispatch(sellerAcceptedOffer(idPenawaran));
+      await dispatch(sellerAcceptedOffer(idPenawaran));
+      setNav(!nav);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRejectedOffer = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(sellerRejectedOffer(idPenawaran));
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +67,14 @@ function InfoPenawar() {
     setIsOpen(!isOpen);
   }
 
+  const onClose = (e) => {
+    // dispatch(clearStatusProduct());
+    // dispatch(clearStatusOffer());
+  };
+
   useEffect(() => {
+    dispatch(clearStatusOffer());
+    dispatch(clearStatusProduct());
     dispatch(
       getSellerOfferDetail({
         offerId: idPenawaran,
@@ -58,6 +85,28 @@ function InfoPenawar() {
   return (
     <div>
       <NavigationBar />
+      {updateProductSoldStatus === "success" ? (
+        <Alert
+          message={"Status Produk Berhasil Diperbaharui"}
+          type="success"
+          closable
+          onClose={onClose}
+          className="w-[340px] sm:w-[500px] flex text-center mx-auto mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+        />
+      ) : (
+        ""
+      )}
+      {rejectedOfferStatus === "success" ? (
+        <Alert
+          message={"Transaksi Berhasil Dibatalkan"}
+          type="success"
+          closable
+          onClose={onClose}
+          className="w-[340px] sm:w-[500px] flex text-center mx-auto mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+        />
+      ) : (
+        ""
+      )}
       {detailOffer.length === 0 || getDetailOfferStatus === "loading" ? (
         <div className="flex mx-auto mt-32 justify-center">
           <SyncLoader color="#7126B5" margin={2} size={12} />
@@ -139,8 +188,8 @@ function InfoPenawar() {
                 </div>
               </div>
               <div>
-                {detailOffer.offerStatus === "Diterima" ||
-                sellerAcceptedOfferStatus === "Diterima" ? (
+                {acceptedOfferStatus === "success" ||
+                detailOffer.offerStatus === "Diterima" ? (
                   <div className="sm:justify-end duration-[1s] flex justify-between">
                     <button
                       onClick={openModal}
@@ -154,8 +203,14 @@ function InfoPenawar() {
                     >
                       Hubungi di <FaWhatsapp className="ml-2" />
                     </button>
-                    <ModalStatus isOpen={isOpen} setIsOpen={setIsOpen} />
+                    <ModalStatus
+                      productId={idProduk}
+                      offerId={idPenawaran}
+                      isOpen={isOpen}
+                      setIsOpen={setIsOpen}
+                    />
                     <ModalWhatsapp
+                      offerId={idPenawaran}
                       nav={nav}
                       setNav={setNav}
                       username={detailOffer.username}
@@ -166,25 +221,41 @@ function InfoPenawar() {
                     />
                   </div>
                 ) : (
-                  <div className="sm:justify-end duration-[1s] flex justify-between">
-                    <button className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium">
-                      Tolak
-                    </button>
-                    <button
-                      onClick={handleAcceptedOffer}
-                      className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
-                    >
-                      Terima
-                    </button>
-                    <ModalWhatsapp
-                      nav={nav}
-                      setNav={setNav}
-                      username={detailOffer.username}
-                      productName={detailOffer.productName}
-                      productPrice={detailOffer.productPrice}
-                      offerPrice={detailOffer.offerPrice}
-                      productImage={detailOffer.url ? detailOffer.url : Card}
-                    />
+                  <div>
+                    {rejectedOfferStatus === "success" ||
+                    detailOffer.offerStatus === "Ditolak" ? (
+                      <p className="italic text-gray-900 text-end">
+                        Trasnsaksi Dibatalkan, <br /> Anda telah menolak tawaran
+                        ini
+                      </p>
+                    ) : (
+                      <div className="sm:justify-end duration-[1s] flex justify-between">
+                        <button
+                          onClick={handleRejectedOffer}
+                          className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium"
+                        >
+                          Tolak
+                        </button>
+                        <button
+                          onClick={handleAcceptedOffer}
+                          className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
+                        >
+                          Terima
+                        </button>
+                        <ModalWhatsapp
+                          offerId={idPenawaran}
+                          nav={nav}
+                          setNav={setNav}
+                          username={detailOffer.username}
+                          productName={detailOffer.productName}
+                          productPrice={detailOffer.productPrice}
+                          offerPrice={detailOffer.offerPrice}
+                          productImage={
+                            detailOffer.url ? detailOffer.url : Card
+                          }
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

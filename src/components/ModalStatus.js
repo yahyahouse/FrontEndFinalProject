@@ -1,12 +1,41 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateProductToSold } from "../features/productSlice";
+import { sellerRejectedOffer } from "../features/offerSlice";
 
 import Close from "../assets/img/fi_x.svg";
 
-const ModalStatus = ({ isOpen, setIsOpen }) => {
+const ModalStatus = ({ productId, offerId, isOpen, setIsOpen }) => {
+  console.log(productId, offerId);
+  const dispatch = useDispatch();
+  const user =
+    localStorage.getItem("user") !== null
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
+
+  const [isSOld, setIsSold] = useState(false);
+  console.log(isSOld);
+
   function closeModal() {
     setIsOpen(!isOpen);
   }
+
+  const handleUpdateProductStatus = async (e) => {
+    e.preventDefault();
+    try {
+      if (isSOld === true) {
+        await dispatch(
+          updateProductToSold({ userId: user.userId, productId: productId })
+        );
+      } else if (isSOld === false) {
+        await dispatch(sellerRejectedOffer(offerId));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setIsOpen(!isOpen);
+  };
 
   return (
     <>
@@ -57,9 +86,10 @@ const ModalStatus = ({ isOpen, setIsOpen }) => {
                     <form>
                       <div className="mb-[24px]">
                         <input
-                          className="bg-gray-900 checked:bg-purple-700 mt-1 transition duration-200 align-top cursor-pointer mr-[16px]"
+                          className="bg-gray-900 hover:bg-purple-700 checked:bg-purple-700 mt-1 transition duration-200 align-top cursor-pointer mr-[16px]"
+                          onClick={() => setIsSold(true)}
                           type="radio"
-                          value=""
+                          value="sold"
                           name="radio"
                         />
                         <label className="font-normal text-sm">
@@ -71,9 +101,10 @@ const ModalStatus = ({ isOpen, setIsOpen }) => {
                       </div>
                       <div className="mb-[24px]">
                         <input
-                          className="bg-gray-900 checked:bg-purple-700 mt-1 transition duration-200 align-top cursor-pointer mr-[16px]"
+                          className="bg-gray-900 hover:bg-purple-700 checked:bg-purple-700 mt-1 transition duration-200 align-top cursor-pointer mr-[16px]"
+                          onClick={() => setIsSold(false)}
                           type="radio"
-                          value=""
+                          value="rejected"
                           name="radio"
                         />
                         <label className="font-normal text-sm">
@@ -83,7 +114,11 @@ const ModalStatus = ({ isOpen, setIsOpen }) => {
                           Kamu membatalkan transaksi produk ini dengan pembeli
                         </p>
                       </div>
-                      <button className="h-[48px] w-full rounded-2xl text-white bg-purple-700 hover:bg-opacity-80 duration-[0.5s]">
+                      <button
+                        type="submit"
+                        onClick={handleUpdateProductStatus}
+                        className="h-[48px] w-full rounded-2xl text-white bg-purple-700 hover:bg-opacity-80 duration-[0.5s]"
+                      >
                         Kirim
                       </button>
                     </form>

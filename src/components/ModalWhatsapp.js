@@ -1,13 +1,13 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-
 import Profile from "../assets/img/profile_infopenawar.png";
 import Card from "../assets/img/card_infopenawar.png";
 import Close from "../assets/img/fi_x.svg";
-import { Link } from "react-router-dom";
+
 import { FaWhatsapp } from "react-icons/fa";
 
 const ModalWhatsapp = ({
+  offerId,
   nav,
   setNav,
   username,

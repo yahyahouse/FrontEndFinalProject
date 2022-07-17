@@ -6,7 +6,7 @@ import sellerProfile from "../assets/img/sellerProfile.png";
 import { Tabs } from "antd";
 import { FiBox, FiHeart, FiDollarSign, FiChevronRight } from "react-icons/fi";
 import CardProduct from "../components/CardProduct";
-import ModalNotifikasi from "../components/ModalNotifikasi";
+import ProdukDiminati from "../components/ProdukDiminati";
 import { EmptyData } from "../components/EmptyData";
 import { ProdukTerjual } from "../components/ProdukTerjual";
 import { FiPlus } from "react-icons/fi";
@@ -17,7 +17,7 @@ import {
   getAddProductStatus,
   getSellerProducts,
   getUpdateProductStatus,
-  clearStatus,
+  clearStatusProduct,
 } from "../features/productSlice";
 
 const { TabPane } = Tabs;
@@ -37,7 +37,7 @@ const DaftarJual = () => {
   const [activeTab, setActiveTab] = useState("1");
 
   const onClose = (e) => {
-    dispatch(clearStatus());
+    dispatch(clearStatusProduct());
   };
 
   const handleActiveTab = (activeKey) => {
@@ -239,7 +239,7 @@ const DaftarJual = () => {
               title: "Diminati",
               icon: <FiHeart className="text-xl" />,
               navRight: <FiChevronRight className="text-xl" />,
-              content: <ModalNotifikasi width={"full"} rounded={"2xl"} />,
+              content: <ProdukDiminati width={"full"} rounded={"2xl"} />,
             })}
 
             {customDekstopTabPane({
@@ -264,7 +264,7 @@ const DaftarJual = () => {
               key: 2,
               title: "Diminati",
               icon: <FiHeart />,
-              content: <ModalNotifikasi rounded={"none"} />,
+              content: <ProdukDiminati rounded={"none"} />,
             })}
             {customMobileTabPane({
               key: 3,

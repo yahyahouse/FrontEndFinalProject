@@ -36,7 +36,7 @@ export const getBuyerOfferHistory = createAsyncThunk(
         }
       );
       console.log(response, "get buyer offer history");
-      return response.data;
+      return response.data.sort((a, b) => b.offerId - a.offerId);
     } catch (error) {
       console.log(error.message);
     }
@@ -59,7 +59,7 @@ export const getSellerOfferHistory = createAsyncThunk(
         }
       );
       console.log(response, "get seller offer history");
-      return response.data;
+      return response.data.sort((a, b) => b.offerId - a.offerId);
     } catch (error) {
       console.log(error.message);
     }
@@ -106,20 +106,21 @@ export const sellerAcceptedOffer = createAsyncThunk(
         }
       );
       console.log(response, "seller accepted offer");
-      // return response.data;
+      return response.data;
     } catch (error) {
       console.log(error.message);
     }
   }
 );
 
-export const getSellerProductSold = createAsyncThunk(
-  "offer/getSellerProductSold",
+export const sellerRejectedOffer = createAsyncThunk(
+  "offer/sellerRejectedOffer",
   async (data) => {
     console.log(data);
     try {
-      const response = await axios.get(
-        `https://dummyprojectbinar.herokuapp.com/offer/seller/get-product-sold/${data.userId}`,
+      const response = await axios.post(
+        `https://dummyprojectbinar.herokuapp.com/offer/seller/rejected-status/${data}`,
+        data,
         {
           headers: {
             Authorization: `Bearer ${JSON.parse(
@@ -128,7 +129,7 @@ export const getSellerProductSold = createAsyncThunk(
           },
         }
       );
-      console.log(response, "get seller product sold");
+      console.log(response, "seller rejected offer");
       return response.data;
     } catch (error) {
       console.log(error.message);
@@ -145,16 +146,20 @@ const initialState = {
   sellerOfferDetailData: [],
   sellerOfferDetailStatus: "",
   sellerAcceptedOfferStatus: "",
-  getSellerProductSold: [],
-  getSellerProductSoldStatus: "",
-
+  sellerRejectedOfferStatus: "",
   error: "",
 };
 
 const offerSLice = createSlice({
   name: "offer",
   initialState,
-  reducers: {},
+  reducers: {
+    clearStatusOffer: (state) => {
+      state.sellerAcceptedOfferStatus = "";
+      state.sellerRejectedOfferStatus = "";
+      state.addOfferStatus = "";
+    },
+  },
   extraReducers: {
     // addOffer
     [addOffer.pending]: (state) => {
@@ -204,21 +209,20 @@ const offerSLice = createSlice({
       state.sellerAcceptedOfferStatus = "loading";
     },
     [sellerAcceptedOffer.fulfilled]: (state) => {
-      state.sellerAcceptedOfferStatus = "Diterima";
+      state.sellerAcceptedOfferStatus = "success";
     },
     [sellerAcceptedOffer.rejected]: (state) => {
       state.sellerAcceptedOfferStatus = "rejected";
     },
-    // product-sold
-    [getSellerProductSold.pending]: (state) => {
-      state.getSellerProductSoldStatus = "loading";
+    [sellerRejectedOffer.pending]: (state) => {
+      state.sellerRejectedOfferStatus = "loading";
     },
-    [getSellerProductSold.fulfilled]: (state, action) => {
-      state.getSellerProductSoldStatus = "success";
-      state.getSellerProductSold = action.payload;
+    [sellerRejectedOffer.fulfilled]: (state) => {
+      state.sellerRejectedOfferStatus = "success";
+      state.sellerAcceptedOfferStatus = "";
     },
-    [getSellerProductSold.rejected]: (state) => {
-      state.getSellerProductSoldStatus = "rejected";
+    [sellerRejectedOffer.rejected]: (state) => {
+      state.sellerAcceptedOfferStatus = "rejected";
     },
   },
 });
@@ -238,8 +242,8 @@ export const getSellerOfferDetailStatus = (state) =>
   state.offer.sellerOfferDetailStatus;
 export const getSellerAcceptedOfferStatus = (state) =>
   state.offer.sellerAcceptedOfferStatus;
-export const getSellerProductSoldData = (state) =>
-  state.offer.getSellerProductSold;
-export const getSellerProductSoldStatus = (state) =>
-  state.offer.getSellerProductSoldStatus;
+export const getSellerRejectedOfferStatus = (state) =>
+  state.offer.sellerRejectedOfferStatus;
+
+export const { clearStatusOffer } = offerSLice.actions;
 export default offerSLice.reducer;

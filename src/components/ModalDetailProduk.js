@@ -21,7 +21,6 @@ const ModalDetailProduk = ({
       ? JSON.parse(localStorage.getItem("user"))
       : "";
 
-  const offerId = 3;
   const [submitted, setSubmitted] = useState(false);
   const [offerPrice, setOfferPrice] = useState("");
   console.log(parseInt(offerPrice));
@@ -33,7 +32,7 @@ const ModalDetailProduk = ({
   const handleAddOffer = async (e) => {
     e.preventDefault();
     if (offerPrice < productPrice) {
-      dispatch(
+      await dispatch(
         addOffer({
           path: {
             userId: parseInt(user.userId),
@@ -45,6 +44,7 @@ const ModalDetailProduk = ({
           },
         })
       );
+      setIsOpen(!isOpen);
     }
     setSubmitted(true);
   };
@@ -52,7 +52,7 @@ const ModalDetailProduk = ({
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={closeModal}>
+        <Dialog as="div" className="relative z-40" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-in-out duration-500"
