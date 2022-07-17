@@ -13,7 +13,6 @@ const InfoProfile = () => {
   const dispatch = useDispatch();
   const getUser = useSelector(detailUser);
   const [users] = useState(JSON.parse(localStorage.getItem("user")));
-  console.log("userid dari info profile ", users.userId);
   useEffect(() => {
     dispatch(getUserById(users.userId));
   }, [dispatch]);
@@ -23,20 +22,18 @@ const InfoProfile = () => {
   const maxNumber = 1;
 
   const onChange = (imageList, addUpdateIndex) => {
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
   // IMAGE_UPLOADING END
   // GET_DATA START
   const [newData, setNewData] = useState({
-    userName: getUser.username,
-    city: getUser.city,
-    address: getUser.address,
-    phone: getUser.phone,
+    userId: users.userId,
+    username: users.username,
+    city: users.city,
+    address: users.address,
+    phone: users.phone,
   });
-
   console.log(newData, "data edit in form");
-
   const handleInputNewData = (e) => {
     setNewData({
       ...newData,
@@ -47,20 +44,38 @@ const InfoProfile = () => {
   const handleEditProfile = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("image", images[0].file);
-    console.log(images[0].file, "test");
-    data.append("username", newData.userName);
-    data.append("city", newData.city);
+    data.append("userId", users.userId);
+    data.append("username", newData.username);
     data.append("address", newData.address);
+    data.append("city", newData.city);
     data.append("phone", newData.phone);
+    data.append("users_image", images[0].file);
+    console.log(images[0].file, "test");
     try {
-      let response = await dispatch(userEdit(data));
+      let response = await dispatch(
+        userEdit({
+          userId: newData.userId,
+          username: newData.username,
+          city: newData.city,
+          address: newData.address,
+          phone: newData.phone,
+          data: data,
+        })
+      );
       console.log(response, "berhasil");
     } catch (error) {
       console.error(error.message, "gagal");
     }
   };
-
+  // option
+  let render;
+  if (users.city) {
+    render = (
+      <option value={newData.city} selected>
+        {newData.city}
+      </option>
+    );
+  }
   // GET_DATA END
   return (
     <div>
@@ -89,7 +104,7 @@ const InfoProfile = () => {
                     {...dragProps}
                   >
                     {/* <img className="z-50" src={Camera} alt="plus" /> */}
-                    <img src={getUser.url} alt="" />
+                    {/* <img src={getUser.url} alt="" /> */}
                   </div>
                 </div>
                 <div className="flex ">
@@ -115,13 +130,13 @@ const InfoProfile = () => {
             <input
               type="text"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              value={newData.userName}
+              value={newData.username}
               name="username"
               onChange={handleInputNewData}
-              id="userName"
+              id="username"
             />
           </div>
-          {/* <div className="flex flex-col mb-3">
+          <div className="flex flex-col mb-3">
             <label className="mb-1 font-medium">Kota*</label>
             <select
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
@@ -129,15 +144,18 @@ const InfoProfile = () => {
               onChange={handleInputNewData}
               id="city"
             >
-              <option value="coba">{newData.city} test</option>
+              {render}
+              <option selected hidden>
+                Pilih kota
+              </option>
+              <option value="jakarta">Jakarta</option>
             </select>
-          </div> */}
+          </div>
           <div className="flex flex-col mb-3">
             <label className="mb-1 font-medium">Alamat*</label>
             <textarea
               type="textarea"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] px-4 text-xs"
-              placeholder={newData.address}
               value={newData.address}
               onChange={handleInputNewData}
               id="address"
