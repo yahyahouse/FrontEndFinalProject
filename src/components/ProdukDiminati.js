@@ -3,10 +3,13 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getSellerOfferHistory,
+  getSellerOfferHistoryStatus,
   getSellerOfferHistoryData,
 } from "../features/offerSlice";
 import productImage from "../assets/img/notifImage.png";
 import { Link } from "react-router-dom";
+import { SyncLoader } from "react-spinners";
+import { EmptyData } from "../components/EmptyData";
 
 const ProdukDiminati = (
   width,
@@ -24,6 +27,7 @@ const ProdukDiminati = (
       : "";
 
   const sellerOfferHistory = useSelector(getSellerOfferHistoryData);
+  const sellerOfferHistoryStatus = useSelector(getSellerOfferHistoryStatus);
 
   useEffect(() => {
     dispatch(getSellerOfferHistory({ userId: user.userId }));
@@ -33,7 +37,16 @@ const ProdukDiminati = (
     <div
       className={`py-4 bg-white md:px-[${paddingX}] md:mt-[${marginT}] rounded-${rounded} shadow-[${shadow}] [&>div:last-child>div>div]:border-none`}
     >
-      {sellerOfferHistory &&
+      {sellerOfferHistoryStatus === "loading" ? (
+        <div className="flex mx-auto mt-32 justify-center">
+          <SyncLoader color="#7126B5" margin={2} size={12} />
+        </div>
+      ) : sellerOfferHistory.length === 0 ? (
+        <div>
+          <EmptyData message="Belum ada produkmu yang diminati nih" />
+        </div>
+      ) : (
+        sellerOfferHistory &&
         sellerOfferHistory.map((item) => (
           <div className={item.userId === user.userId ? "hidden" : "block"}>
             <div className="cursor-pointer">
@@ -101,7 +114,8 @@ const ProdukDiminati = (
               </div>
             </div>
           </div>
-        ))}
+        ))
+      )}
     </div>
   );
 };

@@ -9,6 +9,7 @@ const ModalDetailProduk = ({
   isOpen,
   setIsOpen,
   productId,
+  productImage,
   productName,
   productPrice,
 }) => {
@@ -116,8 +117,12 @@ const ModalDetailProduk = ({
                       </p>
                       <div className="p-[16px] flex flex-col w-full rounded-2xl shadow-[0_0_4px_rgba(0,0,0,0.15)] mb-[24px] bg-gray-200">
                         <div className="flex">
-                          <div className="rounded-xl h-[48px] w-[48px] overflow-hidden">
-                            <img src={Card} alt="" />
+                          <div>
+                            <img
+                              src={productImage}
+                              alt=""
+                              className="rounded-xl h-[48px] w-[48px] object-cover"
+                            />
                           </div>
                           <div className="pl-[16px] flex flex-col">
                             <p className="text-sm font-semibold ">

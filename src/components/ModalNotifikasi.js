@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+// import {
+//   getBuyerOfferHistory,
+//   getBuyerOfferHistoryData,
+//   getBuyerOfferHistoryStatus,
+//   getSellerOfferHistory,
+//   getSellerOfferHistoryData,
+//   getSellerOfferHistoryStatus,
+// } from "../features/offerSlice";
 import {
-  getBuyerOfferHistory,
-  getBuyerOfferHistoryData,
-  getBuyerOfferHistoryStatus,
-  getSellerOfferHistory,
-  getSellerOfferHistoryData,
-  getSellerOfferHistoryStatus,
-} from "../features/offerSlice";
-import productImage from "../assets/img/notifImage.png";
+  getUserNotification,
+  getUserNotificationData,
+  // getUserNotificationStatus,
+} from "../features/notificationSlice";
+
 import moment from "moment";
 import { EmptyData } from "./EmptyData";
-import Card from "../assets/img/card_infopenawar.png";
 
 const ModalNotifikasi = ({
   width,
@@ -22,7 +26,6 @@ const ModalNotifikasi = ({
   paddingX,
   marginT,
 }) => {
-  const location = useLocation();
   const dispatch = useDispatch();
 
   const user =
@@ -30,53 +33,104 @@ const ModalNotifikasi = ({
       ? JSON.parse(localStorage.getItem("user"))
       : "";
 
-  const buyerOfferHistory = useSelector(getBuyerOfferHistoryData);
-  const buyerGetOfferStatus = useSelector(getBuyerOfferHistoryStatus);
-  const sellerOfferHistory = useSelector(getSellerOfferHistoryData);
-  const sellerGetOfferStatus = useSelector(getSellerOfferHistoryStatus);
-  console.log(buyerOfferHistory);
-  console.log(sellerOfferHistory, "seller get offer");
-  console.log(buyerGetOfferStatus);
-  console.log(sellerGetOfferStatus);
+  const userNotification = useSelector(getUserNotificationData);
+  console.log(userNotification);
+  // const userNotificationStatus = useSelector(getUserNotificationStatus);
+  // const buyerOfferHistory = useSelector(getBuyerOfferHistoryData);
+  // const buyerGetOfferStatus = useSelector(getBuyerOfferHistoryStatus);
+  // const sellerOfferHistory = useSelector(getSellerOfferHistoryData);
+  // const sellerGetOfferStatus = useSelector(getSellerOfferHistoryStatus);
+  // console.log(buyerOfferHistory);
+  // console.log(sellerOfferHistory, "seller get offer");
+  // console.log(buyerGetOfferStatus);
+  // console.log(sellerGetOfferStatus);
 
   useEffect(() => {
-    dispatch(getBuyerOfferHistory(user.userId));
-    dispatch(getSellerOfferHistory({ userId: user.userId }));
+    // dispatch(getBuyerOfferHistory(user.userId));
+    // dispatch(getSellerOfferHistory({ userId: user.userId }));
+    dispatch(getUserNotification({ userId: user.userId }));
   }, [dispatch, user.userId]);
 
-  return location.pathname === "/" ||
-    location.pathname.includes("detailproduk") ? (
+  return (
     <div
-      className={`py-4 bg-white md:px-[${paddingX}] md:mt-[${marginT}] rounded-${rounded} shadow-[${shadow}] [&>div:last-child>div>div]:border-none`}
+      className={`notification py-4 sm:max-h-[271px] sm:w-[410px] bg-white md:px-[${paddingX}] md:mt-[${marginT}] rounded-${rounded} shadow-[${shadow}] [&>div:last-child>div>div]:border-none sm:overflow-scroll`}
     >
-      {buyerOfferHistory &&
-        buyerOfferHistory.map((item) => (
+      {userNotification.length === 0 ? (
+        <div>
+          <EmptyData message="Belum ada notifikasi nih" imageWidth={"100px"} />
+        </div>
+      ) : (
+        userNotification &&
+        userNotification.map((item) => (
+          // <Link
+          //   to={
+          //     item.title.includes("Anda mendapat tawaran")
+          //       ? `/infopenawar/${item.productId}/${item.offerId}`
+          //       : `/detailproduk/${item.productId}`
+          //   }
+          // >
           <div className="hover:bg-gray-500 cursor-pointer">
             <div className="px-4 pt-4">
               <div
-                className={`flex gap-12 w-${width} justify-between border-b border-gray-500 pb-4`}
+                className={`flex gap-12 sm:gap-4 w-${width} justify-between border-b border-gray-500 pb-4`}
               >
                 <div className="flex gap-4">
                   <div>
                     <img
-                      src={item.url ? item.url : Card}
+                      src={item.url}
                       alt="productImage"
                       className="w-12 h-12 rounded-xl object-cover"
                     />
                   </div>
                   <div>
                     <p className="text-[10px] text-gray-900">
-                      Penawaran produk
+                      {item.title.includes("Anda mendapat tawaran")
+                        ? "Penawaran produk"
+                        : item.title.includes("Product Diterbitkan")
+                        ? "Berhasil di terbitkan"
+                        : item.title.includes("Tawaran Product")
+                        ? "Penawaran anda"
+                        : ""}
                     </p>
                     <h3 className="mt-1 text-sm font-normal text-black">
                       {item.productName}
                     </h3>
-                    <h3 className="mt-1 text-sm font-normal text-black">
-                      Rp {item.productPrice}
-                    </h3>
-                    <h3 className="mt-1 text-sm font-normal text-black">
-                      Ditawar Rp {item.offerPrice}
-                    </h3>
+                    {/* Check offer status */}
+                    {item.title.includes("Tawaran Product") &&
+                    item.offerStatus &&
+                    item.offerStatus === "Diterima" ? (
+                      <h3 className="mt-1 text-sm font-normal text-black line-through">
+                        Rp {item.productPrice}
+                      </h3>
+                    ) : (
+                      <h3 className="mt-1 text-sm font-normal text-black">
+                        Rp {item.productPrice}
+                      </h3>
+                    )}
+
+                    {/* ketika buyer penawarannya diterima */}
+                    {item.title.includes("Tawaran Product") &&
+                    item.offerStatus &&
+                    item.offerStatus === "Diterima" ? (
+                      <div>
+                        <h3 className="mt-1 text-sm font-normal text-black">
+                          Berhasil Ditawar Rp {item.offerPrice}
+                        </h3>
+                        <p className="text-[10px] text-gray-900">
+                          Kamu akan dihubungi penjual via whatsapp
+                        </p>
+                      </div>
+                    ) : item.title.includes("Tawaran Product") &&
+                      item.offerStatus &&
+                      item.offerStatus === "Ditolak" ? (
+                      <h3 className="mt-1 text-sm font-normal text-black">
+                        Penawaran Rp {item.offerPrice} ditolak
+                      </h3>
+                    ) : (
+                      <h3 className="mt-1 text-sm font-normal text-black">
+                        Ditawar Rp {item.offerPrice}
+                      </h3>
+                    )}
                   </div>
                 </div>
 
@@ -88,74 +142,15 @@ const ModalNotifikasi = ({
                       .local()
                       .format("MMMM DD, hh:mm")}
                   </p>
+
                   <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1"></div>
                 </div>
               </div>
             </div>
           </div>
-        ))}
-    </div>
-  ) : (
-    <div
-      className={`py-4 bg-white md:px-[${paddingX}] md:mt-[${marginT}] rounded-${rounded} shadow-[${shadow}] [&>div:last-child>div>div]:border-none`}
-    >
-      {sellerOfferHistory &&
-        sellerOfferHistory.map((item) => (
-          <div className={item.userId === user.userId ? "hidden" : "block"}>
-            <Link to={`/infopenawar/${item.productId}/${item.offerId}`}>
-              <div className="hover:bg-gray-500 cursor-pointer">
-                <div className="px-4 pt-4">
-                  <div
-                    className={`flex gap-12 w-${width} justify-between border-b border-gray-500 pb-4`}
-                  >
-                    <div className="flex gap-6">
-                      <div>
-                        {item.url ? (
-                          <img
-                            src={item.url}
-                            alt="productImage"
-                            className="w-12 h-12 rounded-xl object-cover"
-                          />
-                        ) : (
-                          <img
-                            src={productImage}
-                            alt="productImage"
-                            className="w-12 h-12 rounded-xl object-cover"
-                          />
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-gray-900">
-                          Penawaran produk
-                        </p>
-                        <h3 className="mt-1 text-sm font-normal text-black">
-                          {item.productName}
-                        </h3>
-                        <h3 className="mt-1 text-sm font-normal text-black">
-                          Rp {item.productPrice}
-                        </h3>
-                        <h3 className="mt-1 text-sm font-normal text-black">
-                          Ditawar Rp {item.offerPrice}
-                        </h3>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2">
-                      <p className="text-[10px] text-gray-900">
-                        {" "}
-                        {moment
-                          .utc(item.localDateTime)
-                          .local()
-                          .format("MMMM DD, hh:mm")}
-                      </p>
-                      <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </div>
-        ))}
+          // </Link>
+        ))
+      )}
     </div>
   );
 };

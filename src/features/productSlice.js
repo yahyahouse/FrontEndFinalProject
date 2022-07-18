@@ -149,7 +149,8 @@ export const getSellerProductSold = createAsyncThunk(
     console.log(data);
     try {
       const response = await axios.get(
-        `https://dummyprojectbinar.herokuapp.com/offer/seller/get-product-sold/${data.userId}`,
+        `https://dummyprojectbinar.herokuapp.com/product/seller/get-product-sold/${data.userId}
+        `,
         {
           headers: {
             Authorization: `Bearer ${JSON.parse(

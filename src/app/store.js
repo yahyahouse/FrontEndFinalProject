@@ -3,6 +3,7 @@ import authReducer from "../features/authSlice";
 import productReducer from "../features/productSlice";
 import userReducer from "../features/userSlice";
 import offerReducer from "../features/offerSlice";
+import notificationReducer from "../features/notificationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     product: productReducer,
     user: userReducer,
     offer: offerReducer,
+    notification: notificationReducer,
   },
 });

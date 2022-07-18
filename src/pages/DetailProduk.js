@@ -208,7 +208,7 @@ function DetailProduk() {
               user.userId === detailProduct.userId ? (
                 <button
                   onClick={handleNav}
-                  className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-gray-700 items-center text-white fixed bottom-5 sm:hidden z-50"
+                  className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-gray-700 items-center text-white fixed bottom-5 sm:hidden z-40"
                   disabled
                 >
                   {user.userId === detailProduct.userId
@@ -218,7 +218,7 @@ function DetailProduk() {
               ) : (
                 <button
                   onClick={handleNav}
-                  className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-50"
+                  className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-40"
                 >
                   Saya Tertarik dan ingin nego
                 </button>
@@ -232,6 +232,7 @@ function DetailProduk() {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             productId={detailProduct ? detailProduct.productId : "Id kosong"}
+            productImage={detailProduct.url ? detailProduct.url : produkimage}
             productName={
               detailProduct ? detailProduct.productName : "Name kosong"
             }

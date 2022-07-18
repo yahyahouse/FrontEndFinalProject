@@ -7,7 +7,7 @@ import { Tabs } from "antd";
 import { FiBox, FiHeart, FiDollarSign, FiChevronRight } from "react-icons/fi";
 import CardProduct from "../components/CardProduct";
 import ProdukDiminati from "../components/ProdukDiminati";
-import { EmptyData } from "../components/EmptyData";
+
 import { ProdukTerjual } from "../components/ProdukTerjual";
 import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router-dom";
