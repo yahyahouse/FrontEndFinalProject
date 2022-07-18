@@ -121,7 +121,8 @@ const ModalNotifikasi = ({
                             </h3>
                           </div>
                         </div>
-                      ) : item.title.includes("Product Diterbitkan") ? (
+                      ) : // Seller Notif
+                      item.title.includes("Product Diterbitkan") ? (
                         <div>
                           <h3 className="mt-1 text-sm font-normal text-black">
                             Rp {item.productPrice}
