@@ -1,23 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import "../assets/css/daftarJual.css";
+import { Alert } from "antd";
 import NavigationBar from "../components/NavigationBar";
 import sellerProfile from "../assets/img/sellerProfile.png";
 import { Tabs } from "antd";
 import { FiBox, FiHeart, FiDollarSign, FiChevronRight } from "react-icons/fi";
 import CardProduct from "../components/CardProduct";
-import ModalNotifikasi from "../components/ModalNotifikasi";
-import { EmptyData } from "../components/EmptyData";
+import ProdukDiminati from "../components/ProdukDiminati";
+
+import { ProdukTerjual } from "../components/ProdukTerjual";
 import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getProductBySeller,
+  getAddProductStatus,
+  getSellerProducts,
+  getUpdateProductStatus,
+  clearStatusProduct,
+} from "../features/productSlice";
 
 const { TabPane } = Tabs;
 
 const DaftarJual = () => {
+  const dispatch = useDispatch();
+  const sellerProducts = useSelector(getSellerProducts);
+  console.log(sellerProducts);
+  const addProductstatus = useSelector(getAddProductStatus);
+  console.log(addProductstatus);
+  const updateProductStatus = useSelector(getUpdateProductStatus);
+
+  const seller =
+    localStorage.getItem("user") !== null
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
   const [activeTab, setActiveTab] = useState("1");
-  const dataDummy = [0, 1, 2, 3, 4, 5, 6, 7];
+
+  const onClose = (e) => {
+    dispatch(clearStatusProduct());
+  };
 
   const handleActiveTab = (activeKey) => {
     setActiveTab(activeKey);
   };
+
+  useEffect(() => {
+    dispatch(getProductBySeller(seller.userId));
+  }, [dispatch, seller.userId]);
 
   // Tabs untuk dekstop view
   const customDekstopTabPane = ({
@@ -50,20 +79,36 @@ const DaftarJual = () => {
       }
     >
       {activeTab === "1" ? (
-        <div className="grid grid-cols-3 justify-between gap-5">
-          <Link to="/infoProduk">
-            <button className="w-full h-full flex justify-center items-center border-dashed border-2 rounded border-gray-700">
-              <div className="text-gray-900">
-                <FiPlus className="mx-auto text-2xl" />
-                <span className="text-xs">Tambahkan Produk</span>
+        <div className="grid grid-cols-3 justify-between gap-y-6">
+          {sellerProducts && sellerProducts.length === 4 ? (
+            <button
+              disabled
+              className="w-full sm:w-[206px] sm:h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-200"
+            >
+              <div className="text-gray-700">
+                <span className="text-xs">
+                  Menacapai Batas <br /> Upload Produk
+                </span>
               </div>
             </button>
-          </Link>
-          {dataDummy.map((i) => (
-            <div key={i} className="w-full">
-              {content}
-            </div>
-          ))}
+          ) : (
+            <Link to="/infoproduk">
+              <button className="w-full sm:w-[206px] sm:h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-700">
+                <div className="text-gray-900">
+                  <FiPlus className="mx-auto text-2xl" />
+                  <span className="text-xs">Tambahkan Produk</span>
+                </div>
+              </button>
+            </Link>
+          )}
+          {sellerProducts &&
+            sellerProducts.map((item) => (
+              <CardProduct
+                cardWidth={"206px"}
+                key={item.productId}
+                data={item}
+              />
+            ))}
         </div>
       ) : activeTab === "2" ? (
         <div>{content}</div>
@@ -89,19 +134,35 @@ const DaftarJual = () => {
       >
         {activeTab === "1" ? (
           <div className="grid grid-cols-2 justify-between gap-5 mt-6">
-            <Link to="/infoProduk">
-              <button className="w-full h-full flex justify-center items-center border-dashed border-2 rounded border-gray-700">
-                <div className="text-gray-900">
-                  <FiPlus className="mx-auto text-2xl" />
-                  <span className="text-xs">Tambahkan Produk</span>
+            {sellerProducts && sellerProducts.length === 4 ? (
+              <button
+                disabled
+                className="w-full h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-200"
+              >
+                <div className="text-gray-700">
+                  <span className="text-xs">Mencapai Batas Upload Produk</span>
                 </div>
               </button>
-            </Link>
-            {dataDummy.map((i) => (
-              <div key={i} className="w-full">
-                {content}
-              </div>
-            ))}
+            ) : (
+              <Link to="/infoproduk">
+                <button className="w-full h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-700">
+                  <div className="text-gray-900">
+                    <FiPlus className="mx-auto text-2xl" />
+                    <span className="text-xs">Tambahkan Produk</span>
+                  </div>
+                </button>
+              </Link>
+            )}
+            {sellerProducts &&
+              sellerProducts.map((item) => (
+                <CardProduct
+                  cardWidth={"206px"}
+                  imgHeight={"120px"}
+                  imgFit={"object-containt"}
+                  key={item.productId}
+                  data={item}
+                />
+              ))}
           </div>
         ) : activeTab === "2" ? (
           <div>{content}</div>
@@ -117,12 +178,42 @@ const DaftarJual = () => {
   return (
     <div className="pb-5">
       <NavigationBar />
+      {addProductstatus === "Produk berhasil ditambahkan" ? (
+        <Alert
+          message={addProductstatus}
+          type="success"
+          closable
+          onClose={onClose}
+          className="w-[340px] sm:w-[500px] flex text-center mx-auto mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+        />
+      ) : (
+        ""
+      )}
+
+      {updateProductStatus === "Produk berhasil diubah" ? (
+        <Alert
+          message={updateProductStatus}
+          type="success"
+          closable
+          onClose={onClose}
+          className="w-[340px] sm:w-[500px] flex mx-auto text-center mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+        />
+      ) : (
+        ""
+      )}
+
       <div className="px-2 mt-4 md:px-[236px] md:mt-[120px]">
         <h2 className="hidden md:block text-[20px] font-bold">
           Daftar Jual Saya
         </h2>
         <div className="w-full my-6 flex justify-between bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl items-center">
-          <img src={sellerProfile} alt="userProfile" width={48} height={48} />
+          <div className="flex gap-4 items-center">
+            <img src={sellerProfile} alt="userProfile" width={48} height={48} />
+            <div>
+              <h4 className="text-sm font-medium">{seller.username}</h4>
+              <p className="text-[10px] text-gray-900 mt-1">Kota</p>
+            </div>
+          </div>
           <button className="px-3 py h-[26px] border border-purple-700 rounded-lg font-medium text-xs">
             Edit
           </button>
@@ -140,7 +231,7 @@ const DaftarJual = () => {
               title: "Semua Produk",
               icon: <FiBox className="text-xl" />,
               navRight: <FiChevronRight className="text-xl" />,
-              content: <CardProduct cardWidth={"206px"} />,
+              content: <CardProduct cardWidth={"182px"} />,
             })}
 
             {customDekstopTabPane({
@@ -148,7 +239,7 @@ const DaftarJual = () => {
               title: "Diminati",
               icon: <FiHeart className="text-xl" />,
               navRight: <FiChevronRight className="text-xl" />,
-              content: <ModalNotifikasi width={"full"} rounded={"2xl"} />,
+              content: <ProdukDiminati width={"full"} rounded={"2xl"} />,
             })}
 
             {customDekstopTabPane({
@@ -156,7 +247,7 @@ const DaftarJual = () => {
               title: "Terjual",
               icon: <FiDollarSign className="text-xl" />,
               navRight: <FiChevronRight className="text-xl" />,
-              content: <EmptyData />,
+              content: <ProdukTerjual />,
             })}
           </Tabs>
         </div>
@@ -173,13 +264,13 @@ const DaftarJual = () => {
               key: 2,
               title: "Diminati",
               icon: <FiHeart />,
-              content: <ModalNotifikasi rounded={"none"} />,
+              content: <ProdukDiminati rounded={"none"} />,
             })}
             {customMobileTabPane({
               key: 3,
               title: "Terjual",
               icon: <FiDollarSign />,
-              content: <EmptyData />,
+              content: <ProdukTerjual />,
             })}
           </Tabs>
         </div>

@@ -1,97 +1,226 @@
-import React from "react";
+import React, { useEffect } from "react";
+import "../assets/css/home.css";
+import { Tabs } from "antd";
 import Banner from "../components/Banner";
 import CardProduct from "../components/CardProduct";
 import { FiSearch, FiPlus } from "react-icons/fi";
 import { Pagination } from "antd";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
+import { useState } from "react";
 import NavigationBar from "../components/NavigationBar";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllProducts,
+  getAllDataProducts,
+  getAllProductStatus,
+} from "../features/productSlice";
+import { SyncLoader } from "react-spinners";
+
+const { TabPane } = Tabs;
 
 const Home = () => {
+  const [category, setCategory] = useState("");
+  console.log(category);
+
+  const dispatch = useDispatch();
+  const allProducts = useSelector(getAllDataProducts);
+  console.log(allProducts, "di home");
+  const getProductStatus = useSelector(getAllProductStatus);
+  console.log(getProductStatus);
+
+  // mengambil value tab kategori active
+  const onChange = (key) => {
+    console.log(key);
+    setCategory(key);
+  };
+
+  // mengambil value dari pagination yang active
   const handlePaginationChange = (page) => {
-    // mengambil value dari pagination yang active
     console.log(page);
   };
+
+  useEffect(() => {
+    dispatch(
+      getAllProducts({
+        productName: "",
+        productCategory: category,
+        page: 1,
+        size: 24,
+      })
+    );
+  }, [dispatch, category]);
   return (
     <div>
       <NavigationBar />
-      <Banner />
-      <div className="w-full md:px-[136px] mt-10">
-        <div className="px-2 mt-[228px] md:mt-2">
-          <h3 className="text-base font-bold">Telusuri Category</h3>
-          <div>
-            <Swiper
-              slidesPerView={2.6}
-              spaceBetween={20}
-              breakpoints={{
-                640: {
-                  slidesPerView: 3,
-                },
-                768: {
-                  slidesPerView: 4,
-                },
-                1024: {
-                  slidesPerView: 6,
-                },
-              }}
-              modules={[]}
-              className="mySwiper"
-            >
-              <SwiperSlide>
-                <button className="bg-purple-700 px-7 py-3 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 hover:bg-purple-500">
-                  <FiSearch className="text-white text-xl font-bold" />
-                  Semua
-                </button>
-              </SwiperSlide>
-              <SwiperSlide>
-                <button className="group bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4 hover:bg-purple-700 hover:text-white">
-                  <FiSearch className="text-black text-xl font-bold group-hover:text-white" />
-                  Hobi
-                </button>
-              </SwiperSlide>
-              <SwiperSlide>
-                <button className="group bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4 hover:bg-purple-700 hover:text-white">
-                  <FiSearch className="text-black text-xl font-bold group-hover:text-white" />
-                  Kendaraan
-                </button>
-              </SwiperSlide>
-              <SwiperSlide>
-                <button className="group bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4 hover:bg-purple-700 hover:text-white">
-                  <FiSearch className="text-black text-xl font-bold group-hover:text-white" />
-                  Fashion
-                </button>
-              </SwiperSlide>
-              <SwiperSlide>
-                <button className="group bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4 hover:bg-purple-700 hover:text-white">
-                  <FiSearch className="text-black text-xl font-bold group-hover:text-white" />
-                  Aksesoris
-                </button>
-              </SwiperSlide>
-              <SwiperSlide>
-                <button className="group bg-purple-100 px-7 py-3 flex items-center gap-2 rounded-xl text-black text-sm font-normal mt-4 hover:bg-purple-700 hover:text-white">
-                  <FiSearch className="text-black text-xl font-bold group-hover:text-white" />
-                  Kesehatan
-                </button>
-              </SwiperSlide>
-            </Swiper>
+      <div className="banner">
+        <Banner />
+      </div>
+      <div className="w-full md:px-[136px] mt-10 min-h-screen">
+        <div className="px-4 mt-[228px] md:mt-2">
+          <div className="category-product">
+            <h3 className="text-base font-bold -mb-5 md:mb-4">
+              Telusuri Category
+            </h3>
+
+            <Tabs defaultActiveKey="1" onChange={onChange}>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Semua
+                  </span>
+                }
+                key=""
+              >
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
+              </TabPane>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Hobi
+                  </span>
+                }
+                key="Hobi"
+              >
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
+              </TabPane>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Kendaraan
+                  </span>
+                }
+                key="Kendaraan"
+              >
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
+              </TabPane>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Fashion
+                  </span>
+                }
+                key="Fashion"
+              >
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
+              </TabPane>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Elektronik
+                  </span>
+                }
+                key="Elektronik"
+              >
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
+              </TabPane>
+              <TabPane
+                tab={
+                  <span className="flex gap-2">
+                    <FiSearch />
+                    Kesehatan
+                  </span>
+                }
+                key="Kesehatan"
+              >
+                {getProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <SyncLoader color="#7126B5" margin={2} size={12} />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 md:mt-2">
+                    {allProducts &&
+                      allProducts.map((item) => (
+                        <CardProduct
+                          cardWidth={"182px"}
+                          key={item.productId}
+                          data={item}
+                        />
+                      ))}
+                  </div>
+                )}
+              </TabPane>
+            </Tabs>
           </div>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-6 justify-between gap-3 mt-8 md:mt-10">
-          <CardProduct cardWidth={"182px"} />
-          <CardProduct cardWidth={"182px"} />
-          <CardProduct cardWidth={"182px"} />
-          <CardProduct cardWidth={"182px"} />
-          <CardProduct cardWidth={"182px"} />
-          <CardProduct cardWidth={"182px"} />
-          <CardProduct cardWidth={"182px"} />
-          <CardProduct cardWidth={"182px"} />
-          <CardProduct cardWidth={"182px"} />
-          <CardProduct cardWidth={"182px"} />
-          <CardProduct cardWidth={"182px"} />
         </div>
       </div>
       <Pagination
@@ -100,7 +229,7 @@ const Home = () => {
         total={1000}
         onChange={handlePaginationChange}
       />
-      <Link to={"/infoproduk"}>
+      <Link to="/infoproduk">
         <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] drop-shadow-[0_0_10px_rgba(0, 0, 0, 0.15)]">
           <FiPlus className="text-white text-xl font-bold" />
           Jual

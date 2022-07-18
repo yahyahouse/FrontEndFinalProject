@@ -9,11 +9,18 @@ import {
   FiUser,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import ModalNotifikasi from "./ModalNotifikasi";
 import DropdownAccount from "./DropdownAccount";
+import { getAllProducts } from "../features/productSlice";
+
+import { useDispatch } from "react-redux";
 
 const NavigationBar = () => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+
   // state untuk responsive navbar toggle
   const [nav, setNav] = useState(false);
   // penampung quary yang diinputkan
@@ -23,8 +30,11 @@ const NavigationBar = () => {
   // state untuk dropdown profile
   const [dropdown, setDropdown] = useState(false);
 
-  // data dummy status user sudah login
-  const [logged, setlogged] = useState(true);
+  // cek apakah user sudah login
+  const userLogged =
+    localStorage.getItem("user") !== null
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
 
   // setting show hide side menu navbar
   const handleNav = () => {
@@ -32,25 +42,33 @@ const NavigationBar = () => {
   };
 
   // menerima setiap perubahan yang diinput
-  const handleChange = (e) => {
+  const handleSearchChange = (e) => {
     setSearchQUery(e.target.value);
-  };
-
-  // handle api search
-  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(searchQuery);
+    if (searchQuery !== "") {
+      dispatch(
+        getAllProducts({
+          productName: searchQuery,
+          productCategory: "",
+          page: 1,
+          size: 12,
+        })
+      );
+      window.innerWidth > 768 ? window.scrollTo(0, 320) : window.scrollTo(0, 0);
+    } else {
+      dispatch(
+        getAllProducts({
+          productName: "",
+          productCategory: "",
+          page: 1,
+          size: 12,
+        })
+      );
+    }
   };
-
-  // pengkondisian
-  const r = window.location.pathname.substring(
-    1,
-    window.location.pathname.lastIndexOf("/") + 50
-  );
-  console.log(r);
 
   // Navbar Info Profile
-  if (r === "infoprofile") {
+  if (location.pathname === "/infoprofile") {
     return (
       <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
         <Link className="sm:hidden" to="/">
@@ -62,25 +80,25 @@ const NavigationBar = () => {
       </nav>
     );
     // Navbar Info Produk
-  } else if (r === "infoproduk") {
+  } else if (location.pathname === "/infoproduk") {
     return (
       <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
         <Link className="sm:hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
         <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
-        <p className="text-base font-medium leading-6 ">
-          Lengkapi Detail Produk
-        </p>
+        <p className="font-normal text-sm">Lengkapi Detail Produk</p>
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
     // Navbar Home | Daftar Jual
   } else if (
-    r === "" ||
-    r === "daftarJual" ||
-    r === "notifikasi" ||
-    r === "userAccount"
+    location.pathname === "/" ||
+    location.pathname === "/daftarJual" ||
+    location.pathname === "/notifikasi" ||
+    location.pathname === "/userAccount" ||
+    location.pathname.includes("/detailproduk") ||
+    location.pathname.includes("/previewproduk")
   ) {
     return (
       <div>
@@ -91,7 +109,7 @@ const NavigationBar = () => {
               : ""
           }
         ></div>
-        <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-2 md:px-[136px] pt-9 md:py-[18px] flex items-center justify-between z-10">
+        <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-4 md:px-[136px] pt-9 md:py-[18px] flex items-center justify-between z-10">
           <Link to="/">
             <div className="hidden md:block w-[100px] h-[34px] bg-purple-900 mr-6" />
           </Link>
@@ -103,13 +121,13 @@ const NavigationBar = () => {
           >
             <FiMenu className="w-6 h-6" />
           </button>
-          {r === "daftarJual" ? (
+          {location.pathname === "/daftarJual" ? (
             <h2 className="md:hidden text-xl font-bold mr-auto">
               Daftar Jual Saya
             </h2>
-          ) : r === "notifikasi" ? (
+          ) : location.pathname === "/notifikasi" ? (
             <h2 className="md:hidden text-xl font-bold mr-auto">Notifikasi</h2>
-          ) : r === "userAccount" ? (
+          ) : location.pathname === "/userAccount" ? (
             <h2 className="md:hidden text-xl font-bold mr-auto">Akun Saya</h2>
           ) : (
             ""
@@ -128,7 +146,7 @@ const NavigationBar = () => {
                 <FiX className="text-2xl text-black font-bold" />
               </button>
             </div>
-            {logged ? (
+            {userLogged ? (
               <div>
                 <Link to="/daftarJual">
                   <h3 className="text-sm font-normal text-black mt-5">
@@ -158,31 +176,42 @@ const NavigationBar = () => {
           {/* // Menu Navbar Dekstop */}
           <form
             className={
-              r === "daftarJual" || r === "notifikasi" || r === "userAccount"
+              location.pathname === "/daftarJual" ||
+              location.pathname === "/notifikasi" ||
+              location.pathname === "/userAccount" ||
+              location.pathname.includes("/detailproduk") ||
+              location.pathname.includes("/previewproduk")
                 ? "hidden md:flex md:justify-start mr-auto w-full"
                 : "flex md:justify-start mr-auto w-full"
             }
-            onSubmit={handleSubmit}
+            onSubmit={handleSearchChange}
           >
-            <input
-              className="w-full md:w-[410px] h-full py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tl-2xl rounded-bl-2xl focus:outline-none placeholder:text-sm placeholder:text-gray-900"
-              placeholder="Cari di sini ..."
-              value={searchQuery}
-              onChange={handleChange}
-            />
-            <button
-              type="submit"
-              className="py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-tr-2xl rounded-br-2xl"
-            >
-              <FiSearch className="w-[19px] h-[19px] text-gray-900" />
-            </button>
+            <div className="relative w-full md:w-[444px]">
+              <input
+                className="w-full md:w-[410px] h-full py-4 px-6 bg-white md:bg-[#EEEEEE] rounded-2xl focus:outline-none placeholder:text-sm placeholder:text-gray-900"
+                placeholder="Cari di sini ..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+              <button
+                type="submit"
+                className="absolute top-0 right-6 md:right-14 h-full rounded-tr-2xl rounded-br-2xl"
+              >
+                <FiSearch className="w-[19px] h-[19px] text-gray-900 hover:text-purple-900" />
+              </button>
+            </div>
           </form>
           {/* )} */}
 
           {/* <p className="text-sm font-normal leading-6">Lengkapi Info Akun</p> */}
           {/* <div className="w-[100px]" /> */}
 
-          {r === "daftarJual" || r === "notifikasi" ? (
+          {(location.pathname === "/" ||
+            location.pathname === "/daftarJual" ||
+            location.pathname === "/notifikasi" ||
+            location.pathname.includes("/detailproduk") ||
+            location.pathname.includes("/previewproduk")) &&
+          userLogged ? (
             <div className="hidden md:flex gap-6">
               <div>
                 <button>
@@ -234,21 +263,40 @@ const NavigationBar = () => {
         </nav>
       </div>
     );
-  }
-  // HOME END
-  // DEFAULT START
-  else {
+  } else if (location.pathname === "/settingaccount") {
     return (
-      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-md duration-[1s] flex items-center justify-between">
+      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
         <Link className="sm:hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
         <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
+        <p className="text-base font-medium leading-6 ">Pengaturan Akun</p>
+        <div className="sm:w-[100px] w-[24px]" />
+      </nav>
+    );
+  } else if (location.pathname.includes("/updateproduk")) {
+    return (
+      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
+        <Link className="sm:hidden" to="/">
+          <img src={Arrowleft} alt="img" />
+        </Link>
+        <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
+        <p className="font-normal text-sm">Ubah Produk</p>
+        <div className="sm:w-[100px] w-[24px]" />
+      </nav>
+    );
+  } else {
+    return (
+      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
+        <Link className="sm:hidden" to="/">
+          <img src={Arrowleft} alt="img" />
+        </Link>
+        <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
+        <p className="font-normal text-sm">Info Penawar</p>
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
   }
-  // DEFAULT END
 };
 
 export default NavigationBar;
