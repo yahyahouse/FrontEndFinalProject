@@ -9,6 +9,7 @@ const ModalDetailProduk = ({
   isOpen,
   setIsOpen,
   productId,
+  productImage,
   productName,
   productPrice,
 }) => {
@@ -21,7 +22,6 @@ const ModalDetailProduk = ({
       ? JSON.parse(localStorage.getItem("user"))
       : "";
 
-  const offerId = 3;
   const [submitted, setSubmitted] = useState(false);
   const [offerPrice, setOfferPrice] = useState("");
   console.log(parseInt(offerPrice));
@@ -33,7 +33,7 @@ const ModalDetailProduk = ({
   const handleAddOffer = async (e) => {
     e.preventDefault();
     if (offerPrice < productPrice) {
-      dispatch(
+      await dispatch(
         addOffer({
           path: {
             userId: parseInt(user.userId),
@@ -45,6 +45,7 @@ const ModalDetailProduk = ({
           },
         })
       );
+      setIsOpen(!isOpen);
     }
     setSubmitted(true);
   };
@@ -52,7 +53,7 @@ const ModalDetailProduk = ({
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={closeModal}>
+        <Dialog as="div" className="relative z-40" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-in-out duration-500"
@@ -116,8 +117,12 @@ const ModalDetailProduk = ({
                       </p>
                       <div className="p-[16px] flex flex-col w-full rounded-2xl shadow-[0_0_4px_rgba(0,0,0,0.15)] mb-[24px] bg-gray-200">
                         <div className="flex">
-                          <div className="rounded-xl h-[48px] w-[48px] overflow-hidden">
-                            <img src={Card} alt="" />
+                          <div>
+                            <img
+                              src={productImage}
+                              alt=""
+                              className="rounded-xl h-[48px] w-[48px] object-cover"
+                            />
                           </div>
                           <div className="pl-[16px] flex flex-col">
                             <p className="text-sm font-semibold ">
