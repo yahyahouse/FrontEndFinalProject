@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FiSearch,
   FiDownload,
@@ -13,9 +13,16 @@ import { useLocation } from "react-router-dom";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import ModalNotifikasi from "./ModalNotifikasi";
 import DropdownAccount from "./DropdownAccount";
-import { getAllProducts } from "../features/productSlice";
-
-import { useDispatch } from "react-redux";
+import {
+  getAllProducts,
+  getCurrentPage,
+  handleSearchQuery,
+} from "../features/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getUserNotification,
+  checkAllNotificationRead,
+} from "../features/notificationSlice";
 
 const NavigationBar = () => {
   const location = useLocation();
@@ -41,6 +48,13 @@ const NavigationBar = () => {
     setNav(!nav);
   };
 
+  // // check all read notif
+  // const isAllRead = useSelector(allReadStatus);
+  // console.log(isAllRead);
+
+  const currentPage = useSelector(getCurrentPage);
+  console.log(currentPage);
+
   // menerima setiap perubahan yang diinput
   const handleSearchChange = (e) => {
     setSearchQUery(e.target.value);
@@ -51,21 +65,28 @@ const NavigationBar = () => {
           productName: searchQuery,
           productCategory: "",
           page: 1,
-          size: 12,
+          size: 6,
         })
       );
+      // for global state search query
+      dispatch(handleSearchQuery(searchQuery));
       window.innerWidth > 768 ? window.scrollTo(0, 320) : window.scrollTo(0, 0);
     } else {
       dispatch(
         getAllProducts({
           productName: "",
           productCategory: "",
-          page: 1,
-          size: 12,
+          page: currentPage,
+          size: 6,
         })
       );
     }
   };
+
+  useEffect(() => {
+    dispatch(getUserNotification());
+    dispatch(checkAllNotificationRead());
+  }, [dispatch]);
 
   // Navbar Info Profile
   if (location.pathname === "/infoprofile") {
@@ -219,6 +240,11 @@ const NavigationBar = () => {
                 </button>
               </div>
               <div className="relative">
+                {/* {isAllRead === false ? (
+                  <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1 absolute -top-1 right-1"></div>
+                ) : (
+                  ""
+                )} */}
                 <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1 absolute -top-1 right-1"></div>
                 <button onMouseEnter={(e) => setNotifikasi(true)}>
                   <FiBell className="text-2xl text-purple-900" />

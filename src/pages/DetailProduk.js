@@ -18,6 +18,10 @@ import {
   getBuyerOfferHistoryData,
   clearStatusOffer,
 } from "../features/offerSlice";
+import {
+  getUserNotification,
+  checkAllNotificationRead,
+} from "../features/notificationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
 
@@ -35,7 +39,7 @@ function DetailProduk() {
   console.log(addOfferStatus, "add offer status");
   console.log(detailProduct, "detail produk");
   console.log(buyerOfferHistory, "buyer offer");
-  // console.log(user.userId, detailProduct.userId);
+  console.log(buyerOfferHistory);
 
   const [hasOffered, setHasOffered] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
@@ -57,10 +61,19 @@ function DetailProduk() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(clearStatusOffer());
-    dispatch(getBuyerOfferHistory(user.userId));
+    if (user) {
+      dispatch(getBuyerOfferHistory(user.userId));
+      dispatch(getUserNotification());
+      dispatch(checkAllNotificationRead());
+      dispatch(getUserNotification());
+      dispatch(checkAllNotificationRead());
+      checkHasOffered();
+    }
     dispatch(getDetailProduct(id));
-    checkHasOffered();
+
+    // checkHasOffered();
   }, [dispatch, id]);
 
   console.log(hasOffered, "hasoffered");
@@ -148,7 +161,7 @@ function DetailProduk() {
                       ? detailProduct.productPrice
                       : "Price kosong"}
                   </p>
-                  {detailProduct ? (
+                  {detailProduct && user ? (
                     addOfferStatus === "success" ||
                     hasOffered ||
                     user.userId === detailProduct.userId ? (
@@ -159,6 +172,8 @@ function DetailProduk() {
                       >
                         {user.userId === detailProduct.userId
                           ? "Saya tertarik dan ingin nego"
+                          : detailProduct.productStatus === "Sold"
+                          ? "Produk sudah terjual"
                           : "Menunggu respon penjual"}
                       </button>
                     ) : (
@@ -170,7 +185,11 @@ function DetailProduk() {
                       </button>
                     )
                   ) : (
-                    ""
+                    <Link to={"/login"}>
+                      <button className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white hidden sm:block ">
+                        Saya tertarik dan ingin nego
+                      </button>
+                    </Link>
                   )}
                 </div>
               </div>
@@ -202,7 +221,7 @@ function DetailProduk() {
             </div>
           </div>
           <div className="flex justify-center">
-            {detailProduct ? (
+            {detailProduct && user ? (
               addOfferStatus === "success" ||
               hasOffered ||
               user.userId === detailProduct.userId ? (
@@ -213,6 +232,8 @@ function DetailProduk() {
                 >
                   {user.userId === detailProduct.userId
                     ? "Saya tertarik dan ingin nego"
+                    : detailProduct.productStatus === "Sold"
+                    ? "Produk sudah terjual"
                     : "Menunggu respon penjual"}
                 </button>
               ) : (
@@ -224,7 +245,11 @@ function DetailProduk() {
                 </button>
               )
             ) : (
-              ""
+              <Link to={"/login"}>
+                <button className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-40">
+                  Saya Tertarik dan ingin nego
+                </button>
+              </Link>
             )}
           </div>
           <ModalDetailProduk
@@ -232,7 +257,7 @@ function DetailProduk() {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             productId={detailProduct ? detailProduct.productId : "Id kosong"}
-            productImage={detailProduct.url ? detailProduct.url : produkimage}
+            productImage={detailProduct ? detailProduct.url : produkimage}
             productName={
               detailProduct ? detailProduct.productName : "Name kosong"
             }

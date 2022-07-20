@@ -11,44 +11,76 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllProducts,
+  getTotalPages,
+  getCurrentPage,
+  handleCurrentPage,
+  handleSearchQuery,
+  getSearchQuery,
   getAllDataProducts,
   getAllProductStatus,
 } from "../features/productSlice";
+import {
+  getUserNotification,
+  checkAllNotificationRead,
+} from "../features/notificationSlice";
 import { SyncLoader } from "react-spinners";
 
 const { TabPane } = Tabs;
 
 const Home = () => {
   const [category, setCategory] = useState("");
-  console.log(category);
-
+  const [page, setPage] = useState("");
+  console.log(category, page);
   const dispatch = useDispatch();
   const allProducts = useSelector(getAllDataProducts);
   console.log(allProducts, "di home");
   const getProductStatus = useSelector(getAllProductStatus);
   console.log(getProductStatus);
+  const totalPages = useSelector(getTotalPages);
+  console.log(totalPages);
+  const currentPage = useSelector(getCurrentPage);
+  console.log(currentPage);
+  const searchQuery = useSelector(getSearchQuery);
+  console.log(searchQuery);
 
   // mengambil value tab kategori active
   const onChange = (key) => {
-    console.log(key);
+    dispatch(handleSearchQuery(""));
     setCategory(key);
+    setPage(1);
+    // setCurrentPage(1);
   };
 
   // mengambil value dari pagination yang active
   const handlePaginationChange = (page) => {
-    console.log(page);
+    setPage(page);
+    dispatch(handleCurrentPage(page));
   };
 
   useEffect(() => {
-    dispatch(
-      getAllProducts({
-        productName: "",
-        productCategory: category,
-        page: 1,
-        size: 24,
-      })
-    );
-  }, [dispatch, category]);
+    if (searchQuery === "") {
+      dispatch(
+        getAllProducts({
+          productName: "",
+          productCategory: category,
+          page: page,
+          size: 6,
+        })
+      );
+    } else {
+      dispatch(
+        getAllProducts({
+          productName: searchQuery,
+          productCategory: "",
+          page: page,
+          size: 6,
+        })
+      );
+    }
+    dispatch(getUserNotification());
+    dispatch(checkAllNotificationRead());
+  }, [dispatch, category, page]);
+
   return (
     <div>
       <NavigationBar />
@@ -73,7 +105,7 @@ const Home = () => {
                 key=""
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -99,7 +131,7 @@ const Home = () => {
                 key="Hobi"
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -125,7 +157,7 @@ const Home = () => {
                 key="Kendaraan"
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -151,7 +183,7 @@ const Home = () => {
                 key="Fashion"
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -177,7 +209,7 @@ const Home = () => {
                 key="Elektronik"
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -203,7 +235,7 @@ const Home = () => {
                 key="Kesehatan"
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -225,8 +257,9 @@ const Home = () => {
       </div>
       <Pagination
         className="mt-12 pb-28 flex justify-center"
-        defaultCurrent={1}
-        total={1000}
+        defaultCurrent={currentPage}
+        current={currentPage}
+        total={totalPages + "0"}
         onChange={handlePaginationChange}
       />
       <Link to="/infoproduk">
