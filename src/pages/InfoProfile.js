@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById, detailUser, userEdit } from "../features/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
 
 // import Camera from "../assets/img/fi_camera.svg";
@@ -15,7 +15,8 @@ const InfoProfile = () => {
   const [users] = useState(JSON.parse(localStorage.getItem("user")));
   useEffect(() => {
     dispatch(getUserById(users.userId));
-  }, [dispatch]);
+  }, [dispatch, users.userId]);
+  const navigate = useNavigate();
   // GET_API END
   // IMAGE_UPLOADING START
   const [images, setImages] = React.useState([]);
@@ -36,10 +37,10 @@ const InfoProfile = () => {
     e.preventDefault();
     const data = new FormData();
     data.append("userId", users.userId);
-    data.append("username", username === "" ? getUser.username : username);
-    data.append("address", address === "" ? getUser.address : address);
-    data.append("city", city === "" ? getUser.city : city);
-    data.append("phone", phone === "" ? getUser.phone : phone);
+    data.append("username", username === "" ? users.username : username);
+    data.append("address", address === "" ? users.address : address);
+    data.append("city", city === "" ? users.city : city);
+    data.append("phone", phone === "" ? users.phone : phone);
     data.append("users_image", images[0].file);
     console.log(images[0].file, "test");
     try {
@@ -49,16 +50,17 @@ const InfoProfile = () => {
         })
       );
       console.log(response, "berhasil");
+      navigate("/");
     } catch (error) {
       console.error(error.message, "gagal");
     }
   };
   // option
   let render;
-  if (getUser.city) {
+  if (users.city) {
     render = (
-      <option defaultValue={getUser.city} selected>
-        {getUser.city}
+      <option defaultValue={users.city} selected>
+        {users.city}
       </option>
     );
   }
@@ -90,7 +92,7 @@ const InfoProfile = () => {
                     {...dragProps}
                   >
                     {/* <img className="z-50" src={Camera} alt="plus" /> */}
-                    <img src={getUser.url} alt="" />
+                    <img src={users.url} alt="" />
                   </div>
                 </div>
                 <div className="flex ">
@@ -116,7 +118,7 @@ const InfoProfile = () => {
             <input
               type="text"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              defaultValue={getUser.username}
+              defaultValue={users.username}
               name="username"
               onChange={(e) => setUsername(e.target.value)}
               id="username"
@@ -126,7 +128,7 @@ const InfoProfile = () => {
             <label className="mb-1 font-medium">Kota*</label>
             <select
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              defaultValue={getUser.city}
+              defaultValue={users.city}
               onChange={(e) => setCity(e.target.value)}
               id="city"
             >
@@ -145,7 +147,7 @@ const InfoProfile = () => {
             <textarea
               type="textarea"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] px-4 text-xs"
-              defaultValue={getUser.address}
+              defaultValue={users.address}
               onChange={(e) => setAddress(e.target.value)}
               id="address"
             />
@@ -155,7 +157,7 @@ const InfoProfile = () => {
             <input
               type="text"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              defaultValue={getUser.phone}
+              defaultValue={users.phone}
               onChange={(e) => setPhone(e.target.value)}
               id="phone"
             />
