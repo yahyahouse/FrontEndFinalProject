@@ -30,7 +30,8 @@ export const updateUserNotification = createAsyncThunk(
     console.log(data);
     try {
       const response = await axios.post(
-        `https://dummyprojectbinar.herokuapp.com/notification/read/${data.userId}`,
+        `https://dummyprojectbinar.herokuapp.com/notification/read/${data.notifId}`,
+        data,
         {
           headers: {
             Authorization: `Bearer ${JSON.parse(
@@ -51,13 +52,28 @@ const initialState = {
   userNotification: [],
   getUserNotificationStatus: "",
   updateUserNotificationStatus: "",
+  isAllRead: false,
   error: "",
 };
 
 const notificationSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
+  reducers: {
+    clearStatusNotification: (state) => {
+      state.updateUserNotificationStatus = "";
+    },
+    checkAllNotificationRead: (state) => {
+      const unread = state.userNotification.filter(
+        (item) => item.isRead === false
+      );
+      console.log(unread);
+
+      unread.length === 0
+        ? (state.isAllRead = true)
+        : (state.isAllRead = false);
+    },
+  },
   extraReducers: {
     [getUserNotification.pending]: (state) => {
       state.getUserNotificationStatus = "loading";
@@ -89,5 +105,8 @@ export const getUserNotificationStatus = (state) =>
   state.notification.getUserNotificationStatus;
 export const updateUserNotificationStatus = (state) =>
   state.notification.updateUserNotificationStatus;
+export const allReadStatus = (state) => state.notification.isAllRead;
 
+export const { clearStatusNotification, checkAllNotificationRead } =
+  notificationSlice.actions;
 export default notificationSlice.reducer;

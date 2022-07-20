@@ -79,8 +79,8 @@
 /* Pagination*/
 .ant-pagination .ant-pagination-item-active,
 .ant-pagination .ant-pagination-item:hover {
-  background-color: #7126b5;
-  border: none;
+  background-color: #7126b5 !important;
+  border: none !important;
 }
 .ant-pagination .ant-pagination-item-active a,
 .ant-pagination .ant-pagination-item a:hover {
@@ -95,6 +95,10 @@
 .ant-pagination .ant-pagination-options .ant-select .ant-select-selector:hover {
   border-color: #7126b5;
   color: #7126b5;
+}
+
+.ant-pagination .ant-pagination-options .ant-pagination-options-size-changer {
+  display: none !important;
 }
 
 @media only screen and (min-width: 576px) {

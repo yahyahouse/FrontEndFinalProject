@@ -1,9 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import Card from "../assets/img/card_detailproduk.png";
 import Close from "../assets/img/fi_x.svg";
 import { useDispatch } from "react-redux/es/exports";
 import { addOffer } from "../features/offerSlice";
+import {
+  getUserNotification,
+  checkAllNotificationRead,
+} from "../features/notificationSlice";
 
 const ModalDetailProduk = ({
   isOpen,

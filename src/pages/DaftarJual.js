@@ -19,6 +19,10 @@ import {
   getUpdateProductStatus,
   clearStatusProduct,
 } from "../features/productSlice";
+import {
+  getUserNotification,
+  checkAllNotificationRead,
+} from "../features/notificationSlice";
 
 const { TabPane } = Tabs;
 
@@ -46,6 +50,8 @@ const DaftarJual = () => {
 
   useEffect(() => {
     dispatch(getProductBySeller(seller.userId));
+    dispatch(getUserNotification());
+    dispatch(checkAllNotificationRead());
   }, [dispatch, seller.userId]);
 
   // Tabs untuk dekstop view

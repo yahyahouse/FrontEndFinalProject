@@ -187,7 +187,9 @@ const ProdukImage = ({ imageDetail }) => {
             >
               {imageDetail &&
                 imageDetail.map((item) => (
-                  <SwiperSlide>
+                  <SwiperSlide
+                    className={item.includes("http") ? "block" : "hidden"}
+                  >
                     <img
                       src={item}
                       className="w-[600px] h-[436px] object-cover"
@@ -207,7 +209,9 @@ const ProdukImage = ({ imageDetail }) => {
             >
               {imageDetail &&
                 imageDetail.map((item) => (
-                  <SwiperSlide>
+                  <SwiperSlide
+                    className={item.includes("http") ? "block" : "hidden"}
+                  >
                     <img
                       className="w-full h-[300px] object-cover"
                       src={item}

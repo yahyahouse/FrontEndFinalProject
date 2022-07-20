@@ -24,6 +24,7 @@ import {
   clearStatusProduct,
   getUpdateProductToSoldStatus,
 } from "../features/productSlice";
+import { getUserNotification } from "../features/notificationSlice";
 import { SyncLoader } from "react-spinners";
 
 function InfoPenawar() {
@@ -80,6 +81,7 @@ function InfoPenawar() {
         offerId: idPenawaran,
       })
     );
+    dispatch(getUserNotification());
   }, [dispatch, idPenawaran]);
 
   return (

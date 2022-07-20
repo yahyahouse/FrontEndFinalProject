@@ -68,7 +68,7 @@ export const ProdukTerjual = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <p className="text-[10px] text-gray-900">Terjual</p>
+                  <p className="text-[10px] text-gray-900">Berhasil terjual</p>
                   <div className="w-2 h-2 rounded bg-purple-700 mt-1"></div>
                 </div>
               </div>
