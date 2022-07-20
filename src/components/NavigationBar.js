@@ -19,11 +19,10 @@ import {
   handleSearchQuery,
 } from "../features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   // allReadStatus,
-//   // // getUserNotification,
-//   // // checkAllNotificationRead,
-// } from "../features/notificationSlice";
+import {
+  getUserNotification,
+  checkAllNotificationRead,
+} from "../features/notificationSlice";
 
 const NavigationBar = () => {
   const location = useLocation();
@@ -49,8 +48,8 @@ const NavigationBar = () => {
     setNav(!nav);
   };
 
-  // check all read notif
-  // // const isAllRead = useSelector(allReadStatus);
+  // // check all read notif
+  // const isAllRead = useSelector(allReadStatus);
   // console.log(isAllRead);
 
   const currentPage = useSelector(getCurrentPage);
@@ -66,7 +65,7 @@ const NavigationBar = () => {
           productName: searchQuery,
           productCategory: "",
           page: 1,
-          size: 36,
+          size: 6,
         })
       );
       // for global state search query
@@ -78,15 +77,15 @@ const NavigationBar = () => {
           productName: "",
           productCategory: "",
           page: currentPage,
-          size: 36,
+          size: 6,
         })
       );
     }
   };
 
   useEffect(() => {
-    // dispatch(getUserNotification());
-    // dispatch(checkAllNotificationRead());
+    dispatch(getUserNotification());
+    dispatch(checkAllNotificationRead());
   }, [dispatch]);
 
   // Navbar Info Profile

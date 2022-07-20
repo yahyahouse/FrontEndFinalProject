@@ -23,6 +23,8 @@ import {
 import {
   clearStatusProduct,
   getUpdateProductToSoldStatus,
+  getDetailProduct,
+  getDetailDataProducts,
 } from "../features/productSlice";
 import { getUserNotification } from "../features/notificationSlice";
 import { SyncLoader } from "react-spinners";
@@ -41,9 +43,11 @@ function InfoPenawar() {
   const acceptedOfferStatus = useSelector(getSellerAcceptedOfferStatus);
   const rejectedOfferStatus = useSelector(getSellerRejectedOfferStatus);
   const updateProductSoldStatus = useSelector(getUpdateProductToSoldStatus);
+  const detailProduct = useSelector(getDetailDataProducts);
   console.log(detailOffer.offerStatus);
   console.log(acceptedOfferStatus);
   console.log(rejectedOfferStatus);
+  console.log(detailProduct);
 
   const handleAcceptedOffer = async (e) => {
     e.preventDefault();
@@ -82,7 +86,8 @@ function InfoPenawar() {
       })
     );
     dispatch(getUserNotification());
-  }, [dispatch, idPenawaran]);
+    dispatch(getDetailProduct(idProduk));
+  }, [dispatch, idPenawaran, idProduk]);
 
   return (
     <div>
@@ -192,7 +197,14 @@ function InfoPenawar() {
               <div>
                 {acceptedOfferStatus === "success" ||
                 detailOffer.offerStatus === "Diterima" ? (
-                  <div className="sm:justify-end duration-[1s] flex justify-between">
+                  <div
+                    className={
+                      updateProductSoldStatus === "success" ||
+                      detailProduct.productStatus === "Sold"
+                        ? `hidden`
+                        : `sm:justify-end duration-[1s] flex justify-between`
+                    }
+                  >
                     <button
                       onClick={openModal}
                       className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium"

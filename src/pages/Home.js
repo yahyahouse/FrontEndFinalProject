@@ -31,7 +31,6 @@ const Home = () => {
   const [category, setCategory] = useState("");
   const [page, setPage] = useState("");
   console.log(category, page);
-
   const dispatch = useDispatch();
   const allProducts = useSelector(getAllDataProducts);
   console.log(allProducts, "di home");
@@ -65,7 +64,7 @@ const Home = () => {
           productName: "",
           productCategory: category,
           page: page,
-          size: 36,
+          size: 6,
         })
       );
     } else {
@@ -74,7 +73,7 @@ const Home = () => {
           productName: searchQuery,
           productCategory: "",
           page: page,
-          size: 36,
+          size: 6,
         })
       );
     }

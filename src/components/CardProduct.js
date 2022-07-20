@@ -75,8 +75,11 @@ const CardProduct = ({ cardWidth, data }) => {
           <p className="mt-1 text-[10px] font-normal text-gray-900">
             {data ? data.productCategory : "Aksesoris"}
           </p>
+          <h3 className="mt-2 text-sm font-normal">
+            {data ? data.productPrice : "200000"}
+          </h3>
         </div>
-        <div className="flex justify-between">
+        {/* <div className="flex justify-between">
           <div>
             <h3 className="mt-2 text-sm font-normal">
               {data ? data.productPrice : "200000"}
@@ -109,7 +112,7 @@ const CardProduct = ({ cardWidth, data }) => {
               ""
             )}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

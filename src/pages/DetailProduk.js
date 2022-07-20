@@ -67,11 +67,12 @@ function DetailProduk() {
       dispatch(getBuyerOfferHistory(user.userId));
       dispatch(getUserNotification());
       dispatch(checkAllNotificationRead());
+      dispatch(getUserNotification());
+      dispatch(checkAllNotificationRead());
       checkHasOffered();
     }
     dispatch(getDetailProduct(id));
-    // dispatch(getUserNotification());
-    // dispatch(checkAllNotificationRead());
+
     // checkHasOffered();
   }, [dispatch, id]);
 
