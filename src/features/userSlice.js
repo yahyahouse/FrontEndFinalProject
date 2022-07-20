@@ -23,7 +23,7 @@ export const getUserById = createAsyncThunk("user/getUserById", async (id) => {
 export const userEdit = createAsyncThunk("auth/userEdit", async (data) => {
   try {
     const response = await axios.post(
-      `https://dummyprojectbinar.herokuapp.com/users/public/update-users-profile?userId=${data.userId}&username=${data.username}&address=${data.address}&city=${data.city}&phone=${data.phone}`,
+      `https://dummyprojectbinar.herokuapp.com/users/public/update-users-profile`,
       data.data,
       {
         headers: {
@@ -32,7 +32,7 @@ export const userEdit = createAsyncThunk("auth/userEdit", async (data) => {
       }
     );
     console.log(response, "data berhasil diupdate");
-    return response.data;
+    // return response.data;
   } catch (error) {
     console.log(error.message);
   }
@@ -66,7 +66,7 @@ const userSlice = createSlice({
       state.status = "loading";
     },
     [userEdit.fulfilled]: (state, action) => {
-      state.status = "succes";
+      state.status = "success";
       state.user = action.payload;
       localStorage.setItem("user", JSON.stringify(action.payload));
     },
