@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById, detailUser, userEdit } from "../features/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
 
 // import Camera from "../assets/img/fi_camera.svg";
@@ -9,70 +9,68 @@ import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import NavigationBar from "../components/NavigationBar";
 
 const InfoProfile = () => {
+  let nama = null;
   // GET_API START
   const dispatch = useDispatch();
   const getUser = useSelector(detailUser);
   const [users] = useState(JSON.parse(localStorage.getItem("user")));
   useEffect(() => {
     dispatch(getUserById(users.userId));
-  }, [dispatch]);
+  }, [dispatch, users.userId]);
   // GET_API END
   // IMAGE_UPLOADING START
   const [images, setImages] = React.useState([]);
   const maxNumber = 1;
+  console.log(getUser, "get data");
 
   const onChange = (imageList, addUpdateIndex) => {
     setImages(imageList);
   };
   // IMAGE_UPLOADING END
-  // GET_DATA START
-  const [newData, setNewData] = useState({
-    userId: users.userId,
-    username: users.username,
-    city: users.city,
-    address: users.address,
-    phone: users.phone,
-  });
-  console.log(newData, "data edit in form");
-  const handleInputNewData = (e) => {
-    setNewData({
-      ...newData,
-      [e.target.id]: e.target.value,
-    });
-  };
+  // console.log("getUser.full_name_user", getUser.fullNameUser);
+  if (getUser.fullNameUser == null || undefined) {
+    nama = getUser.username;
+  } else {
+    nama = getUser.fullNameUser;
+  }
+
+  const [username, setUsername] = useState("");
+  const [city, setCity] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
 
   const handleEditProfile = async (e) => {
     e.preventDefault();
     const data = new FormData();
     data.append("userId", users.userId);
-    data.append("username", newData.username);
-    data.append("address", newData.address);
-    data.append("city", newData.city);
-    data.append("phone", newData.phone);
+    data.append(
+      "full_name_user",
+      username === "" ? getUser.username : username
+    );
+    data.append("address", address === "" ? getUser.address : address);
+    data.append("city", city === "" ? getUser.city : city);
+    data.append("phone", phone === "" ? getUser.phone : phone);
     data.append("users_image", images[0].file);
     console.log(images[0].file, "test");
     try {
       let response = await dispatch(
         userEdit({
-          userId: newData.userId,
-          username: newData.username,
-          city: newData.city,
-          address: newData.address,
-          phone: newData.phone,
           data: data,
         })
       );
       console.log(response, "berhasil");
+      window.location.reload(true);
+      // navigate("/login");
     } catch (error) {
       console.error(error.message, "gagal");
     }
   };
   // option
   let render;
-  if (users.city) {
+  if (getUser.city) {
     render = (
-      <option value={newData.city} selected>
-        {newData.city}
+      <option defaultValue={getUser.city} selected>
+        {getUser.city}
       </option>
     );
   }
@@ -104,7 +102,7 @@ const InfoProfile = () => {
                     {...dragProps}
                   >
                     {/* <img className="z-50" src={Camera} alt="plus" /> */}
-                    {/* <img src={getUser.url} alt="" /> */}
+                    <img src={getUser.url} alt="" />
                   </div>
                 </div>
                 <div className="flex ">
@@ -130,9 +128,9 @@ const InfoProfile = () => {
             <input
               type="text"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              value={newData.username}
-              name="username"
-              onChange={handleInputNewData}
+              defaultValue={nama}
+              name="full_name_user"
+              onChange={(e) => setUsername(e.target.value)}
               id="username"
             />
           </div>
@@ -140,15 +138,18 @@ const InfoProfile = () => {
             <label className="mb-1 font-medium">Kota*</label>
             <select
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              value={newData.city}
-              onChange={handleInputNewData}
+              defaultValue={getUser.city}
+              onChange={(e) => setCity(e.target.value)}
               id="city"
             >
               {render}
               <option selected hidden>
                 Pilih kota
               </option>
-              <option value="jakarta">Jakarta</option>
+              <option defaultValue="jakarta">Jakarta</option>
+              <option defaultValue="bandung">Bandung</option>
+              <option defaultValue="surabaya">Surabaya</option>
+              <option defaultValue="bali">Bali</option>
             </select>
           </div>
           <div className="flex flex-col mb-3">
@@ -156,8 +157,8 @@ const InfoProfile = () => {
             <textarea
               type="textarea"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] px-4 text-xs"
-              value={newData.address}
-              onChange={handleInputNewData}
+              defaultValue={getUser.address}
+              onChange={(e) => setAddress(e.target.value)}
               id="address"
             />
           </div>
@@ -166,9 +167,8 @@ const InfoProfile = () => {
             <input
               type="text"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              placeholder={newData.phone}
-              value={newData.phone}
-              onChange={handleInputNewData}
+              defaultValue={getUser.phone}
+              onChange={(e) => setPhone(e.target.value)}
               id="phone"
             />
           </div>
