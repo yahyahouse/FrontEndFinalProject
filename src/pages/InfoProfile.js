@@ -9,6 +9,7 @@ import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import NavigationBar from "../components/NavigationBar";
 
 const InfoProfile = () => {
+  let nama = null;
   // GET_API START
   const dispatch = useDispatch();
   const getUser = useSelector(detailUser);
@@ -16,7 +17,6 @@ const InfoProfile = () => {
   useEffect(() => {
     dispatch(getUserById(users.userId));
   }, [dispatch, users.userId]);
-  const navigate = useNavigate();
   // GET_API END
   // IMAGE_UPLOADING START
   const [images, setImages] = React.useState([]);
@@ -27,6 +27,12 @@ const InfoProfile = () => {
     setImages(imageList);
   };
   // IMAGE_UPLOADING END
+  // console.log("getUser.full_name_user", getUser.fullNameUser);
+  if (getUser.fullNameUser == null || undefined) {
+    nama = getUser.username;
+  } else {
+    nama = getUser.fullNameUser;
+  }
 
   const [username, setUsername] = useState("");
   const [city, setCity] = useState("");
@@ -37,10 +43,13 @@ const InfoProfile = () => {
     e.preventDefault();
     const data = new FormData();
     data.append("userId", users.userId);
-    data.append("username", username === "" ? users.username : username);
-    data.append("address", address === "" ? users.address : address);
-    data.append("city", city === "" ? users.city : city);
-    data.append("phone", phone === "" ? users.phone : phone);
+    data.append(
+      "full_name_user",
+      username === "" ? getUser.username : username
+    );
+    data.append("address", address === "" ? getUser.address : address);
+    data.append("city", city === "" ? getUser.city : city);
+    data.append("phone", phone === "" ? getUser.phone : phone);
     data.append("users_image", images[0].file);
     console.log(images[0].file, "test");
     try {
@@ -50,17 +59,18 @@ const InfoProfile = () => {
         })
       );
       console.log(response, "berhasil");
-      navigate("/");
+      window.location.reload(true);
+      // navigate("/login");
     } catch (error) {
       console.error(error.message, "gagal");
     }
   };
   // option
   let render;
-  if (users.city) {
+  if (getUser.city) {
     render = (
-      <option defaultValue={users.city} selected>
-        {users.city}
+      <option defaultValue={getUser.city} selected>
+        {getUser.city}
       </option>
     );
   }
@@ -92,7 +102,7 @@ const InfoProfile = () => {
                     {...dragProps}
                   >
                     {/* <img className="z-50" src={Camera} alt="plus" /> */}
-                    <img src={users.url} alt="" />
+                    <img src={getUser.url} alt="" />
                   </div>
                 </div>
                 <div className="flex ">
@@ -118,8 +128,8 @@ const InfoProfile = () => {
             <input
               type="text"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              defaultValue={users.username}
-              name="username"
+              defaultValue={nama}
+              name="full_name_user"
               onChange={(e) => setUsername(e.target.value)}
               id="username"
             />
@@ -128,7 +138,7 @@ const InfoProfile = () => {
             <label className="mb-1 font-medium">Kota*</label>
             <select
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              defaultValue={users.city}
+              defaultValue={getUser.city}
               onChange={(e) => setCity(e.target.value)}
               id="city"
             >
@@ -147,7 +157,7 @@ const InfoProfile = () => {
             <textarea
               type="textarea"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] px-4 text-xs"
-              defaultValue={users.address}
+              defaultValue={getUser.address}
               onChange={(e) => setAddress(e.target.value)}
               id="address"
             />
@@ -157,7 +167,7 @@ const InfoProfile = () => {
             <input
               type="text"
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              defaultValue={users.phone}
+              defaultValue={getUser.phone}
               onChange={(e) => setPhone(e.target.value)}
               id="phone"
             />
