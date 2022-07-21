@@ -31,7 +31,8 @@ const InfoProfile = () => {
   }, [dispatch, id, userUpdateStatus]);
   // GET_API END
   // IMAGE_UPLOADING START
-  const [images, setImages] = React.useState([]);
+  const [images, setImages] = useState([]);
+  console.log(images, "image");
   const maxNumber = 1;
   console.log(getUser, "get data");
 
@@ -50,6 +51,8 @@ const InfoProfile = () => {
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  console.log(submitted);
 
   const onClose = (e) => {
     dispatch(clearStatusUpdateProfile());
@@ -57,6 +60,7 @@ const InfoProfile = () => {
 
   const handleEditProfile = async (e) => {
     e.preventDefault();
+    setSubmitted(true);
     const data = new FormData();
     data.append("userId", id);
     data.append(
@@ -66,16 +70,23 @@ const InfoProfile = () => {
     data.append("address", address === "" ? getUser.address : address);
     data.append("city", city === "" ? getUser.city : city);
     data.append("phone", phone === "" ? getUser.phone : phone);
-    data.append("users_image", images[0].file);
-    console.log(images[0].file, "test");
+    data.append("users_image", images.length === 0 ? "" : images[0].file);
+
     try {
-      let response = await dispatch(
-        userEdit({
-          data: data,
-        })
-      );
-      console.log(response, "berhasil");
-      // navigate("/login");
+      if (
+        (username || getUser.username) &&
+        (address || getUser.address) &&
+        (city || getUser.city) &&
+        (phone || getUser.phone) &&
+        images.length !== 0
+      ) {
+        let response = await dispatch(
+          userEdit({
+            data: data,
+          })
+        );
+        console.log(response, "berhasil");
+      }
     } catch (error) {
       console.error(error.message, "gagal");
     }
@@ -129,7 +140,6 @@ const InfoProfile = () => {
                     onClick={onImageUpload}
                     {...dragProps}
                   >
-                    {/* <img className="z-50" src={Camera} alt="plus" /> */}
                     {getUser.url !== null ? (
                       <img src={getUser.url} alt="" />
                     ) : (
@@ -137,6 +147,13 @@ const InfoProfile = () => {
                     )}
                   </div>
                 </div>
+                {submitted && images.length === 0 ? (
+                  <p className="text-[#FA2C5A] text-xs mt-1 text-center">
+                    Foto harus diisi kembali!
+                  </p>
+                ) : (
+                  ""
+                )}
                 <div className="flex mb-3">
                   &nbsp;
                   {imageList.map((image, index) => (
