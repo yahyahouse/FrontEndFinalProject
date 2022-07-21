@@ -48,9 +48,9 @@ function UpdateProduk() {
   });
 
   const handlePreview = () => {
-    let objImage = {};
+    let objImage = [];
     for (let i = 0; i < imagesFile.length; i++) {
-      objImage["image" + i] = URL.createObjectURL(imagesFile[i]);
+      objImage.push({ image: URL.createObjectURL(imagesFile[i]) });
     }
     console.log(objImage, "obj image");
     localStorage.setItem("imagePreview", JSON.stringify(objImage));

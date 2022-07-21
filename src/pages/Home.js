@@ -18,6 +18,8 @@ import {
   getSearchQuery,
   getAllDataProducts,
   getAllProductStatus,
+  getProductBySeller,
+  getSellerProducts,
 } from "../features/productSlice";
 import {
   getUserNotification,
@@ -42,6 +44,13 @@ const Home = () => {
   console.log(currentPage);
   const searchQuery = useSelector(getSearchQuery);
   console.log(searchQuery);
+  const sellerProducts = useSelector(getSellerProducts);
+  console.log(sellerProducts);
+
+  const user =
+    localStorage.getItem("user") !== null
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
 
   // mengambil value tab kategori active
   const onChange = (key) => {
@@ -77,8 +86,10 @@ const Home = () => {
         })
       );
     }
-    dispatch(getUserNotification());
-    dispatch(checkAllNotificationRead());
+    dispatch(getProductBySeller(user.userId));
+    // kurang pake id
+    // dispatch(getUserNotification());
+    // dispatch(checkAllNotificationRead());
   }, [dispatch, category, page]);
 
   return (
@@ -262,12 +273,20 @@ const Home = () => {
         total={totalPages + "0"}
         onChange={handlePaginationChange}
       />
-      <Link to="/infoproduk">
-        <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] drop-shadow-[0_0_10px_rgba(0, 0, 0, 0.15)]">
+
+      {sellerProducts && sellerProducts.length >= 4 ? (
+        <button className="bg-purple-500 pointer-events-none px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] shadow-lg shadow-purple-500/50 hover:shadow-purple/40]">
           <FiPlus className="text-white text-xl font-bold" />
           Jual
         </button>
-      </Link>
+      ) : (
+        <Link to="/infoproduk">
+          <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] shadow-lg shadow-purple-500/50 hover:shadow-purple/40]">
+            <FiPlus className="text-white text-xl font-bold" />
+            Jual
+          </button>
+        </Link>
+      )}
     </div>
   );
 };
