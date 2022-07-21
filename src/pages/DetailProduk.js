@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import ProdukImage from "../components/ProdukImage";
 import produkimage from "../assets/img/detailproduk-image.png";
@@ -27,6 +27,7 @@ import { SyncLoader } from "react-spinners";
 
 function DetailProduk() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user =
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
@@ -210,7 +211,7 @@ function DetailProduk() {
               </div>
             </div>
           </div>
-          <div className="container block sm:hidden mt-[250px] sm:mt-0 px-4 ">
+          <div className="container block sm:hidden mt-[216px] sm:mt-0 px-4 ">
             <div className="border rounded-xl shadow-lg p-5 mt-10 ">
               <h1 className="pb-3 font-bold">Deskripsi</h1>
               <p>
@@ -245,11 +246,12 @@ function DetailProduk() {
                 </button>
               )
             ) : (
-              <Link to={"/login"}>
-                <button className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-40">
-                  Saya Tertarik dan ingin nego
-                </button>
-              </Link>
+              <button
+                onClick={() => navigate("/login")}
+                className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-40"
+              >
+                Saya Tertarik dan ingin nego
+              </button>
             )}
           </div>
           <ModalDetailProduk

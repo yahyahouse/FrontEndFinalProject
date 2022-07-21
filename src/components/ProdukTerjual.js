@@ -41,7 +41,7 @@ export const ProdukTerjual = () => {
           {sellerProductSold &&
             sellerProductSold.map((item) => (
               <div
-                className={`flex gap-12 w-full justify-between border-b border-gray-500 pb-4`}
+                className={`flex gap-12 w-full justify-between border-b border-gray-500 pb-4 mb-4`}
               >
                 <div className="flex gap-6">
                   <div>

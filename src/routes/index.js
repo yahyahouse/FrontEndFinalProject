@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import PrivateRoutes from "./PrivateRoutes";
 import Home from "../pages/Home";
 import InfoPenawar from "../pages/InfoPenawar";
 import InfoProduk from "../pages/InfoProduk";
@@ -16,28 +16,29 @@ import BuyerDetail from "../pages/DetailProduk";
 import ModalDetailProduk from "../components/ModalDetailProduk";
 import UpdateProduk from "../pages/UpdateProduk";
 
-
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/infoprofile" element={<InfoProfile />} />
-        <Route path="/infoproduk" element={<InfoProduk />} />
-        <Route
-          path="/infopenawar/:idProduk/:idPenawaran"
-          element={<InfoPenawar />}
-        />
         <Route path="/login" element={<Login />} />
-        <Route path="/daftarJual" element={<DaftarJual />} />
-        <Route path="/notifikasi" element={<Notifikasi />}></Route>
-        <Route path="/userAccount" element={<UserAccount />}></Route>
-        <Route path="/settingaccount" element={<SettingAccount />}></Route>
         <Route path="/register" element={<Register />}></Route>
-        <Route path="/previewproduk" element={<PreviewProduk />} />
+        <Route path="/" element={<Home />} />
         <Route path="/detailproduk/:id" element={<BuyerDetail />} />
-        <Route path="/modaldetail" element={<ModalDetailProduk />} />
-        <Route path="/updateproduk/:id" element={<UpdateProduk />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/infoprofile" element={<InfoProfile />} />
+          <Route path="/infoproduk" element={<InfoProduk />} />
+          <Route
+            path="/infopenawar/:idProduk/:idPenawaran"
+            element={<InfoPenawar />}
+          />
+          <Route path="/daftarJual" element={<DaftarJual />} />
+          <Route path="/notifikasi" element={<Notifikasi />}></Route>
+          <Route path="/userAccount" element={<UserAccount />}></Route>
+          <Route path="/settingaccount" element={<SettingAccount />}></Route>
+          <Route path="/previewproduk" element={<PreviewProduk />} />
+          <Route path="/modaldetail" element={<ModalDetailProduk />} />
+          <Route path="/updateproduk/:id" element={<UpdateProduk />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
