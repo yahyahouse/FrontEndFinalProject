@@ -1,21 +1,10 @@
 import React from "react";
 import cardImage from "../assets/img/card-image.png";
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { deleteProduct } from "../features/productSlice";
 
 const CardProduct = ({ cardWidth, data }) => {
   console.log(data);
   const location = useLocation();
-  const dispatch = useDispatch();
-
-  const handleDeleteProduct = async () => {
-    try {
-      await dispatch(deleteProduct({ productId: data.productId }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className={`group w-full sm:w-[${cardWidth}]`}>
