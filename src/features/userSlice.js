@@ -47,7 +47,9 @@ export const userEdit = createAsyncThunk("auth/userEdit", async (data) => {
 
 const initialState = {
   detailUser: [],
-  status: "",
+  userUpdate: [],
+  getUserStatus: "",
+  getUserUpdateStatus: "",
   erorr: "",
   succesMessage: "",
 };
@@ -55,25 +57,29 @@ const initialState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    clearStatusUpdateProfile: (state) => {
+      state.getUserUpdateStatus = "";
+    },
+  },
   extraReducers: {
     [getUserById.pending]: (state) => {
-      state.status = "loading";
+      state.getUserStatus = "loading";
     },
     [getUserById.fulfilled]: (state, action) => {
-      state.status = "success";
+      state.getUserStatus = "success";
       state.detailUser = action.payload;
     },
     [getUserById.rejected]: (state) => {
-      state.status = "rejected";
+      state.getUserStatus = "rejected";
     },
     // USER_EDIT
     [userEdit.pending]: (state) => {
-      state.status = "loading";
+      state.getUserUpdateStatus = "loading";
     },
     [userEdit.fulfilled]: (state, action) => {
-      state.status = "success";
-      state.user = action.payload;
+      state.getUserUpdateStatus = "success";
+      state.userUpdate = action.payload;
       localStorage.setItem("user", JSON.stringify(action.payload));
     },
     [userEdit.rejected]: (state, action) => {
@@ -83,4 +89,8 @@ const userSlice = createSlice({
 });
 
 export const detailUser = (state) => state.user.detailUser;
+export const getuserUpdate = (state) => state.user.userUpdate;
+export const getuserUpdateStatus = (state) => state.user.getUserUpdateStatus;
+
+export const { clearStatusUpdateProfile } = userSlice.actions;
 export default userSlice.reducer;

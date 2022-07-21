@@ -10,6 +10,11 @@ const DropdownAccount = () => {
     localStorage.removeItem("token");
     window.location.reload(true);
   };
+
+  const user =
+    localStorage.getItem("user") !== null
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
   return (
     <div>
       <img
@@ -30,12 +35,12 @@ const DropdownAccount = () => {
             </div>
           </div>
         </Link>
-        <Link to="/infoprofile">
+        <Link to={`/infoprofile/${user.userId}`}>
           <div className="hover:bg-gray-500 cursor-pointer">
             <div className="px-4 pt-4">
               <div className="pb-4 flex gap-5 border-b border-gray-500">
                 <FiEdit3 className="text-purple-900 text-lg" />{" "}
-                <h3 className="text-sm font-normal text-black">Ubah Akun</h3>
+                <h3 className="text-sm font-normal text-black">Info Profile</h3>
               </div>
             </div>
           </div>

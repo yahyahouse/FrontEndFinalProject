@@ -51,6 +51,7 @@ const Home = () => {
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
       : "";
+  console.log(user);
 
   // mengambil value tab kategori active
   const onChange = (key) => {
@@ -280,7 +281,22 @@ const Home = () => {
           Jual
         </button>
       ) : (
-        <Link to="/infoproduk">
+        <Link
+          to={
+            user.fullNameUser &&
+            user.fullNameUser !== "" &&
+            user.address &&
+            user.address !== "" &&
+            user.city &&
+            user.city !== "" &&
+            user.phone &&
+            user.phone !== "" &&
+            user.url &&
+            user.url !== ""
+              ? `/infoproduk`
+              : `/infoprofile/${user.userId}`
+          }
+        >
           <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] shadow-lg shadow-purple-500/50 hover:shadow-purple/40]">
             <FiPlus className="text-white text-xl font-bold" />
             Jual

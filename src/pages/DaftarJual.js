@@ -98,7 +98,22 @@ const DaftarJual = () => {
               </div>
             </button>
           ) : (
-            <Link to="/infoproduk">
+            <Link
+              to={
+                seller.fullNameUser &&
+                seller.fullNameUser !== "" &&
+                seller.address &&
+                seller.address !== "" &&
+                seller.city &&
+                seller.city !== "" &&
+                seller.phone &&
+                seller.phone !== "" &&
+                seller.url &&
+                seller.url !== ""
+                  ? `/infoproduk`
+                  : `/infoprofile/${seller.userId}`
+              }
+            >
               <button className="w-full sm:w-[206px] sm:h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-700">
                 <div className="text-gray-900">
                   <FiPlus className="mx-auto text-2xl" />
@@ -150,7 +165,22 @@ const DaftarJual = () => {
                 </div>
               </button>
             ) : (
-              <Link to="/infoproduk">
+              <Link
+                to={
+                  seller.fullNameUser &&
+                  seller.fullNameUser !== "" &&
+                  seller.address &&
+                  seller.address !== "" &&
+                  seller.city &&
+                  seller.city !== "" &&
+                  seller.phone &&
+                  seller.phone !== "" &&
+                  seller.url &&
+                  seller.url !== ""
+                    ? `/infoproduk`
+                    : `/infoprofile/${seller.userId}`
+                }
+              >
                 <button className="w-full h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-700">
                   <div className="text-gray-900">
                     <FiPlus className="mx-auto text-2xl" />
@@ -214,15 +244,27 @@ const DaftarJual = () => {
         </h2>
         <div className="w-full my-6 flex justify-between bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl items-center">
           <div className="flex gap-4 items-center">
-            <img src={sellerProfile} alt="userProfile" width={48} height={48} />
+            <img
+              className="w-12 h-12 object-cover rounded-xl"
+              src={seller.url ? seller.url : sellerProfile}
+              alt="userProfile"
+              width={48}
+              height={48}
+            />
             <div>
-              <h4 className="text-sm font-medium">{seller.username}</h4>
-              <p className="text-[10px] text-gray-900 mt-1">Kota</p>
+              <h4 className="text-sm font-medium">
+                {seller.fullNameUser ? seller.fullNameUser : "Nama Penjual"}
+              </h4>
+              <p className="text-[10px] text-gray-900 mt-1">
+                {seller.city ? seller.city : "Jogja"}
+              </p>
             </div>
           </div>
-          <button className="px-3 py h-[26px] border border-purple-700 rounded-lg font-medium text-xs">
-            Edit
-          </button>
+          <Link to={`/infoprofile/${seller.userId}`}>
+            <button className="px-3 py h-[26px] border border-purple-700 rounded-lg font-medium text-xs hover:text-black">
+              Edit
+            </button>
+          </Link>
         </div>
         {/* tabs dekstop view */}
         <div className="hidden md:block">

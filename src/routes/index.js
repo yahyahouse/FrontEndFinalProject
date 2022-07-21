@@ -25,7 +25,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/detailproduk/:id" element={<BuyerDetail />} />
         <Route element={<PrivateRoutes />}>
-          <Route path="/infoprofile" element={<InfoProfile />} />
+          <Route path="/infoprofile/:id" element={<InfoProfile />} />
           <Route path="/infoproduk" element={<InfoProduk />} />
           <Route
             path="/infopenawar/:idProduk/:idPenawaran"

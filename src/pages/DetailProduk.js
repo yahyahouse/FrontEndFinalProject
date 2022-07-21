@@ -201,11 +201,11 @@ function DetailProduk() {
                   </div>
                   <div className="">
                     <p className="font-semibold">
-                      {detailProduct
-                        ? detailProduct.username
-                        : "Username kosong"}
+                      {detailProduct ? detailProduct.username : "Nama Penjual"}
                     </p>
-                    <p className="font-thin pt-2">Kota</p>
+                    <p className="text-[10px] font-normal text-gray-900 pt-2">
+                      {detailProduct ? detailProduct.city : "Jogja"}
+                    </p>
                   </div>
                 </div>
               </div>
