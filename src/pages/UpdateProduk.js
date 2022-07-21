@@ -6,8 +6,12 @@ import { useNavigate } from "react-router-dom";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import plus from "../assets/img/fi_plus.svg";
 import NavigationBar from "../components/NavigationBar";
-import { updateProduct } from "../features/productSlice";
+import {
+  updateProduct,
+  getUpdateProductStatus,
+} from "../features/productSlice";
 import { useParams } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 
 function UpdateProduk() {
   const dispatch = useDispatch();
@@ -21,6 +25,8 @@ function UpdateProduk() {
   const { id } = useParams();
   console.log(id);
   console.log(name);
+
+  const updateProductStatus = useSelector(getUpdateProductStatus);
 
   const dataProductToUpdate = useLocation();
   console.log(dataProductToUpdate);
@@ -222,7 +228,13 @@ function UpdateProduk() {
               type="submit"
               className="sm:w-[276px] w-[156px] h-[48px] rounded-2xl bg-purple-700 text-white font-medium text-xs duration-[1s]"
             >
-              Update
+              {updateProductStatus === "loading" ? (
+                <div className="flex mx-auto justify-center">
+                  <BeatLoader color="#ffffff" margin={4} size={12} />
+                </div>
+              ) : (
+                "Update"
+              )}
             </button>
           </div>
         </form>

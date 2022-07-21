@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import plus from "../assets/img/fi_plus.svg";
 import NavigationBar from "../components/NavigationBar";
-import { addProduct } from "../features/productSlice";
+import { addProduct, getAddProductStatus } from "../features/productSlice";
+import { BeatLoader } from "react-spinners";
+import { data } from "autoprefixer";
 
 const InfoProduk = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const dataProduct = useLocation();
+  console.log(dataProduct);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
@@ -25,6 +28,8 @@ const InfoProduk = () => {
   const imagesFile = [];
   console.log(imagesFile);
   // // console.log(images);
+
+  const addProductStatus = useSelector(getAddProductStatus);
 
   const onChange = (imageList, addUpdateIndex) => {
     console.log(imageList, addUpdateIndex, "list image");
@@ -54,10 +59,22 @@ const InfoProduk = () => {
     imagesFile.forEach(function (file) {
       data.append("files", file);
     });
-    data.append("product_name", name);
-    data.append("product_description", description);
-    data.append("product_price", parseInt(price));
-    data.append("product_category", category);
+    data.append(
+      "product_name",
+      name === "" ? dataProduct.state.productName : name
+    );
+    data.append(
+      "product_description",
+      description === "" ? dataProduct.state.productDescription : description
+    );
+    data.append(
+      "product_price",
+      price === "" ? dataProduct.state.productPrice : parseInt(price)
+    );
+    data.append(
+      "product_category",
+      category === "" ? dataProduct.state.productCategory : category
+    );
     data.append("productStatus", "Available");
 
     try {
@@ -83,6 +100,11 @@ const InfoProduk = () => {
             <label className="mb-1 font-medium text-xs">Nama Produk</label>
             <input
               type="text"
+              defaultValue={
+                dataProduct.state && dataProduct.state.productName
+                  ? dataProduct.state.productName
+                  : ""
+              }
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
               placeholder="Nama Produk"
               onChange={(e) => setName(e.target.value)}
@@ -92,6 +114,11 @@ const InfoProduk = () => {
             <label className="mb-1 font-medium text-xs">Harga Produk</label>
             <input
               type="text"
+              defaultValue={
+                dataProduct.state && dataProduct.state.productPrice
+                  ? dataProduct.state.productPrice
+                  : ""
+              }
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4  text-xs"
               placeholder="Rp 0,00"
               onChange={(e) => setPrice(e.target.value)}
@@ -104,7 +131,9 @@ const InfoProduk = () => {
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4  text-xs"
             >
               <option value="none" hidden>
-                Pilih Kategori
+                {dataProduct.state && dataProduct.state.productCategory
+                  ? dataProduct.state.productCategory
+                  : "Pilih Kategori"}
               </option>
               <option value="Hobi">Hobi</option>
               <option value="Kendaraan">Kendaraan</option>
@@ -117,6 +146,9 @@ const InfoProduk = () => {
             <label className="mb-1 font-medium text-xs">Deskripsi</label>
             <textarea
               type="textarea"
+              defaultValue={
+                dataProduct.state && dataProduct.state.productDescription
+              }
               className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] py-2 px-4 resize-none text-xs"
               placeholder="Contoh: Masih mulus"
               onChange={(e) => setDescription(e.target.value)}
@@ -174,10 +206,22 @@ const InfoProduk = () => {
               to="/previewproduk"
               state={{
                 image: imagesFile,
-                name: name,
-                description: description,
-                price: price,
-                category: category,
+                name:
+                  name === "" && dataProduct.state
+                    ? dataProduct.state.productName
+                    : name,
+                description:
+                  description === "" && dataProduct.state
+                    ? dataProduct.state.productDescription
+                    : description,
+                price:
+                  price === "" && dataProduct.state
+                    ? dataProduct.state.productPrice
+                    : price,
+                category:
+                  category === "" && dataProduct.state
+                    ? dataProduct.state.productCategory
+                    : category,
                 // productId: productId,
               }}
             >
@@ -193,7 +237,13 @@ const InfoProduk = () => {
               type="submit"
               className="sm:w-[276px] w-[156px] h-[48px] rounded-2xl bg-purple-700 text-white font-medium text-xs duration-[1s]"
             >
-              Terbitkan
+              {addProductStatus === "loading" ? (
+                <div className="flex mx-auto justify-center">
+                  <BeatLoader color="#ffffff" margin={4} size={12} />
+                </div>
+              ) : (
+                "Terbitkan"
+              )}
             </button>
           </div>
         </form>
