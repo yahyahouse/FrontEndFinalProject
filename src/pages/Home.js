@@ -74,7 +74,7 @@ const Home = () => {
           productName: "",
           productCategory: category,
           page: page,
-          size: 36,
+          size: 18,
         })
       );
     } else {
@@ -83,7 +83,7 @@ const Home = () => {
           productName: searchQuery,
           productCategory: "",
           page: page,
-          size: 36,
+          size: 18,
         })
       );
     }

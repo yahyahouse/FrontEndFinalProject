@@ -66,7 +66,7 @@ const NavigationBar = () => {
           productName: searchQuery,
           productCategory: "",
           page: 1,
-          size: 36,
+          size: 18,
         })
       );
       // for global state search query
@@ -78,7 +78,7 @@ const NavigationBar = () => {
           productName: "",
           productCategory: "",
           page: currentPage,
-          size: 36,
+          size: 18,
         })
       );
     }
