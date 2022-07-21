@@ -30,7 +30,7 @@ const SettingAccount = () => {
   return (
     <div>
       <NavigationBar />
-      <section className="flex justify-center py-28 sm:py-6 ">
+      <section className="flex justify-center mt-8 sm:mt-28 ">
         <Link className="sm:block hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>

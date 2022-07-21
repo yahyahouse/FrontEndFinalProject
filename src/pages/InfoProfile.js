@@ -104,7 +104,6 @@ const InfoProfile = () => {
   return (
     <div>
       <NavigationBar />
-
       {userUpdateStatus === "success" ? (
         <Alert
           message="Data berhasil diperbaharui"
@@ -117,7 +116,7 @@ const InfoProfile = () => {
         ""
       )}
 
-      <section className="flex justify-center py-6">
+      <section className="flex justify-center py-6 mt-8 sm:mt-28">
         <Link className="sm:block hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>

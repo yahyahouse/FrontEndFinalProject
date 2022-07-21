@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import logo from "../assets/img/logo.png";
 import {
   FiSearch,
   FiDownload,
@@ -65,7 +66,7 @@ const NavigationBar = () => {
           productName: searchQuery,
           productCategory: "",
           page: 1,
-          size: 6,
+          size: 36,
         })
       );
       // for global state search query
@@ -77,7 +78,7 @@ const NavigationBar = () => {
           productName: "",
           productCategory: "",
           page: currentPage,
-          size: 6,
+          size: 36,
         })
       );
     }
@@ -91,24 +92,34 @@ const NavigationBar = () => {
   // Navbar Info Profile
   if (location.pathname.includes("/infoprofile")) {
     return (
-      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
+      <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-4 md:px-[136px] pt-9 md:py-[14px] flex items-center justify-between z-10">
         <Link className="sm:hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
-        <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
-        <p className="font-normal text-sm">Lengkapi Info Akun</p>
+        <div className="sm:mr-6">
+          <Link to="/">
+            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+          </Link>
+        </div>
+        <p className="font-normal text-sm mr-10 sm:mr-0">Lengkapi Info Akun</p>
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
     // Navbar Info Produk
   } else if (location.pathname === "/infoproduk") {
     return (
-      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
+      <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-4 md:px-[136px] pt-9 md:py-[14px] flex items-center justify-between z-10">
         <Link className="sm:hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
-        <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
-        <p className="font-normal text-sm">Lengkapi Detail Produk</p>
+        <div className="sm:mr-6">
+          <Link to="/">
+            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+          </Link>
+        </div>
+        <p className="font-normal text-sm flex mr-10 sm:mr-0">
+          Lengkapi Detail Produk
+        </p>
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
@@ -130,10 +141,16 @@ const NavigationBar = () => {
               : ""
           }
         ></div>
-        <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-4 md:px-[136px] pt-9 md:py-[18px] flex items-center justify-between z-10">
-          <Link to="/">
-            <div className="hidden md:block w-[100px] h-[34px] bg-purple-900 mr-6" />
-          </Link>
+        <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-4 md:px-[136px] pt-9 md:py-[14px] flex items-center justify-between z-10">
+          <div className="sm:mr-6">
+            <Link to="/">
+              <img
+                src={logo}
+                alt="logo"
+                className="w-[164px] hidden md:block"
+              />
+            </Link>
+          </div>
           {/* Menu Navbar Mobile */}
           {/* button toggle*/}
           <button
@@ -157,7 +174,7 @@ const NavigationBar = () => {
           <div
             className={
               nav
-                ? "fixed left-0 top-0 w-[50%] h-full bg-white ease-in-out duration-500 px-2 z-50"
+                ? "fixed left-0 top-0 w-[50%] h-full bg-white ease-in-out duration-500 px-4 z-50"
                 : "ease-in-out duration-500 fixed left-[-100%] h-full"
             }
           >
@@ -169,6 +186,9 @@ const NavigationBar = () => {
             </div>
             {userLogged ? (
               <div>
+                <Link to="/">
+                  <h3 className="text-sm font-normal text-black mt-5">Home</h3>
+                </Link>
                 <Link to="/daftarJual">
                   <h3 className="text-sm font-normal text-black mt-5">
                     Daftar Jual
@@ -291,34 +311,46 @@ const NavigationBar = () => {
     );
   } else if (location.pathname === "/settingaccount") {
     return (
-      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
+      <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-4 md:px-[136px] pt-9 md:py-[14px] flex items-center justify-between z-10">
         <Link className="sm:hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
-        <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
-        <p className="text-base font-medium leading-6 ">Pengaturan Akun</p>
+        <div className="sm:mr-6">
+          <Link to="/">
+            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+          </Link>
+        </div>
+        <p className="font-normal text-sm mr-10 sm:mr-0">Pengaturan Akun</p>
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
   } else if (location.pathname.includes("/updateproduk")) {
     return (
-      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
+      <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-4 md:px-[136px] pt-9 md:py-[14px] flex items-center justify-between z-10">
         <Link className="sm:hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
-        <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
-        <p className="font-normal text-sm">Ubah Produk</p>
+        <div className="sm:mr-6">
+          <Link to="/">
+            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+          </Link>
+        </div>
+        <p className="font-normal text-sm mr-10 sm:mr-0">Ubah Produk</p>
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );
   } else {
     return (
-      <nav className="sm:h-[84px] sm:px-[136px] h-[52px] w-full px-[16px] shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] flex items-center justify-between">
-        <Link className="sm:hidden" to="/">
+      <nav className="w-full md:bg-white static md:fixed top-0 md:shadow-[0_0_4px_rgba(0,0,0,0.15)] duration-[1s] px-4 md:px-[136px] pt-9 md:py-[14px] flex items-center justify-between z-10">
+        <Link className="sm:hidden" to="/daftarJual">
           <img src={Arrowleft} alt="img" />
         </Link>
-        <div className="sm:flex sm:bg-purple-900 w-[100px] h-[34px] hidden" />
-        <p className="font-normal text-sm">Info Penawar</p>
+        <div className="sm:mr-6">
+          <Link to="/">
+            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+          </Link>
+        </div>
+        <p className="font-normal text-sm mr-10 sm:mr-0">Info Penawar</p>
         <div className="sm:w-[100px] w-[24px]" />
       </nav>
     );

@@ -61,10 +61,23 @@ const PreviewProduk = () => {
       <div className="sm:flex sm:px-[236px] gap-[32px] mt-[-88px] sm:mt-32 relative">
         <Link
           className="absolute top-[44px] left-[16px] z-50 bg-white rounded-full sm:hidden"
-          to="/"
+          to={
+            dataProduct.state.productId
+              ? {
+                  pathname: `/updateproduk/${dataProduct.state.productId}`,
+                }
+              : "/infoproduk"
+          }
+          state={{
+            productName: dataProduct.state.name,
+            productPrice: dataProduct.state.price,
+            productCategory: dataProduct.state.category,
+            productDescription: dataProduct.state.description,
+          }}
         >
           <img src={Arrowleft} alt="Arrowleft" />
         </Link>
+
         <div className="sm:w-[600px]">
           <ProdukImage />
           <div className="container hidden sm:block ">

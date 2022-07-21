@@ -3,12 +3,15 @@ import { FiEdit3, FiSettings, FiDownload } from "react-icons/fi";
 import { BiStoreAlt } from "react-icons/bi";
 import profilePicture from "../assets/img/fi_camera.svg";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const DropdownAccount = () => {
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     window.location.reload(true);
+    navigate("/");
   };
 
   const user =
@@ -18,7 +21,7 @@ const DropdownAccount = () => {
   return (
     <div>
       <img
-        src={profilePicture}
+        src={user ? user.url : profilePicture}
         alt="profilePicture"
         className="block md:hidden m-auto mt-6 md:mt-0"
         width={96}

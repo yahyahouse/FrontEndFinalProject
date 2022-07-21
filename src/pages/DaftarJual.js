@@ -24,6 +24,8 @@ import {
   checkAllNotificationRead,
 } from "../features/notificationSlice";
 
+import { getUserById } from "../features/userSlice";
+
 const { TabPane } = Tabs;
 
 const DaftarJual = () => {
@@ -49,6 +51,7 @@ const DaftarJual = () => {
   };
 
   useEffect(() => {
+    dispatch(getUserById(seller.userId));
     dispatch(getProductBySeller(seller.userId));
     dispatch(getUserNotification());
     dispatch(checkAllNotificationRead());
@@ -86,7 +89,7 @@ const DaftarJual = () => {
     >
       {activeTab === "1" ? (
         <div className="grid grid-cols-3 justify-between gap-y-6">
-          {sellerProducts && sellerProducts.length === 4 ? (
+          {sellerProducts && sellerProducts.length >= 4 ? (
             <button
               disabled
               className="w-full sm:w-[206px] sm:h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-200"
@@ -155,7 +158,7 @@ const DaftarJual = () => {
       >
         {activeTab === "1" ? (
           <div className="grid grid-cols-2 justify-between gap-5 mt-6">
-            {sellerProducts && sellerProducts.length === 4 ? (
+            {sellerProducts && sellerProducts.length >= 4 ? (
               <button
                 disabled
                 className="w-full h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-200"
@@ -238,7 +241,7 @@ const DaftarJual = () => {
         ""
       )}
 
-      <div className="px-2 mt-4 md:px-[236px] md:mt-[120px]">
+      <div className="px-4 mt-4 md:px-[236px] md:mt-[120px]">
         <h2 className="hidden md:block text-[20px] font-bold">
           Daftar Jual Saya
         </h2>
@@ -253,7 +256,7 @@ const DaftarJual = () => {
             />
             <div>
               <h4 className="text-sm font-medium">
-                {seller.fullNameUser ? seller.fullNameUser : "Nama Penjual"}
+                {seller.fullNameUser ? seller.fullNameUser : seller.username}
               </h4>
               <p className="text-[10px] text-gray-900 mt-1">
                 {seller.city ? seller.city : "Jogja"}

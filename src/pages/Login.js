@@ -40,7 +40,9 @@ const Login = () => {
   };
 
   useEffect(() => {
-    statusLogin === "successLogin" ? navigate("/") : navigate("/login");
+    statusLogin === "successLogin"
+      ? navigate("/daftarJual")
+      : navigate("/login");
   }, [statusLogin, navigate]);
 
   return (

@@ -35,7 +35,7 @@ const ModalDetailProduk = ({
 
   const handleAddOffer = async (e) => {
     e.preventDefault();
-    if (offerPrice < productPrice) {
+    if (offerPrice !== "" && offerPrice < productPrice) {
       await dispatch(
         addOffer({
           path: {
@@ -151,6 +151,10 @@ const ModalDetailProduk = ({
                           {submitted && offerPrice >= productPrice ? (
                             <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
                               Harga tawar harus lebih kecil dari harga asli !
+                            </p>
+                          ) : submitted && offerPrice === "" ? (
+                            <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
+                              Harga tawaran berum diisi !
                             </p>
                           ) : (
                             ""

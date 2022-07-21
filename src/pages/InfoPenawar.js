@@ -119,14 +119,20 @@ function InfoPenawar() {
           <SyncLoader color="#7126B5" margin={2} size={12} />
         </div>
       ) : (
-        <section className="flex justify-center py-[16px] md:mt-10">
+        <section className="flex justify-center py-[16px] mt-8 sm:mt-28">
           <Link className="sm:block hidden" to="/daftarJual">
             <img src={Arrowleft} alt="img" />
           </Link>
           <div className="sm:w-[568px] sm:mx-[78px] duration-[1s] w-[328px]">
             <div className="h-[80px] border rounded-2xl shadow-[0_0_4px_rgba(0,0,0,0.15)] flex items-center p-[16px] mb-[24px]">
-              <div className="rounded-xl h-[48px] w-[58px] overflow-hidden">
-                <img src={Profile} alt="Profile" />
+              <div className="rounded-xl h-[48px] w-[58px]">
+                <img
+                  className="w-12 h-12 object-cover rounded-xl"
+                  src={detailOffer.length !== 0 ? detailOffer.url : Profile}
+                  alt="buyerProfile"
+                  width={48}
+                  height={48}
+                />
               </div>
               <div className="h-full w-full px-[16px] py-[3px] flex flex-col justify-between">
                 <p className="text-sm font-medium">
@@ -238,7 +244,7 @@ function InfoPenawar() {
                   <div>
                     {rejectedOfferStatus === "success" ||
                     detailOffer.offerStatus === "Ditolak" ? (
-                      <p className="italic text-gray-900 text-end">
+                      <p className="italic text-gray-900 text-end mt-6 sm:mt-0">
                         Trasnsaksi Dibatalkan, <br /> Anda telah menolak tawaran
                         ini
                       </p>

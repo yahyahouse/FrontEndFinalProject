@@ -88,7 +88,7 @@ const InfoProduk = () => {
   return (
     <div>
       <NavigationBar />
-      <section className="py-6 flex justify-center ">
+      <section className="py-6 flex justify-center mt-8 sm:mt-28">
         <Link className="sm:block hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>

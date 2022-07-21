@@ -74,7 +74,7 @@ const Home = () => {
           productName: "",
           productCategory: category,
           page: page,
-          size: 6,
+          size: 36,
         })
       );
     } else {
@@ -83,7 +83,7 @@ const Home = () => {
           productName: searchQuery,
           productCategory: "",
           page: page,
-          size: 6,
+          size: 36,
         })
       );
     }
@@ -280,7 +280,7 @@ const Home = () => {
           <FiPlus className="text-white text-xl font-bold" />
           Jual
         </button>
-      ) : (
+      ) : user ? (
         <Link
           to={
             user.fullNameUser &&
@@ -302,6 +302,8 @@ const Home = () => {
             Jual
           </button>
         </Link>
+      ) : (
+        ""
       )}
     </div>
   );

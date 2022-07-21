@@ -69,6 +69,7 @@ const userSlice = createSlice({
     [getUserById.fulfilled]: (state, action) => {
       state.getUserStatus = "success";
       state.detailUser = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
     [getUserById.rejected]: (state) => {
       state.getUserStatus = "rejected";
