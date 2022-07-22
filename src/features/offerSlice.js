@@ -204,7 +204,7 @@ const offerSLice = createSlice({
     [getSellerOfferDetail.rejected]: (state) => {
       state.sellerOfferDetailStatus = "rejected";
     },
-
+    // seller acc offer
     [sellerAcceptedOffer.pending]: (state) => {
       state.sellerAcceptedOfferStatus = "loading";
     },
@@ -214,6 +214,7 @@ const offerSLice = createSlice({
     [sellerAcceptedOffer.rejected]: (state) => {
       state.sellerAcceptedOfferStatus = "rejected";
     },
+    // seller reject offer
     [sellerRejectedOffer.pending]: (state) => {
       state.sellerRejectedOfferStatus = "loading";
     },

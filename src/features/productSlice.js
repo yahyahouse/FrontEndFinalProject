@@ -218,6 +218,7 @@ const productSice = createSlice({
     },
   },
   extraReducers: {
+    // get all product
     [getAllProducts.pending]: (state) => {
       state.getAllProductStatus = "loading";
     },
@@ -233,6 +234,7 @@ const productSice = createSlice({
     [getAllProducts.rejected]: (state) => {
       state.getAllProductStatus = "rejected";
     },
+    // update product
     [updateProduct.pending]: (state) => {
       state.updateProductStatus = "loading";
     },
@@ -242,6 +244,7 @@ const productSice = createSlice({
     [updateProduct.rejected]: (state) => {
       state.updateProductStatus = "rejected";
     },
+    // get detail product
     [getDetailProduct.pending]: (state) => {
       state.getDetailProductStatus = "loading";
     },
@@ -252,6 +255,7 @@ const productSice = createSlice({
     [getDetailProduct.rejected]: (state) => {
       state.getDetailProductStatus = "rejected";
     },
+    // add product
     [addProduct.pending]: (state) => {
       state.addProductStatus = "loading";
     },
@@ -261,7 +265,7 @@ const productSice = createSlice({
     [addProduct.rejected]: (state) => {
       state.addProductStatus = "rejected";
     },
-
+    // get product by seller
     [getProductBySeller.pending]: (state) => {
       state.getProductBySellerStatus = "loading";
       state.getSellerProductSoldStatus = "loading";
@@ -282,6 +286,7 @@ const productSice = createSlice({
       state.getProductBySellerStatus = "rejected";
       state.getSellerProductSoldStatus = "rejected";
     },
+    // update product to sold
     [updateProductToSold.pending]: (state) => {
       state.updateProductToSoldStatus = "loading";
     },
@@ -291,7 +296,7 @@ const productSice = createSlice({
     [updateProductToSold.rejected]: (state) => {
       state.updateProductToSoldStatus = "rejected";
     },
-    // product-sold
+    // get seller product-sold
     [getSellerProductSold.pending]: (state) => {
       state.getSellerProductSoldStatus = "loading";
     },

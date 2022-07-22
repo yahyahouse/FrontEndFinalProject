@@ -63,6 +63,7 @@ const userSlice = createSlice({
     },
   },
   extraReducers: {
+    // get user by id
     [getUserById.pending]: (state) => {
       state.getUserStatus = "loading";
     },
@@ -74,7 +75,7 @@ const userSlice = createSlice({
     [getUserById.rejected]: (state) => {
       state.getUserStatus = "rejected";
     },
-    // USER_EDIT
+    // user edit
     [userEdit.pending]: (state) => {
       state.getUserUpdateStatus = "loading";
     },

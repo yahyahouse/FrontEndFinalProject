@@ -94,7 +94,7 @@ const Home = () => {
   return (
     <div>
       <Helmet>
-        <title>Secondpedia | Jual Beli Bekas Termurah</title>
+        <title>Secondpedia | Jual Beli Bekas Berkualitas</title>
       </Helmet>
       <NavigationBar />
       <div className="banner">
@@ -292,8 +292,8 @@ const Home = () => {
             user.city !== "" &&
             user.phone &&
             user.phone !== "" &&
-            user.url &&
-            user.url !== ""
+            user.urlUser &&
+            user.urlUser !== ""
               ? `/infoproduk`
               : `/infoprofile/${user.userId}`
           }

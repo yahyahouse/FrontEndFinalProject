@@ -143,8 +143,8 @@ const InfoProfile = () => {
                     onClick={onImageUpload}
                     {...dragProps}
                   >
-                    {getUser.url !== null ? (
-                      <img src={getUser.url} alt="" />
+                    {getUser.urlUser !== null ? (
+                      <img src={getUser.urlUser} alt="" />
                     ) : (
                       <AiOutlineCamera className="text-purple-700 text-2xl" />
                     )}

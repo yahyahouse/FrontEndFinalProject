@@ -26,7 +26,6 @@ import {
   getDetailProduct,
   getDetailDataProducts,
 } from "../features/productSlice";
-
 import { getUserNotification } from "../features/notificationSlice";
 import { SyncLoader } from "react-spinners";
 import { Helmet } from "react-helmet";
@@ -133,7 +132,11 @@ function InfoPenawar() {
               <div className="rounded-xl h-[48px] w-[58px]">
                 <img
                   className="w-12 h-12 object-cover rounded-xl"
-                  src={Profile}
+                  src={
+                    detailOffer.length !== 0 && detailOffer.urlUser
+                      ? detailOffer.urlUser
+                      : Profile
+                  }
                   alt="buyerProfile"
                   width={48}
                   height={48}
@@ -242,7 +245,10 @@ function InfoPenawar() {
                       offerId={idPenawaran}
                       nav={nav}
                       setNav={setNav}
-                      buyerImage={detailOffer.url}
+                      buyerImage={
+                        detailOffer.urlUser ? detailOffer.urlUser : Profile
+                      }
+                      city={detailOffer.city ? detailOffer.city : "Jogja"}
                       username={detailOffer.username}
                       productName={detailOffer.productName}
                       productPrice={detailOffer.productPrice}
