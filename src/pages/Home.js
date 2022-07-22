@@ -21,19 +21,19 @@ import {
   getProductBySeller,
   getSellerProducts,
 } from "../features/productSlice";
-// import {
-//   getUserNotification,
-//   checkAllNotificationRead,
-// } from "../features/notificationSlice";
+
 import { SyncLoader } from "react-spinners";
 import { Helmet } from "react-helmet";
 
 const { TabPane } = Tabs;
 
 const Home = () => {
+  // filter page home
   const [category, setCategory] = useState("");
   const [page, setPage] = useState("");
   console.log(category, page);
+
+  // golabal state
   const dispatch = useDispatch();
   const allProducts = useSelector(getAllDataProducts);
   console.log(allProducts, "di home");
@@ -48,6 +48,7 @@ const Home = () => {
   const sellerProducts = useSelector(getSellerProducts);
   console.log(sellerProducts);
 
+  // data user setelah login
   const user =
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
@@ -59,7 +60,6 @@ const Home = () => {
     dispatch(handleSearchQuery(""));
     setCategory(key);
     setPage(1);
-    // setCurrentPage(1);
   };
 
   // mengambil value dari pagination yang active
@@ -89,9 +89,6 @@ const Home = () => {
       );
     }
     dispatch(getProductBySeller(user.userId));
-    // kurang pake id
-    // dispatch(getUserNotification());
-    // dispatch(checkAllNotificationRead());
   }, [dispatch, category, page]);
 
   return (

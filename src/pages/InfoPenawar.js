@@ -33,13 +33,14 @@ import { Helmet } from "react-helmet";
 
 function InfoPenawar() {
   const dispatch = useDispatch();
-
+  // modal
   const [nav, setNav] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
+  // offer data
   const { idProduk, idPenawaran } = useParams();
   console.log(idProduk, idPenawaran);
 
+  // global state
   const detailOffer = useSelector(getSellerOfferDetailData);
   const getDetailOfferStatus = useSelector(getSellerOfferDetailStatus);
   const acceptedOfferStatus = useSelector(getSellerAcceptedOfferStatus);
@@ -75,10 +76,7 @@ function InfoPenawar() {
     setIsOpen(!isOpen);
   }
 
-  const onClose = (e) => {
-    // dispatch(clearStatusProduct());
-    // dispatch(clearStatusOffer());
-  };
+  const onClose = (e) => {};
 
   useEffect(() => {
     dispatch(clearStatusOffer());
