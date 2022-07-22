@@ -21,10 +21,10 @@ import {
   getProductBySeller,
   getSellerProducts,
 } from "../features/productSlice";
-import {
-  getUserNotification,
-  checkAllNotificationRead,
-} from "../features/notificationSlice";
+// import {
+//   getUserNotification,
+//   checkAllNotificationRead,
+// } from "../features/notificationSlice";
 import { SyncLoader } from "react-spinners";
 import { Helmet } from "react-helmet";
 
