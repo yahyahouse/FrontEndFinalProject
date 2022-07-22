@@ -7,7 +7,7 @@ import {
   getSellerProductSoldStatus,
 } from "../features/productSlice";
 import { SyncLoader } from "react-spinners";
-import { EmptyData } from "../components/EmptyData";
+import EmptyData from "../components/EmptyData";
 
 export const ProdukTerjual = () => {
   const dispatch = useDispatch();

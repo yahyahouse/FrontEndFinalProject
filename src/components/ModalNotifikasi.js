@@ -10,7 +10,7 @@ import {
 } from "../features/notificationSlice";
 
 import moment from "moment";
-import { EmptyData } from "./EmptyData";
+import EmptyData from "./EmptyData";
 
 const ModalNotifikasi = ({
   width,

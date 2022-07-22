@@ -9,7 +9,7 @@ import {
 import productImage from "../assets/img/notifImage.png";
 import { Link } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
-import { EmptyData } from "../components/EmptyData";
+import EmptyData from "../components/EmptyData";
 
 const ProdukDiminati = (
   width,
