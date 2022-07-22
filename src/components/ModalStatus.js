@@ -101,7 +101,7 @@ const ModalStatus = ({ productId, offerId, isOpen, setIsOpen }) => {
                       </div>
                       <div className="mb-[24px]">
                         <input
-                          className="bg-gray-900 hover:bg-purple-700 checked:bg-purple-700 mt-1 transition duration-200 align-top cursor-pointer mr-[16px]"
+                          className="bg-gray-900 hover:bg-purple-700 checked:bg-purple-700 outline-none ring-purple-900 mt-1 transition duration-200 align-top cursor-pointer mr-[16px]"
                           onClick={() => setIsSold(false)}
                           type="radio"
                           value="rejected"
@@ -117,7 +117,7 @@ const ModalStatus = ({ productId, offerId, isOpen, setIsOpen }) => {
                       <button
                         type="submit"
                         onClick={handleUpdateProductStatus}
-                        className="h-[48px] w-full rounded-2xl text-white bg-purple-700 hover:bg-opacity-80 duration-[0.5s]"
+                        className="h-[48px] w-full rounded-2xl text-white bg-purple-700 hover:bg-purple-900 duration-[1s]"
                       >
                         Kirim
                       </button>

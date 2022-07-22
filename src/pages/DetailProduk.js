@@ -24,6 +24,7 @@ import {
 } from "../features/notificationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
+import { Helmet } from "react-helmet";
 
 function DetailProduk() {
   const dispatch = useDispatch();
@@ -81,6 +82,9 @@ function DetailProduk() {
 
   return (
     <div onLoad={checkHasOffered}>
+      <Helmet>
+        <title>Secondpedia | Jual Beli Bekas Termurah</title>
+      </Helmet>
       <div className="hidden md:block">
         <NavigationBar />
       </div>
@@ -180,14 +184,14 @@ function DetailProduk() {
                     ) : (
                       <button
                         onClick={handleNav}
-                        className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white hidden sm:block "
+                        className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white hidden sm:block "
                       >
                         Saya tertarik dan ingin nego
                       </button>
                     )
                   ) : (
                     <Link to={"/login"}>
-                      <button className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white hidden sm:block ">
+                      <button className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white hidden sm:block ">
                         Saya tertarik dan ingin nego
                       </button>
                     </Link>
@@ -240,7 +244,7 @@ function DetailProduk() {
               ) : (
                 <button
                   onClick={handleNav}
-                  className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-40"
+                  className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white fixed bottom-5 sm:hidden z-40"
                 >
                   Saya Tertarik dan ingin nego
                 </button>
@@ -248,7 +252,7 @@ function DetailProduk() {
             ) : (
               <button
                 onClick={() => navigate("/login")}
-                className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-40"
+                className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white fixed bottom-5 sm:hidden z-40"
               >
                 Saya Tertarik dan ingin nego
               </button>

@@ -145,7 +145,7 @@ const ModalDetailProduk = ({
                           <input
                             type="text"
                             placeholder="Rp 0,00"
-                            className="w-full border solid border-gray-700 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl px-4 py-3 placeholder:text-sm placeholder:text-gray-900"
+                            className="w-full border solid border-gray-700 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl px-4 py-3 placeholder:text-sm placeholder:text-gray-900 focus:border-transparent focus:ring-purple-900"
                             onChange={(e) => setOfferPrice(e.target.value)}
                           />
                           {submitted && offerPrice >= productPrice ? (
@@ -161,7 +161,7 @@ const ModalDetailProduk = ({
                           )}
                           <button
                             type="submit"
-                            className="h-[48px] mt-6 rounded-2xl w-full bg-purple-700 text-white hover:text-white flex justify-center items-center mb-[20px]"
+                            className="h-[48px] mt-6 rounded-2xl w-full bg-purple-700 hover:bg-purple-900 text-white hover:text-white flex justify-center items-center mb-[20px] duration-[1s]"
                           >
                             <p className="justify-center font-medium text-sm mx-[40px] hover:text-white">
                               Kirim

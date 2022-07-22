@@ -26,6 +26,7 @@ import {
   checkAllNotificationRead,
 } from "../features/notificationSlice";
 import { SyncLoader } from "react-spinners";
+import { Helmet } from "react-helmet";
 
 const { TabPane } = Tabs;
 
@@ -95,6 +96,9 @@ const Home = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Secondpedia | Jual Beli Bekas Termurah</title>
+      </Helmet>
       <NavigationBar />
       <div className="banner">
         <Banner />
@@ -297,7 +301,7 @@ const Home = () => {
               : `/infoprofile/${user.userId}`
           }
         >
-          <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] shadow-lg shadow-purple-500/50 hover:shadow-purple/40]">
+          <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] shadow-lg shadow-purple-500/50 hover:bg-purple-900 duration-[0.5s]">
             <FiPlus className="text-white text-xl font-bold" />
             Jual
           </button>

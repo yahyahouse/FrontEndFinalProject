@@ -8,7 +8,7 @@ import plus from "../assets/img/fi_plus.svg";
 import NavigationBar from "../components/NavigationBar";
 import { addProduct, getAddProductStatus } from "../features/productSlice";
 import { BeatLoader } from "react-spinners";
-import { data } from "autoprefixer";
+import { Helmet } from "react-helmet";
 
 const InfoProduk = () => {
   const dispatch = useDispatch();
@@ -87,6 +87,9 @@ const InfoProduk = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Secondpedia | Seller Produk </title>
+      </Helmet>
       <NavigationBar />
       <section className="py-6 flex justify-center mt-8 sm:mt-28">
         <Link className="sm:block hidden" to="/">
@@ -105,7 +108,7 @@ const InfoProduk = () => {
                   ? dataProduct.state.productName
                   : ""
               }
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
               placeholder="Nama Produk"
               onChange={(e) => setName(e.target.value)}
             />
@@ -119,7 +122,7 @@ const InfoProduk = () => {
                   ? dataProduct.state.productPrice
                   : ""
               }
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4  text-xs"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
               placeholder="Rp 0,00"
               onChange={(e) => setPrice(e.target.value)}
             />
@@ -128,7 +131,7 @@ const InfoProduk = () => {
             <label className="mb-1 font-medium text-xs">Kategori</label>
             <select
               onChange={(e) => setCategory(e.target.value)}
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4  text-xs"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
             >
               <option value="none" hidden>
                 {dataProduct.state && dataProduct.state.productCategory
@@ -149,7 +152,7 @@ const InfoProduk = () => {
               defaultValue={
                 dataProduct.state && dataProduct.state.productDescription
               }
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] py-2 px-4 resize-none text-xs"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] py-2 px-4 resize-none text-xs focus:border-transparent focus:ring-purple-900"
               placeholder="Contoh: Masih mulus"
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -227,7 +230,7 @@ const InfoProduk = () => {
             >
               <button
                 type="submit"
-                className="sm:w-[276px] w-[156px] h-[48px] rounded-2xl border-2 border-purple-700 text-black font-medium text-xs duration-[1s]"
+                className="sm:w-[276px] w-[156px] h-[48px] rounded-2xl border-2 border-purple-700 hover:border-purple-900 text-black font-medium text-xs duration-[1s]"
                 onClick={handlePreview}
               >
                 Preview
@@ -235,7 +238,7 @@ const InfoProduk = () => {
             </Link>
             <button
               type="submit"
-              className="sm:w-[276px] w-[156px] h-[48px] rounded-2xl bg-purple-700 text-white font-medium text-xs duration-[1s]"
+              className="sm:w-[276px] w-[156px] h-[48px] rounded-2xl bg-purple-700 hover:bg-purple-900 text-white font-medium text-xs duration-[1s]"
             >
               {addProductStatus === "loading" ? (
                 <div className="flex mx-auto justify-center">

@@ -105,7 +105,7 @@ const ProdukDiminati = (
                       </p>
                     </div>
                     <Link to={`/infopenawar/${item.productId}/${item.offerId}`}>
-                      <button className="bg-purple-700 px-4 py-2 text-white text-sm rounded-2xl">
+                      <button className="bg-purple-700 hover:bg-purple-900 px-4 py-2 text-white text-sm rounded-2xl duration-[1s]">
                         Lihat Rincian
                       </button>
                     </Link>

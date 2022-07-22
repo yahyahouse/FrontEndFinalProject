@@ -12,6 +12,7 @@ import {
   getUpdateProductStatus,
 } from "../features/productSlice";
 import { BeatLoader } from "react-spinners";
+import { Helmet } from "react-helmet";
 
 const PreviewProduk = () => {
   const navigate = useNavigate();
@@ -56,7 +57,10 @@ const PreviewProduk = () => {
   };
 
   return (
-    <div className="">
+    <div>
+      <Helmet>
+        <title>Secondpedia | Seller Produk</title>
+      </Helmet>
       <NavigationBar />
       <div className="sm:flex sm:px-[236px] gap-[32px] mt-[-88px] sm:mt-32 relative">
         <Link
@@ -99,7 +103,7 @@ const PreviewProduk = () => {
               </p>
               <button
                 onClick={handleAddProduct}
-                className="duration-[1s] w-[300px] h-[40px] rounded-2xl bg-purple-700 items-center text-white hidden sm:block "
+                className="duration-[1s] w-[300px] h-[40px] rounded-2xl bg-purple-700 hover:bg-purple-900 items-center text-white hidden sm:block "
               >
                 {addProductStatus === "loading" ||
                 updateProductStatus === "loading" ? (
@@ -125,7 +129,7 @@ const PreviewProduk = () => {
                   productDescription: dataProduct.state.description,
                 }}
               >
-                <button className="w-[300px] h-[40px] mt-4 border-2 rounded-2xl border-purple-700 justify-center items-center font-medium hidden sm:block hover:text-black">
+                <button className="w-[300px] h-[40px] mt-4 border-2 text-black rounded-2xl border-purple-700 hover:border-purple-900 justify-center items-center font-medium hidden sm:block hover:text-black">
                   Edit
                 </button>
               </Link>
@@ -154,7 +158,7 @@ const PreviewProduk = () => {
         <button
           onClick={handleAddProduct}
           className=" duration-[1s] w-[350px] px-6 py-[14px] rounded-2xl 
-            bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-50"
+            bg-purple-700 hover:bg-purple-900 items-center text-white fixed bottom-5 sm:hidden z-50"
         >
           {addProductStatus === "loading" ||
           updateProductStatus === "loading" ? (

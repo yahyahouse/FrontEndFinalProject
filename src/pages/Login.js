@@ -71,7 +71,7 @@ const Login = () => {
             <label className="text-xs">Email</label>
             <input
               id="email"
-              className="rounded-2xl px-4 py-3 mt-2 text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm"
+              className="rounded-2xl px-4 py-3 mt-2 text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm focus:border-transparent focus:ring-purple-900"
               placeholder="Contoh: johndee@gmail.com"
               type="text"
               value={account.email}
@@ -90,7 +90,7 @@ const Login = () => {
             <div className="relative">
               <input
                 id="password"
-                className="rounded-2xl w-full px-4 py-3 mt-2 text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm"
+                className="rounded-2xl w-full px-4 py-3 mt-2 text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm focus:border-transparent focus:ring-purple-900"
                 placeholder="Masukkan Password"
                 type={passwordShow ? "text" : "password"}
                 value={account.password}
@@ -118,7 +118,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="rounded-2xl w-full my-5 py-3 bg-purple-700 font-bold shadow-lg shadow-purple-500/50 hover:shadow-purple/40 text-white"
+            className="rounded-2xl w-full my-5 py-3 bg-purple-700 font-bold hover:bg-purple-900 text-white duration-[1s]"
           >
             Masuk
           </button>

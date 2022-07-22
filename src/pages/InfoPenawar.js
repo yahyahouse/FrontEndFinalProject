@@ -28,6 +28,7 @@ import {
 } from "../features/productSlice";
 import { getUserNotification } from "../features/notificationSlice";
 import { SyncLoader } from "react-spinners";
+import { Helmet } from "react-helmet";
 
 function InfoPenawar() {
   const dispatch = useDispatch();
@@ -91,6 +92,9 @@ function InfoPenawar() {
 
   return (
     <div>
+      <Helmet>
+        <title>Secondpedia | Seller Penawaran</title>
+      </Helmet>
       <NavigationBar />
       {updateProductSoldStatus === "success" ? (
         <Alert
@@ -213,13 +217,13 @@ function InfoPenawar() {
                   >
                     <button
                       onClick={openModal}
-                      className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium"
+                      className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 hover:border-purple-900 flex justify-center items-center text-sm font-medium"
                     >
                       Status
                     </button>
                     <button
                       onClick={() => setNav(!nav)}
-                      className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
+                      className="sm:ml-5 w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 hover:bg-purple-900 flex justify-center items-center text-sm font-medium text-white duration-[1s] "
                     >
                       Hubungi di <FaWhatsapp className="ml-2" />
                     </button>
@@ -252,13 +256,13 @@ function InfoPenawar() {
                       <div className="sm:justify-end duration-[1s] flex justify-between">
                         <button
                           onClick={handleRejectedOffer}
-                          className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium"
+                          className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 hover:border-purple-900 flex justify-center items-center text-sm font-medium"
                         >
                           Tolak
                         </button>
                         <button
                           onClick={handleAcceptedOffer}
-                          className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
+                          className="sm:ml-5 w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 hover:bg-purple-900 flex justify-center items-center text-sm font-medium text-white duration-[1s]"
                         >
                           Terima
                         </button>

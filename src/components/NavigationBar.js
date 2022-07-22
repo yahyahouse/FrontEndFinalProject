@@ -190,7 +190,7 @@ const NavigationBar = () => {
                   <h3 className="text-sm font-normal text-black mt-5">Home</h3>
                 </Link>
                 <Link to="/daftarJual">
-                  <h3 className="text-sm font-normal text-black mt-5">
+                  <h3 className="text-sm font-normal text-black mt-4">
                     Daftar Jual
                   </h3>
                 </Link>
@@ -207,7 +207,7 @@ const NavigationBar = () => {
               </div>
             ) : (
               <Link to={"/login"}>
-                <button className="mt-[18px] flex bg-purple-700 px-6 py-[14px] items-center gap-2 rounded-xl text-white text-sm font-normal">
+                <button className="mt-[18px] flex bg-purple-700 hover:bg-purple-900 px-6 py-[14px] items-center gap-2 rounded-xl text-white text-sm font-normal duration-[1s]">
                   <FiDownload className="text-white text-xl font-bold -rotate-90" />
                   Masuk
                 </button>
@@ -300,7 +300,7 @@ const NavigationBar = () => {
             </div>
           ) : (
             <Link to={"/login"}>
-              <button className="bg-purple-700 px-6 py-[14px] hidden md:flex items-center gap-2 rounded-xl text-white text-sm font-normal">
+              <button className="bg-purple-700 hover:bg-purple-900 px-6 py-[14px] hidden md:flex items-center gap-2 rounded-xl text-white text-sm font-normal duration-[1s]">
                 <FiDownload className="text-white text-xl font-bold -rotate-90" />
                 Masuk
               </button>

@@ -7,11 +7,12 @@ import {
   getuserUpdateStatus,
   clearStatusUpdateProfile,
 } from "../features/userSlice";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
 import { AiOutlineCamera } from "react-icons/ai";
 import { BeatLoader } from "react-spinners";
 import { Alert } from "antd";
+import { Helmet } from "react-helmet";
 
 // import Camera from "../assets/img/fi_camera.svg";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
@@ -103,6 +104,9 @@ const InfoProfile = () => {
   // GET_DATA END
   return (
     <div>
+      <Helmet>
+        <title>Secondpedia | Profile </title>
+      </Helmet>
       <NavigationBar />
       {userUpdateStatus === "success" ? (
         <Alert
@@ -175,7 +179,7 @@ const InfoProfile = () => {
             <label className="mb-1 font-medium">Nama*</label>
             <input
               type="text"
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs "
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
               defaultValue={nama}
               name="full_name_user"
               onChange={(e) => setUsername(e.target.value)}
@@ -185,7 +189,7 @@ const InfoProfile = () => {
           <div className="flex flex-col mb-3">
             <label className="mb-1 font-medium">Kota*</label>
             <select
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
               defaultValue={getUser.city}
               onChange={(e) => setCity(e.target.value)}
               id="city"
@@ -197,7 +201,15 @@ const InfoProfile = () => {
               <option defaultValue="jakarta">Jakarta</option>
               <option defaultValue="bandung">Bandung</option>
               <option defaultValue="surabaya">Surabaya</option>
-              <option defaultValue="bali">Bali</option>
+              <option defaultValue="bali">Semarang</option>
+              <option defaultValue="jakarta">Bali</option>
+              <option defaultValue="bandung">Yogyakarta</option>
+              <option defaultValue="surabaya">Medan</option>
+              <option defaultValue="bali">Palembang</option>
+              <option defaultValue="jakarta">Padang</option>
+              <option defaultValue="bandung">Lampung</option>
+              <option defaultValue="surabaya">Pontianak</option>
+              <option defaultValue="bali">Banjarmasin</option>
             </select>
           </div>
           <div className="flex flex-col mb-3">
@@ -205,7 +217,7 @@ const InfoProfile = () => {
             <textarea
               type="textarea"
               placeholder="Contoh Jl Ikan Hiu 33"
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] px-4 text-xs pt-3"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] px-4 text-xs pt-3 focus:border-transparent focus:ring-purple-900"
               defaultValue={getUser.address}
               onChange={(e) => setAddress(e.target.value)}
               id="address"
@@ -216,7 +228,7 @@ const InfoProfile = () => {
             <input
               type="text"
               placeholder="Contoh: +628123456789"
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
               defaultValue={getUser.phone}
               onChange={(e) => setPhone(e.target.value)}
               id="phone"
@@ -224,7 +236,7 @@ const InfoProfile = () => {
           </div>
           <button
             type="submit"
-            className="h-[48px]  bg-purple-700 text-white rounded-2xl mt-5 font-medium"
+            className="h-[48px]  bg-purple-700 hover:bg-purple-900 text-white rounded-2xl mt-5 font-medium"
           >
             {userUpdateStatus === "loading" ? (
               <div className="flex mx-auto justify-center">

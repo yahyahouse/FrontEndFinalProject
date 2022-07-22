@@ -23,9 +23,8 @@ import {
   getUserNotification,
   checkAllNotificationRead,
 } from "../features/notificationSlice";
-
 import { getUserById } from "../features/userSlice";
-
+import { Helmet } from "react-helmet";
 const { TabPane } = Tabs;
 
 const DaftarJual = () => {
@@ -216,6 +215,9 @@ const DaftarJual = () => {
 
   return (
     <div className="pb-5">
+      <Helmet>
+        <title>Secondpedia | Seller Dashboard</title>
+      </Helmet>
       <NavigationBar />
       {addProductstatus === "Produk berhasil ditambahkan" ? (
         <Alert
