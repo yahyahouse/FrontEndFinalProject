@@ -1,9 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import Card from "../assets/img/card_detailproduk.png";
 import Close from "../assets/img/fi_x.svg";
 import { useDispatch } from "react-redux/es/exports";
 import { addOffer } from "../features/offerSlice";
+// import {
+//   getUserNotification,
+//   checkAllNotificationRead,
+// } from "../features/notificationSlice";
 
 const ModalDetailProduk = ({
   isOpen,
@@ -32,7 +35,7 @@ const ModalDetailProduk = ({
 
   const handleAddOffer = async (e) => {
     e.preventDefault();
-    if (offerPrice < productPrice) {
+    if (offerPrice !== "" && offerPrice < productPrice) {
       await dispatch(
         addOffer({
           path: {
@@ -142,19 +145,23 @@ const ModalDetailProduk = ({
                           <input
                             type="text"
                             placeholder="Rp 0,00"
-                            className="w-full border solid border-gray-700 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl px-4 py-3 placeholder:text-sm placeholder:text-gray-900"
+                            className="w-full border solid border-gray-700 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl px-4 py-3 placeholder:text-sm placeholder:text-gray-900 focus:border-transparent focus:ring-purple-900"
                             onChange={(e) => setOfferPrice(e.target.value)}
                           />
                           {submitted && offerPrice >= productPrice ? (
                             <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
                               Harga tawar harus lebih kecil dari harga asli !
                             </p>
+                          ) : submitted && offerPrice === "" ? (
+                            <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
+                              Harga tawaran berum diisi !
+                            </p>
                           ) : (
                             ""
                           )}
                           <button
                             type="submit"
-                            className="h-[48px] mt-6 rounded-2xl w-full bg-purple-700 text-white hover:text-white flex justify-center items-center mb-[20px]"
+                            className="h-[48px] mt-6 rounded-2xl w-full bg-purple-700 hover:bg-purple-900 text-white hover:text-white flex justify-center items-center mb-[20px] duration-[1s]"
                           >
                             <p className="justify-center font-medium text-sm mx-[40px] hover:text-white">
                               Kirim

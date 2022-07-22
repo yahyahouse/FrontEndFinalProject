@@ -1,71 +1,126 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById, detailUser, userEdit } from "../features/userSlice";
-import { Link } from "react-router-dom";
+import {
+  getUserById,
+  detailUser,
+  userEdit,
+  getuserUpdateStatus,
+  clearStatusUpdateProfile,
+} from "../features/userSlice";
+import { Link, useParams } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
+import { AiOutlineCamera } from "react-icons/ai";
+import { BeatLoader } from "react-spinners";
+import { Alert } from "antd";
+import { Helmet } from "react-helmet";
 
 // import Camera from "../assets/img/fi_camera.svg";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import NavigationBar from "../components/NavigationBar";
 
 const InfoProfile = () => {
+  const { id } = useParams();
+
+  let nama = null;
   // GET_API START
   const dispatch = useDispatch();
   const getUser = useSelector(detailUser);
-  const [users] = useState(JSON.parse(localStorage.getItem("user")));
-  console.log("userid dari info profile ", users.userId);
+  const userUpdateStatus = useSelector(getuserUpdateStatus);
+
   useEffect(() => {
-    dispatch(getUserById(users.userId));
-  }, [dispatch]);
+    dispatch(getUserById(id));
+  }, [dispatch, id, userUpdateStatus]);
   // GET_API END
   // IMAGE_UPLOADING START
-  const [images, setImages] = React.useState([]);
+  const [images, setImages] = useState([]);
+  console.log(images, "image");
   const maxNumber = 1;
+  console.log(getUser, "get data");
 
   const onChange = (imageList, addUpdateIndex) => {
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
   // IMAGE_UPLOADING END
-  // GET_DATA START
-  const [newData, setNewData] = useState({
-    userName: getUser.username,
-    city: getUser.city,
-    address: getUser.address,
-    phone: getUser.phone,
-  });
+  // console.log("getUser.full_name_user", getUser.fullNameUser);
+  if (getUser.fullNameUser == null || undefined) {
+    nama = getUser.username;
+  } else {
+    nama = getUser.fullNameUser;
+  }
 
-  console.log(newData, "data edit in form");
+  const [username, setUsername] = useState("");
+  const [city, setCity] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  console.log(submitted);
 
-  const handleInputNewData = (e) => {
-    setNewData({
-      ...newData,
-      [e.target.id]: e.target.value,
-    });
+  const onClose = (e) => {
+    dispatch(clearStatusUpdateProfile());
   };
 
   const handleEditProfile = async (e) => {
     e.preventDefault();
+    setSubmitted(true);
     const data = new FormData();
-    data.append("image", images[0].file);
-    console.log(images[0].file, "test");
-    data.append("username", newData.userName);
-    data.append("city", newData.city);
-    data.append("address", newData.address);
-    data.append("phone", newData.phone);
+    data.append("userId", id);
+    data.append(
+      "full_name_user",
+      username === "" ? getUser.username : username
+    );
+    data.append("address", address === "" ? getUser.address : address);
+    data.append("city", city === "" ? getUser.city : city);
+    data.append("phone", phone === "" ? getUser.phone : phone);
+    data.append("users_image", images.length === 0 ? "" : images[0].file);
+
     try {
-      let response = await dispatch(userEdit(data));
-      console.log(response, "berhasil");
+      if (
+        (username || getUser.username) &&
+        (address || getUser.address) &&
+        (city || getUser.city) &&
+        (phone || getUser.phone) &&
+        images.length !== 0
+      ) {
+        let response = await dispatch(
+          userEdit({
+            data: data,
+          })
+        );
+        console.log(response, "berhasil");
+      }
     } catch (error) {
       console.error(error.message, "gagal");
     }
   };
-
+  // option
+  let render;
+  if (getUser.city) {
+    render = (
+      <option defaultValue={getUser.city} selected>
+        {getUser.city}
+      </option>
+    );
+  }
   // GET_DATA END
   return (
     <div>
+      <Helmet>
+        <title>Secondpedia | Profile </title>
+      </Helmet>
       <NavigationBar />
-      <section className="flex justify-center py-6">
+      {userUpdateStatus === "success" ? (
+        <Alert
+          message="Data berhasil diperbaharui"
+          type="success"
+          closable
+          onClose={onClose}
+          className="w-[340px] sm:w-[500px] flex text-center mx-auto mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+        />
+      ) : (
+        ""
+      )}
+
+      <section className="flex justify-center py-6 mt-8 sm:mt-28">
         <Link className="sm:block hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
@@ -88,11 +143,21 @@ const InfoProfile = () => {
                     onClick={onImageUpload}
                     {...dragProps}
                   >
-                    {/* <img className="z-50" src={Camera} alt="plus" /> */}
-                    <img src={getUser.url} alt="" />
+                    {getUser.url !== null ? (
+                      <img src={getUser.url} alt="" />
+                    ) : (
+                      <AiOutlineCamera className="text-purple-700 text-2xl" />
+                    )}
                   </div>
                 </div>
-                <div className="flex ">
+                {submitted && images.length === 0 ? (
+                  <p className="text-[#FA2C5A] text-xs mt-1 text-center">
+                    Foto harus diisi kembali!
+                  </p>
+                ) : (
+                  ""
+                )}
+                <div className="flex mb-3">
                   &nbsp;
                   {imageList.map((image, index) => (
                     <div
@@ -114,32 +179,47 @@ const InfoProfile = () => {
             <label className="mb-1 font-medium">Nama*</label>
             <input
               type="text"
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              value={newData.userName}
-              name="username"
-              onChange={handleInputNewData}
-              id="userName"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
+              defaultValue={nama}
+              name="full_name_user"
+              onChange={(e) => setUsername(e.target.value)}
+              id="username"
             />
           </div>
-          {/* <div className="flex flex-col mb-3">
+          <div className="flex flex-col mb-3">
             <label className="mb-1 font-medium">Kota*</label>
             <select
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              value={newData.city}
-              onChange={handleInputNewData}
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
+              defaultValue={getUser.city}
+              onChange={(e) => setCity(e.target.value)}
               id="city"
             >
-              <option value="coba">{newData.city} test</option>
+              {render}
+              <option selected hidden>
+                Pilih kota
+              </option>
+              <option defaultValue="jakarta">Jakarta</option>
+              <option defaultValue="bandung">Bandung</option>
+              <option defaultValue="surabaya">Surabaya</option>
+              <option defaultValue="bali">Semarang</option>
+              <option defaultValue="jakarta">Bali</option>
+              <option defaultValue="bandung">Yogyakarta</option>
+              <option defaultValue="surabaya">Medan</option>
+              <option defaultValue="bali">Palembang</option>
+              <option defaultValue="jakarta">Padang</option>
+              <option defaultValue="bandung">Lampung</option>
+              <option defaultValue="surabaya">Pontianak</option>
+              <option defaultValue="bali">Banjarmasin</option>
             </select>
-          </div> */}
+          </div>
           <div className="flex flex-col mb-3">
             <label className="mb-1 font-medium">Alamat*</label>
             <textarea
               type="textarea"
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] px-4 text-xs"
-              placeholder={newData.address}
-              value={newData.address}
-              onChange={handleInputNewData}
+              placeholder="Contoh Jl Ikan Hiu 33"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[80px] px-4 text-xs pt-3 focus:border-transparent focus:ring-purple-900"
+              defaultValue={getUser.address}
+              onChange={(e) => setAddress(e.target.value)}
               id="address"
             />
           </div>
@@ -147,18 +227,24 @@ const InfoProfile = () => {
             <label className="mb-1 font-medium">No Handphone*</label>
             <input
               type="text"
-              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
-              placeholder={newData.phone}
-              value={newData.phone}
-              onChange={handleInputNewData}
+              placeholder="Contoh: +628123456789"
+              className="text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
+              defaultValue={getUser.phone}
+              onChange={(e) => setPhone(e.target.value)}
               id="phone"
             />
           </div>
           <button
             type="submit"
-            className="h-[48px]  bg-purple-700 text-white rounded-2xl mt-5 font-medium"
+            className="h-[48px]  bg-purple-700 hover:bg-purple-900 text-white rounded-2xl mt-5 font-medium"
           >
-            Simpan
+            {userUpdateStatus === "loading" ? (
+              <div className="flex mx-auto justify-center">
+                <BeatLoader color="#ffffff" margin={4} size={12} />
+              </div>
+            ) : (
+              "Simpan"
+            )}
           </button>
         </form>
         <div className="sm:w-[24px] w-0" />

@@ -18,7 +18,7 @@ const ProdukImage = ({ imageDetail }) => {
     localStorage.getItem("imagePreview") !== null
       ? JSON.parse(localStorage.getItem("imagePreview"))
       : "";
-  console.log(imagePreview.image0);
+  console.log(imagePreview);
   return (
     <div>
       {location.pathname === "/previewproduk" ? (
@@ -33,68 +33,16 @@ const ProdukImage = ({ imageDetail }) => {
               onSlideChange={() => console.log("slide change")}
               className="swiper-detail rounded-2xl"
             >
-              <SwiperSlide>
-                <img
-                  src={
-                    location.pathname === "/previewproduk"
-                      ? imagePreview.image0
-                      : produkimage
-                  }
-                  className="w-[600px] h-[436px] object-cover"
-                  alt="productImage"
-                />
-              </SwiperSlide>
-              <SwiperSlide
-                className={
-                  location.pathname === "/previewproduk" && !imagePreview.image1
-                    ? "hidden"
-                    : ""
-                }
-              >
-                <img
-                  src={
-                    location.pathname === "/previewproduk"
-                      ? imagePreview.image1
-                      : produkimage
-                  }
-                  className="w-[600px] h-[436px] object-cover"
-                  alt="productImage"
-                />
-              </SwiperSlide>
-              <SwiperSlide
-                className={
-                  location.pathname === "/previewproduk" && !imagePreview.image2
-                    ? "hidden"
-                    : ""
-                }
-              >
-                <img
-                  src={
-                    location.pathname === "/previewproduk"
-                      ? imagePreview.image2
-                      : produkimage
-                  }
-                  className="w-[600px] h-[436px] object-cover"
-                  alt="productImage"
-                />
-              </SwiperSlide>
-              <SwiperSlide
-                className={
-                  location.pathname === "/previewproduk" && !imagePreview.image3
-                    ? "hidden"
-                    : ""
-                }
-              >
-                <img
-                  src={
-                    location.pathname === "/previewproduk"
-                      ? imagePreview.image3
-                      : produkimage
-                  }
-                  className="w-[600px] h-[436px] object-cover"
-                  alt="produkimage"
-                />
-              </SwiperSlide>
+              {imagePreview &&
+                imagePreview.map((item) => (
+                  <SwiperSlide>
+                    <img
+                      src={item.image}
+                      className="w-[600px] h-[436px] object-cover"
+                      alt="productImage"
+                    />
+                  </SwiperSlide>
+                ))}
             </Swiper>
           </div>
           <div className="w-full block md:hidden -mt-[54px] md:static -z-10">
@@ -105,71 +53,16 @@ const ProdukImage = ({ imageDetail }) => {
               loop={true}
               pagination={{ clickable: true }}
             >
-              <SwiperSlide>
-                <img
-                  className="w-full h-[300px] object-cover"
-                  src={
-                    location.pathname === "/previewproduk"
-                      ? imagePreview.image0
-                      : produkimage
-                  }
-                  alt="productImage"
-                />
-              </SwiperSlide>
-              <div className="hidden">
-                <SwiperSlide
-                  className={
-                    location.pathname === "/previewproduk" &&
-                    !imagePreview.image1
-                      ? "hidden"
-                      : ""
-                  }
-                >
-                  <img
-                    className="w-full h-[300px] object-cover"
-                    src={
-                      location.pathname === "/previewproduk"
-                        ? imagePreview.image1
-                        : produkimage
-                    }
-                    alt="productImage"
-                  />
-                </SwiperSlide>
-              </div>
-              <SwiperSlide
-                className={
-                  location.pathname === "previewproduk" && !imagePreview.image2
-                    ? "hidden"
-                    : ""
-                }
-              >
-                <img
-                  className="w-full h-[300px] object-cover"
-                  src={
-                    location.pathname === "/previewproduk"
-                      ? imagePreview.image2
-                      : produkimage
-                  }
-                  alt="productImage"
-                />
-              </SwiperSlide>
-              <SwiperSlide
-                className={
-                  location.pathname === "previewproduk" && !imagePreview.image3
-                    ? "hidden"
-                    : ""
-                }
-              >
-                <img
-                  className="w-full h-[300px] object-cover"
-                  src={
-                    location.pathname === "/previewproduk"
-                      ? imagePreview.image3
-                      : produkimage
-                  }
-                  alt="productImage"
-                />
-              </SwiperSlide>
+              {imagePreview &&
+                imagePreview.map((item) => (
+                  <SwiperSlide>
+                    <img
+                      className="w-full h-[300px] object-cover"
+                      src={item.image}
+                      alt="productImage"
+                    />
+                  </SwiperSlide>
+                ))}
             </Swiper>
           </div>
         </div>
@@ -187,7 +80,9 @@ const ProdukImage = ({ imageDetail }) => {
             >
               {imageDetail &&
                 imageDetail.map((item) => (
-                  <SwiperSlide>
+                  <SwiperSlide
+                    className={item.includes("http") ? "block" : "hidden"}
+                  >
                     <img
                       src={item}
                       className="w-[600px] h-[436px] object-cover"
@@ -207,7 +102,9 @@ const ProdukImage = ({ imageDetail }) => {
             >
               {imageDetail &&
                 imageDetail.map((item) => (
-                  <SwiperSlide>
+                  <SwiperSlide
+                    className={item.includes("http") ? "block" : "hidden"}
+                  >
                     <img
                       className="w-full h-[300px] object-cover"
                       src={item}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import ProdukImage from "../components/ProdukImage";
 import produkimage from "../assets/img/detailproduk-image.png";
@@ -18,11 +18,17 @@ import {
   getBuyerOfferHistoryData,
   clearStatusOffer,
 } from "../features/offerSlice";
+import {
+  getUserNotification,
+  checkAllNotificationRead,
+} from "../features/notificationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
+import { Helmet } from "react-helmet";
 
 function DetailProduk() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user =
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
@@ -35,7 +41,7 @@ function DetailProduk() {
   console.log(addOfferStatus, "add offer status");
   console.log(detailProduct, "detail produk");
   console.log(buyerOfferHistory, "buyer offer");
-  // console.log(user.userId, detailProduct.userId);
+  console.log(buyerOfferHistory);
 
   const [hasOffered, setHasOffered] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
@@ -57,16 +63,28 @@ function DetailProduk() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(clearStatusOffer());
-    dispatch(getBuyerOfferHistory(user.userId));
+    if (user) {
+      dispatch(getBuyerOfferHistory(user.userId));
+      dispatch(getUserNotification());
+      dispatch(checkAllNotificationRead());
+      dispatch(getUserNotification());
+      dispatch(checkAllNotificationRead());
+      checkHasOffered();
+    }
     dispatch(getDetailProduct(id));
-    checkHasOffered();
+
+    // checkHasOffered();
   }, [dispatch, id]);
 
   console.log(hasOffered, "hasoffered");
 
   return (
     <div onLoad={checkHasOffered}>
+      <Helmet>
+        <title>Secondpedia | Jual Beli Bekas Termurah</title>
+      </Helmet>
       <div className="hidden md:block">
         <NavigationBar />
       </div>
@@ -148,7 +166,7 @@ function DetailProduk() {
                       ? detailProduct.productPrice
                       : "Price kosong"}
                   </p>
-                  {detailProduct ? (
+                  {detailProduct && user ? (
                     addOfferStatus === "success" ||
                     hasOffered ||
                     user.userId === detailProduct.userId ? (
@@ -159,18 +177,24 @@ function DetailProduk() {
                       >
                         {user.userId === detailProduct.userId
                           ? "Saya tertarik dan ingin nego"
+                          : detailProduct.productStatus === "Sold"
+                          ? "Produk sudah terjual"
                           : "Menunggu respon penjual"}
                       </button>
                     ) : (
                       <button
                         onClick={handleNav}
-                        className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white hidden sm:block "
+                        className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white hidden sm:block "
                       >
                         Saya tertarik dan ingin nego
                       </button>
                     )
                   ) : (
-                    ""
+                    <Link to={"/login"}>
+                      <button className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white hidden sm:block ">
+                        Saya tertarik dan ingin nego
+                      </button>
+                    </Link>
                   )}
                 </div>
               </div>
@@ -181,17 +205,17 @@ function DetailProduk() {
                   </div>
                   <div className="">
                     <p className="font-semibold">
-                      {detailProduct
-                        ? detailProduct.username
-                        : "Username kosong"}
+                      {detailProduct ? detailProduct.username : "Nama Penjual"}
                     </p>
-                    <p className="font-thin pt-2">Kota</p>
+                    <p className="text-[10px] font-normal text-gray-900 pt-2">
+                      {detailProduct ? detailProduct.city : "Jogja"}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="container block sm:hidden mt-[250px] sm:mt-0 px-4 ">
+          <div className="container block sm:hidden mt-[216px] sm:mt-0 px-4 ">
             <div className="border rounded-xl shadow-lg p-5 mt-10 ">
               <h1 className="pb-3 font-bold">Deskripsi</h1>
               <p>
@@ -202,7 +226,7 @@ function DetailProduk() {
             </div>
           </div>
           <div className="flex justify-center">
-            {detailProduct ? (
+            {detailProduct && user ? (
               addOfferStatus === "success" ||
               hasOffered ||
               user.userId === detailProduct.userId ? (
@@ -213,18 +237,25 @@ function DetailProduk() {
                 >
                   {user.userId === detailProduct.userId
                     ? "Saya tertarik dan ingin nego"
+                    : detailProduct.productStatus === "Sold"
+                    ? "Produk sudah terjual"
                     : "Menunggu respon penjual"}
                 </button>
               ) : (
                 <button
                   onClick={handleNav}
-                  className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-40"
+                  className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white fixed bottom-5 sm:hidden z-40"
                 >
                   Saya Tertarik dan ingin nego
                 </button>
               )
             ) : (
-              ""
+              <button
+                onClick={() => navigate("/login")}
+                className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white fixed bottom-5 sm:hidden z-40"
+              >
+                Saya Tertarik dan ingin nego
+              </button>
             )}
           </div>
           <ModalDetailProduk
@@ -232,7 +263,7 @@ function DetailProduk() {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             productId={detailProduct ? detailProduct.productId : "Id kosong"}
-            productImage={detailProduct.url ? detailProduct.url : produkimage}
+            productImage={detailProduct ? detailProduct.url : produkimage}
             productName={
               detailProduct ? detailProduct.productName : "Name kosong"
             }

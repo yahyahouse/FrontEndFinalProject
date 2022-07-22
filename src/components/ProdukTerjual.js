@@ -7,7 +7,7 @@ import {
   getSellerProductSoldStatus,
 } from "../features/productSlice";
 import { SyncLoader } from "react-spinners";
-import { EmptyData } from "../components/EmptyData";
+import EmptyData from "../components/EmptyData";
 
 export const ProdukTerjual = () => {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ export const ProdukTerjual = () => {
           {sellerProductSold &&
             sellerProductSold.map((item) => (
               <div
-                className={`flex gap-12 w-full justify-between border-b border-gray-500 pb-4`}
+                className={`flex gap-12 w-full justify-between border-b border-gray-500 pb-4 mb-4`}
               >
                 <div className="flex gap-6">
                   <div>
@@ -68,7 +68,7 @@ export const ProdukTerjual = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <p className="text-[10px] text-gray-900">Terjual</p>
+                  <p className="text-[10px] text-gray-900">Berhasil terjual</p>
                   <div className="w-2 h-2 rounded bg-purple-700 mt-1"></div>
                 </div>
               </div>

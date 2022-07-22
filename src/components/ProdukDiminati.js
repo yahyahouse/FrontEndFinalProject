@@ -9,7 +9,7 @@ import {
 import productImage from "../assets/img/notifImage.png";
 import { Link } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
-import { EmptyData } from "../components/EmptyData";
+import EmptyData from "../components/EmptyData";
 
 const ProdukDiminati = (
   width,
@@ -105,7 +105,7 @@ const ProdukDiminati = (
                       </p>
                     </div>
                     <Link to={`/infopenawar/${item.productId}/${item.offerId}`}>
-                      <button className="bg-purple-700 px-4 py-2 text-white text-sm rounded-2xl">
+                      <button className="bg-purple-700 hover:bg-purple-900 px-4 py-2 text-white text-sm rounded-2xl duration-[1s]">
                         Lihat Rincian
                       </button>
                     </Link>

@@ -23,26 +23,35 @@ import {
 import {
   clearStatusProduct,
   getUpdateProductToSoldStatus,
+  getDetailProduct,
+  getDetailDataProducts,
 } from "../features/productSlice";
+
+import { getUserNotification } from "../features/notificationSlice";
 import { SyncLoader } from "react-spinners";
+import { Helmet } from "react-helmet";
 
 function InfoPenawar() {
   const dispatch = useDispatch();
-
+  // modal
   const [nav, setNav] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
+  // offer data
   const { idProduk, idPenawaran } = useParams();
   console.log(idProduk, idPenawaran);
 
+  // global state
   const detailOffer = useSelector(getSellerOfferDetailData);
   const getDetailOfferStatus = useSelector(getSellerOfferDetailStatus);
   const acceptedOfferStatus = useSelector(getSellerAcceptedOfferStatus);
   const rejectedOfferStatus = useSelector(getSellerRejectedOfferStatus);
   const updateProductSoldStatus = useSelector(getUpdateProductToSoldStatus);
+  const detailProduct = useSelector(getDetailDataProducts);
+
   console.log(detailOffer.offerStatus);
   console.log(acceptedOfferStatus);
   console.log(rejectedOfferStatus);
+  console.log(detailProduct);
 
   const handleAcceptedOffer = async (e) => {
     e.preventDefault();
@@ -67,10 +76,7 @@ function InfoPenawar() {
     setIsOpen(!isOpen);
   }
 
-  const onClose = (e) => {
-    // dispatch(clearStatusProduct());
-    // dispatch(clearStatusOffer());
-  };
+  const onClose = (e) => {};
 
   useEffect(() => {
     dispatch(clearStatusOffer());
@@ -80,10 +86,16 @@ function InfoPenawar() {
         offerId: idPenawaran,
       })
     );
-  }, [dispatch, idPenawaran]);
+
+    dispatch(getUserNotification());
+    dispatch(getDetailProduct(idProduk));
+  }, [dispatch, idPenawaran, idProduk]);
 
   return (
     <div>
+      <Helmet>
+        <title>Secondpedia | Seller Penawaran</title>
+      </Helmet>
       <NavigationBar />
       {updateProductSoldStatus === "success" ? (
         <Alert
@@ -112,14 +124,20 @@ function InfoPenawar() {
           <SyncLoader color="#7126B5" margin={2} size={12} />
         </div>
       ) : (
-        <section className="flex justify-center py-[16px] md:mt-10">
+        <section className="flex justify-center py-[16px] mt-8 sm:mt-28">
           <Link className="sm:block hidden" to="/daftarJual">
             <img src={Arrowleft} alt="img" />
           </Link>
           <div className="sm:w-[568px] sm:mx-[78px] duration-[1s] w-[328px]">
             <div className="h-[80px] border rounded-2xl shadow-[0_0_4px_rgba(0,0,0,0.15)] flex items-center p-[16px] mb-[24px]">
-              <div className="rounded-xl h-[48px] w-[58px] overflow-hidden">
-                <img src={Profile} alt="Profile" />
+              <div className="rounded-xl h-[48px] w-[58px]">
+                <img
+                  className="w-12 h-12 object-cover rounded-xl"
+                  src={Profile}
+                  alt="buyerProfile"
+                  width={48}
+                  height={48}
+                />
               </div>
               <div className="h-full w-full px-[16px] py-[3px] flex flex-col justify-between">
                 <p className="text-sm font-medium">
@@ -127,7 +145,11 @@ function InfoPenawar() {
                     ? detailOffer.username
                     : "Nama Pembeli"}
                 </p>
-                <p className="text-[10px] leading-[14px] text-gray-900">Kota</p>
+                <p className="text-[10px] leading-[14px] text-gray-900">
+                  {detailOffer.length !== 0 && detailOffer.city
+                    ? detailOffer.city
+                    : "Jogja"}
+                </p>
               </div>
             </div>
             <p className="my-6 text-sm font-medium">
@@ -190,16 +212,23 @@ function InfoPenawar() {
               <div>
                 {acceptedOfferStatus === "success" ||
                 detailOffer.offerStatus === "Diterima" ? (
-                  <div className="sm:justify-end duration-[1s] flex justify-between">
+                  <div
+                    className={
+                      updateProductSoldStatus === "success" ||
+                      detailProduct.productStatus === "Sold"
+                        ? `hidden`
+                        : `sm:justify-end duration-[1s] flex justify-between`
+                    }
+                  >
                     <button
                       onClick={openModal}
-                      className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium"
+                      className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 hover:border-purple-900 flex justify-center items-center text-sm font-medium"
                     >
                       Status
                     </button>
                     <button
                       onClick={() => setNav(!nav)}
-                      className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
+                      className="sm:ml-5 w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 hover:bg-purple-900 flex justify-center items-center text-sm font-medium text-white duration-[1s] "
                     >
                       Hubungi di <FaWhatsapp className="ml-2" />
                     </button>
@@ -213,6 +242,7 @@ function InfoPenawar() {
                       offerId={idPenawaran}
                       nav={nav}
                       setNav={setNav}
+                      buyerImage={detailOffer.url}
                       username={detailOffer.username}
                       productName={detailOffer.productName}
                       productPrice={detailOffer.productPrice}
@@ -224,7 +254,7 @@ function InfoPenawar() {
                   <div>
                     {rejectedOfferStatus === "success" ||
                     detailOffer.offerStatus === "Ditolak" ? (
-                      <p className="italic text-gray-900 text-end">
+                      <p className="italic text-gray-900 text-end mt-6 sm:mt-0">
                         Trasnsaksi Dibatalkan, <br /> Anda telah menolak tawaran
                         ini
                       </p>
@@ -232,13 +262,13 @@ function InfoPenawar() {
                       <div className="sm:justify-end duration-[1s] flex justify-between">
                         <button
                           onClick={handleRejectedOffer}
-                          className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 flex justify-center items-center text-sm font-medium"
+                          className="w-[156px] h-[36px] border-2 rounded-2xl border-purple-700 hover:border-purple-900 flex justify-center items-center text-sm font-medium"
                         >
                           Tolak
                         </button>
                         <button
                           onClick={handleAcceptedOffer}
-                          className="sm:ml-5 duration-[1s] w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 flex justify-center items-center text-sm font-medium text-white"
+                          className="sm:ml-5 w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 hover:bg-purple-900 flex justify-center items-center text-sm font-medium text-white duration-[1s]"
                         >
                           Terima
                         </button>

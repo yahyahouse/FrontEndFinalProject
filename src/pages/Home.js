@@ -11,46 +11,91 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllProducts,
+  getTotalPages,
+  getCurrentPage,
+  handleCurrentPage,
+  handleSearchQuery,
+  getSearchQuery,
   getAllDataProducts,
   getAllProductStatus,
+  getProductBySeller,
+  getSellerProducts,
 } from "../features/productSlice";
+
 import { SyncLoader } from "react-spinners";
+import { Helmet } from "react-helmet";
 
 const { TabPane } = Tabs;
 
 const Home = () => {
+  // filter page home
   const [category, setCategory] = useState("");
-  console.log(category);
+  const [page, setPage] = useState("");
+  console.log(category, page);
 
+  // golabal state
   const dispatch = useDispatch();
   const allProducts = useSelector(getAllDataProducts);
   console.log(allProducts, "di home");
   const getProductStatus = useSelector(getAllProductStatus);
   console.log(getProductStatus);
+  const totalPages = useSelector(getTotalPages);
+  console.log(totalPages);
+  const currentPage = useSelector(getCurrentPage);
+  console.log(currentPage);
+  const searchQuery = useSelector(getSearchQuery);
+  console.log(searchQuery);
+  const sellerProducts = useSelector(getSellerProducts);
+  console.log(sellerProducts);
+
+  // data user setelah login
+  const user =
+    localStorage.getItem("user") !== null
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
+  console.log(user);
 
   // mengambil value tab kategori active
   const onChange = (key) => {
-    console.log(key);
+    dispatch(handleSearchQuery(""));
     setCategory(key);
+    setPage(1);
   };
 
   // mengambil value dari pagination yang active
   const handlePaginationChange = (page) => {
-    console.log(page);
+    setPage(page);
+    dispatch(handleCurrentPage(page));
   };
 
   useEffect(() => {
-    dispatch(
-      getAllProducts({
-        productName: "",
-        productCategory: category,
-        page: 1,
-        size: 24,
-      })
-    );
-  }, [dispatch, category]);
+    if (searchQuery === "") {
+      dispatch(
+        getAllProducts({
+          productName: "",
+          productCategory: category,
+          page: page,
+          size: 18,
+        })
+      );
+    } else {
+      dispatch(
+        getAllProducts({
+          productName: searchQuery,
+          productCategory: "",
+          page: page,
+          size: 18,
+        })
+      );
+    }
+    dispatch(getProductBySeller(user.userId));
+  }, [dispatch, category, page]);
+
   return (
     <div>
+      <Helmet>
+        <title>Secondpedia | Jual Beli Bekas Termurah</title>
+      </Helmet>
       <NavigationBar />
       <div className="banner">
         <Banner />
@@ -73,7 +118,7 @@ const Home = () => {
                 key=""
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -99,7 +144,7 @@ const Home = () => {
                 key="Hobi"
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -125,7 +170,7 @@ const Home = () => {
                 key="Kendaraan"
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -151,7 +196,7 @@ const Home = () => {
                 key="Fashion"
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -177,7 +222,7 @@ const Home = () => {
                 key="Elektronik"
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -203,7 +248,7 @@ const Home = () => {
                 key="Kesehatan"
               >
                 {getProductStatus === "loading" ? (
-                  <div className="flex mx-auto justify-center">
+                  <div className="flex sm:mt-7 mx-auto justify-center">
                     <SyncLoader color="#7126B5" margin={2} size={12} />
                   </div>
                 ) : (
@@ -225,16 +270,42 @@ const Home = () => {
       </div>
       <Pagination
         className="mt-12 pb-28 flex justify-center"
-        defaultCurrent={1}
-        total={1000}
+        defaultCurrent={currentPage}
+        current={currentPage}
+        total={totalPages + "0"}
         onChange={handlePaginationChange}
       />
-      <Link to="/infoproduk">
-        <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] drop-shadow-[0_0_10px_rgba(0, 0, 0, 0.15)]">
+
+      {sellerProducts && sellerProducts.length >= 4 ? (
+        <button className="bg-purple-500 pointer-events-none px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] shadow-lg shadow-purple-500/50 hover:shadow-purple/40]">
           <FiPlus className="text-white text-xl font-bold" />
           Jual
         </button>
-      </Link>
+      ) : user ? (
+        <Link
+          to={
+            user.fullNameUser &&
+            user.fullNameUser !== "" &&
+            user.address &&
+            user.address !== "" &&
+            user.city &&
+            user.city !== "" &&
+            user.phone &&
+            user.phone !== "" &&
+            user.url &&
+            user.url !== ""
+              ? `/infoproduk`
+              : `/infoprofile/${user.userId}`
+          }
+        >
+          <button className="bg-purple-700 px-7 py-4 flex items-center gap-2 rounded-xl text-white text-sm font-normal mt-4 mx-auto fixed bottom-7 left-[50%] -translate-x-[50%] shadow-lg shadow-purple-500/50 hover:bg-purple-900 duration-[0.5s]">
+            <FiPlus className="text-white text-xl font-bold" />
+            Jual
+          </button>
+        </Link>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

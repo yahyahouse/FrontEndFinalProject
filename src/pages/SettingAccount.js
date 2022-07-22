@@ -30,7 +30,7 @@ const SettingAccount = () => {
   return (
     <div>
       <NavigationBar />
-      <section className="flex justify-center py-28 sm:py-6 ">
+      <section className="flex justify-center mt-8 sm:mt-28 ">
         <Link className="sm:block hidden" to="/">
           <img src={Arrowleft} alt="img" />
         </Link>
@@ -44,7 +44,7 @@ const SettingAccount = () => {
               <input
                 id="passwordLama"
                 type={passwordShow ? "text" : "password"}
-                className="w-full text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
+                className="w-full text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
                 placeholder="Masukan Passsword Lama"
                 onChange={handleInputPassword}
               />
@@ -73,7 +73,7 @@ const SettingAccount = () => {
               <input
                 id="passwordBaru"
                 type={passwordShow ? "text" : "password"}
-                className="w-full text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
+                className="w-full text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
                 placeholder="Masukan Passsword Baru"
                 onChange={handleInputPassword}
               />
@@ -104,7 +104,7 @@ const SettingAccount = () => {
               <input
                 id="konfirmasiPassword"
                 type={passwordShow ? "text" : "password"}
-                className="w-full text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs"
+                className="w-full text-black border border-solid border-[#D0D0D0] placeholder:text-gray-900 placeholder:text-sm rounded-2xl h-[48px] px-4 text-xs focus:border-transparent focus:ring-purple-900"
                 placeholder="Masukan Konfirmasi Password Baru"
                 onChange={handleInputPassword}
               />
@@ -129,7 +129,7 @@ const SettingAccount = () => {
           </div>
           <button
             type="submit"
-            className="h-[48px]  bg-purple-700 text-white rounded-2xl mt-5 font-medium"
+            className="h-[48px] bg-purple-700 hover:bg-purple-900 text-white rounded-2xl mt-5 font-medium duration-[1s]"
           >
             Simpan Perubahan
           </button>

@@ -8,7 +8,7 @@ export const getAllProducts = createAsyncThunk(
       const response = await axios.get(
         `https://dummyprojectbinar.herokuapp.com/home-page?productName=${data.productName}&productCategory=${data.productCategory}&page=${data.page}&size=${data.size}`
       );
-      console.log(response);
+      console.log(response, "get all product");
       return response.data;
     } catch (error) {
       console.log(error.message);
@@ -21,14 +21,8 @@ export const getDetailProduct = createAsyncThunk(
     console.log(idProduct);
     try {
       const response = await axios.get(
-        `https://dummyprojectbinar.herokuapp.com/product/buyer/get-detail-product/${idProduct}`,
-        {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(
-              localStorage.getItem("token")
-            )}`,
-          },
-        }
+        `https://dummyprojectbinar.herokuapp.com/home-page/get-detail-product/${idProduct}`,
+        idProduct
       );
       console.log(response, "detail product");
       return response.data;
@@ -91,6 +85,27 @@ export const updateProduct = createAsyncThunk(
         }
       );
       console.log(response, "update product");
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+);
+
+export const deleteProduct = createAsyncThunk(
+  "product/deleteProduct",
+  async (data) => {
+    try {
+      const response = await axios.delete(
+        `https://dummyprojectbinar.herokuapp.com/product/seller/delete-product/${data.productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
+      console.log(response, "delete product");
     } catch (error) {
       console.log(error.message);
     }
@@ -169,6 +184,9 @@ export const getSellerProductSold = createAsyncThunk(
 
 const initialState = {
   allProducts: [],
+  totalPages: 0,
+  currentPage: "",
+  searchQuery: "",
   detailProduct: [],
   sellerProducts: [],
   getAllProductStatus: "",
@@ -192,6 +210,12 @@ const productSice = createSlice({
       state.updateProductStatus = "";
       state.updateProductToSoldStatus = "";
     },
+    handleCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    handleSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
   },
   extraReducers: {
     [getAllProducts.pending]: (state) => {
@@ -203,6 +227,8 @@ const productSice = createSlice({
       state.allProducts = action.payload.products.filter(
         (item) => item.productStatus === "Available"
       );
+      state.totalPages = action.payload.totalPages;
+      state.currentPage = action.payload.currentPage;
     },
     [getAllProducts.rejected]: (state) => {
       state.getAllProductStatus = "rejected";
@@ -280,6 +306,9 @@ const productSice = createSlice({
 });
 
 export const getAllDataProducts = (state) => state.product.allProducts;
+export const getTotalPages = (state) => state.product.totalPages;
+export const getCurrentPage = (state) => state.product.currentPage;
+export const getSearchQuery = (state) => state.product.searchQuery;
 export const getDetailDataProducts = (state) => state.product.detailProduct;
 export const getDetailProductStatus = (state) =>
   state.product.getDetailProductStatus;
@@ -295,5 +324,6 @@ export const getSellerProductSoldData = (state) =>
 export const getSellerProductSoldStatus = (state) =>
   state.product.getSellerProductSoldStatus;
 
-export const { clearStatusProduct } = productSice.actions;
+export const { clearStatusProduct, handleCurrentPage, handleSearchQuery } =
+  productSice.actions;
 export default productSice.reducer;

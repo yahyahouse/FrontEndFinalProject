@@ -19,7 +19,12 @@ import {
   getUpdateProductStatus,
   clearStatusProduct,
 } from "../features/productSlice";
-
+import {
+  getUserNotification,
+  checkAllNotificationRead,
+} from "../features/notificationSlice";
+import { getUserById } from "../features/userSlice";
+import { Helmet } from "react-helmet";
 const { TabPane } = Tabs;
 
 const DaftarJual = () => {
@@ -45,7 +50,10 @@ const DaftarJual = () => {
   };
 
   useEffect(() => {
+    dispatch(getUserById(seller.userId));
     dispatch(getProductBySeller(seller.userId));
+    dispatch(getUserNotification());
+    dispatch(checkAllNotificationRead());
   }, [dispatch, seller.userId]);
 
   // Tabs untuk dekstop view
@@ -80,7 +88,7 @@ const DaftarJual = () => {
     >
       {activeTab === "1" ? (
         <div className="grid grid-cols-3 justify-between gap-y-6">
-          {sellerProducts && sellerProducts.length === 4 ? (
+          {sellerProducts && sellerProducts.length >= 4 ? (
             <button
               disabled
               className="w-full sm:w-[206px] sm:h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-200"
@@ -92,7 +100,22 @@ const DaftarJual = () => {
               </div>
             </button>
           ) : (
-            <Link to="/infoproduk">
+            <Link
+              to={
+                seller.fullNameUser &&
+                seller.fullNameUser !== "" &&
+                seller.address &&
+                seller.address !== "" &&
+                seller.city &&
+                seller.city !== "" &&
+                seller.phone &&
+                seller.phone !== "" &&
+                seller.url &&
+                seller.url !== ""
+                  ? `/infoproduk`
+                  : `/infoprofile/${seller.userId}`
+              }
+            >
               <button className="w-full sm:w-[206px] sm:h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-700">
                 <div className="text-gray-900">
                   <FiPlus className="mx-auto text-2xl" />
@@ -134,7 +157,7 @@ const DaftarJual = () => {
       >
         {activeTab === "1" ? (
           <div className="grid grid-cols-2 justify-between gap-5 mt-6">
-            {sellerProducts && sellerProducts.length === 4 ? (
+            {sellerProducts && sellerProducts.length >= 4 ? (
               <button
                 disabled
                 className="w-full h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-200"
@@ -144,7 +167,22 @@ const DaftarJual = () => {
                 </div>
               </button>
             ) : (
-              <Link to="/infoproduk">
+              <Link
+                to={
+                  seller.fullNameUser &&
+                  seller.fullNameUser !== "" &&
+                  seller.address &&
+                  seller.address !== "" &&
+                  seller.city &&
+                  seller.city !== "" &&
+                  seller.phone &&
+                  seller.phone !== "" &&
+                  seller.url &&
+                  seller.url !== ""
+                    ? `/infoproduk`
+                    : `/infoprofile/${seller.userId}`
+                }
+              >
                 <button className="w-full h-[198px] flex justify-center items-center border-dashed border-2 rounded border-gray-700">
                   <div className="text-gray-900">
                     <FiPlus className="mx-auto text-2xl" />
@@ -177,6 +215,9 @@ const DaftarJual = () => {
 
   return (
     <div className="pb-5">
+      <Helmet>
+        <title>Secondpedia | Seller Dashboard</title>
+      </Helmet>
       <NavigationBar />
       {addProductstatus === "Produk berhasil ditambahkan" ? (
         <Alert
@@ -202,21 +243,33 @@ const DaftarJual = () => {
         ""
       )}
 
-      <div className="px-2 mt-4 md:px-[236px] md:mt-[120px]">
+      <div className="px-4 mt-4 md:px-[236px] md:mt-[120px]">
         <h2 className="hidden md:block text-[20px] font-bold">
           Daftar Jual Saya
         </h2>
         <div className="w-full my-6 flex justify-between bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.15)] rounded-2xl items-center">
           <div className="flex gap-4 items-center">
-            <img src={sellerProfile} alt="userProfile" width={48} height={48} />
+            <img
+              className="w-12 h-12 object-cover rounded-xl"
+              src={seller.url ? seller.url : sellerProfile}
+              alt="userProfile"
+              width={48}
+              height={48}
+            />
             <div>
-              <h4 className="text-sm font-medium">{seller.username}</h4>
-              <p className="text-[10px] text-gray-900 mt-1">Kota</p>
+              <h4 className="text-sm font-medium">
+                {seller.fullNameUser ? seller.fullNameUser : seller.username}
+              </h4>
+              <p className="text-[10px] text-gray-900 mt-1">
+                {seller.city ? seller.city : "Jogja"}
+              </p>
             </div>
           </div>
-          <button className="px-3 py h-[26px] border border-purple-700 rounded-lg font-medium text-xs">
-            Edit
-          </button>
+          <Link to={`/infoprofile/${seller.userId}`}>
+            <button className="px-3 py h-[26px] border border-purple-700 rounded-lg font-medium text-xs hover:text-black">
+              Edit
+            </button>
+          </Link>
         </div>
         {/* tabs dekstop view */}
         <div className="hidden md:block">

@@ -33,6 +33,19 @@
   border-radius: 12px;
   color: #000000;
 }
+
+.category-product
+  .ant-tabs
+  .ant-tabs-nav
+  .ant-tabs-nav-wrap
+  .ant-tabs-nav-list
+  .ant-tabs-tab
+  .ant-tabs-tab-btn:hover {
+background-color: #D0B7E6;
+transition-duration: 1s;
+}
+
+
 .category-product
   .ant-tabs
   .ant-tabs-nav
@@ -45,6 +58,17 @@
   padding: 12px 14px;
   border-radius: 12px;
 }
+
+.category-product
+  .ant-tabs
+  .ant-tabs-nav
+  .ant-tabs-nav-wrap
+  .ant-tabs-nav-list
+  .ant-tabs-tab-active
+  .ant-tabs-tab-btn:hover{
+    background-color: #4B1979;
+    transition-duration: 1s;
+  }
 
 .category-product
   .ant-tabs
@@ -79,8 +103,8 @@
 /* Pagination*/
 .ant-pagination .ant-pagination-item-active,
 .ant-pagination .ant-pagination-item:hover {
-  background-color: #7126b5;
-  border: none;
+  background-color: #7126b5 !important;
+  border: none !important;
 }
 .ant-pagination .ant-pagination-item-active a,
 .ant-pagination .ant-pagination-item a:hover {
@@ -95,6 +119,10 @@
 .ant-pagination .ant-pagination-options .ant-select .ant-select-selector:hover {
   border-color: #7126b5;
   color: #7126b5;
+}
+
+.ant-pagination .ant-pagination-options .ant-pagination-options-size-changer {
+  display: none !important;
 }
 
 @media only screen and (min-width: 576px) {

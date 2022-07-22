@@ -4,8 +4,15 @@ import NavigationBar from "../components/NavigationBar";
 import ProdukImage from "../components/ProdukImage";
 import Image from "../assets/img/image_detailproduk.png";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
-import { useDispatch } from "react-redux";
-import { addProduct, updateProduct } from "../features/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addProduct,
+  updateProduct,
+  getAddProductStatus,
+  getUpdateProductStatus,
+} from "../features/productSlice";
+import { BeatLoader } from "react-spinners";
+import { Helmet } from "react-helmet";
 
 const PreviewProduk = () => {
   const navigate = useNavigate();
@@ -16,6 +23,9 @@ const PreviewProduk = () => {
       : "";
   const dataProduct = useLocation();
   console.log(dataProduct);
+
+  const addProductStatus = useSelector(getAddProductStatus);
+  const updateProductStatus = useSelector(getUpdateProductStatus);
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
@@ -47,15 +57,31 @@ const PreviewProduk = () => {
   };
 
   return (
-    <div className="">
+    <div>
+      <Helmet>
+        <title>Secondpedia | Seller Produk</title>
+      </Helmet>
       <NavigationBar />
       <div className="sm:flex sm:px-[236px] gap-[32px] mt-[-88px] sm:mt-32 relative">
         <Link
           className="absolute top-[44px] left-[16px] z-50 bg-white rounded-full sm:hidden"
-          to="/"
+          to={
+            dataProduct.state.productId
+              ? {
+                  pathname: `/updateproduk/${dataProduct.state.productId}`,
+                }
+              : "/infoproduk"
+          }
+          state={{
+            productName: dataProduct.state.name,
+            productPrice: dataProduct.state.price,
+            productCategory: dataProduct.state.category,
+            productDescription: dataProduct.state.description,
+          }}
         >
           <img src={Arrowleft} alt="Arrowleft" />
         </Link>
+
         <div className="sm:w-[600px]">
           <ProdukImage />
           <div className="container hidden sm:block ">
@@ -77,13 +103,36 @@ const PreviewProduk = () => {
               </p>
               <button
                 onClick={handleAddProduct}
-                className=" duration-[1s] w-[300px] h-[40px] rounded-2xl bg-purple-700 items-center text-white hidden sm:block "
+                className="duration-[1s] w-[300px] h-[40px] rounded-2xl bg-purple-700 hover:bg-purple-900 items-center text-white hidden sm:block "
               >
-                Terbitkan
+                {addProductStatus === "loading" ||
+                updateProductStatus === "loading" ? (
+                  <div className="flex mx-auto justify-center">
+                    <BeatLoader color="#ffffff" margin={4} size={12} />
+                  </div>
+                ) : (
+                  "Terbitkan"
+                )}
               </button>
-              <button className="w-[300px] h-[40px] mt-4 border-2 rounded-2xl border-purple-700 justify-center items-center font-medium hidden sm:block">
-                Edit
-              </button>
+              <Link
+                to={
+                  dataProduct.state.productId
+                    ? {
+                        pathname: `/updateproduk/${dataProduct.state.productId}`,
+                      }
+                    : "/infoproduk"
+                }
+                state={{
+                  productName: dataProduct.state.name,
+                  productPrice: dataProduct.state.price,
+                  productCategory: dataProduct.state.category,
+                  productDescription: dataProduct.state.description,
+                }}
+              >
+                <button className="w-[300px] h-[40px] mt-4 border-2 text-black rounded-2xl border-purple-700 hover:border-purple-900 justify-center items-center font-medium hidden sm:block hover:text-black">
+                  Edit
+                </button>
+              </Link>
             </div>
           </div>
           <div className="container sm:mt-6 w-full">
@@ -109,9 +158,16 @@ const PreviewProduk = () => {
         <button
           onClick={handleAddProduct}
           className=" duration-[1s] w-[350px] px-6 py-[14px] rounded-2xl 
-            bg-purple-700 items-center text-white fixed bottom-5 sm:hidden z-50"
+            bg-purple-700 hover:bg-purple-900 items-center text-white fixed bottom-5 sm:hidden z-50"
         >
-          Terbitkan
+          {addProductStatus === "loading" ||
+          updateProductStatus === "loading" ? (
+            <div className="flex mx-auto justify-center">
+              <BeatLoader color="#ffffff" margin={4} size={12} />
+            </div>
+          ) : (
+            "Terbitkan"
+          )}
         </button>
       </div>
     </div>

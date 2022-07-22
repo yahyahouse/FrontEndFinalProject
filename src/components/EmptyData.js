@@ -1,7 +1,7 @@
 import React from "react";
 import emptyIcon from "../assets/img/empty-icon.svg";
 
-export const EmptyData = ({ message, imageWidth }) => {
+const EmptyData = ({ message, imageWidth }) => {
   console.log(imageWidth);
   return (
     <div className="px-10 py-4">
@@ -16,3 +16,5 @@ export const EmptyData = ({ message, imageWidth }) => {
     </div>
   );
 };
+
+export default EmptyData;

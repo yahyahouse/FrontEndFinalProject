@@ -3,17 +3,25 @@ import { FiEdit3, FiSettings, FiDownload } from "react-icons/fi";
 import { BiStoreAlt } from "react-icons/bi";
 import profilePicture from "../assets/img/fi_camera.svg";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const DropdownAccount = () => {
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     window.location.reload(true);
+    navigate("/");
   };
+
+  const user =
+    localStorage.getItem("user") !== null
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
   return (
     <div>
       <img
-        src={profilePicture}
+        src={user ? user.url : profilePicture}
         alt="profilePicture"
         className="block md:hidden m-auto mt-6 md:mt-0"
         width={96}
@@ -30,12 +38,12 @@ const DropdownAccount = () => {
             </div>
           </div>
         </Link>
-        <Link to="/infoprofile">
+        <Link to={`/infoprofile/${user.userId}`}>
           <div className="hover:bg-gray-500 cursor-pointer">
             <div className="px-4 pt-4">
               <div className="pb-4 flex gap-5 border-b border-gray-500">
                 <FiEdit3 className="text-purple-900 text-lg" />{" "}
-                <h3 className="text-sm font-normal text-black">Ubah Akun</h3>
+                <h3 className="text-sm font-normal text-black">Info Profile</h3>
               </div>
             </div>
           </div>
