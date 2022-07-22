@@ -132,7 +132,7 @@ function InfoPenawar() {
               <div className="rounded-xl h-[48px] w-[58px]">
                 <img
                   className="w-12 h-12 object-cover rounded-xl"
-                  src={detailOffer.length !== 0 ? detailOffer.url : Profile}
+                  src={Profile}
                   alt="buyerProfile"
                   width={48}
                   height={48}
@@ -144,7 +144,11 @@ function InfoPenawar() {
                     ? detailOffer.username
                     : "Nama Pembeli"}
                 </p>
-                <p className="text-[10px] leading-[14px] text-gray-900">Kota</p>
+                <p className="text-[10px] leading-[14px] text-gray-900">
+                  {detailOffer.length !== 0 && detailOffer.city
+                    ? detailOffer.city
+                    : "Jogja"}
+                </p>
               </div>
             </div>
             <p className="my-6 text-sm font-medium">
@@ -237,6 +241,7 @@ function InfoPenawar() {
                       offerId={idPenawaran}
                       nav={nav}
                       setNav={setNav}
+                      buyerImage={detailOffer.url}
                       username={detailOffer.username}
                       productName={detailOffer.productName}
                       productPrice={detailOffer.productPrice}

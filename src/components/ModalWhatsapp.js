@@ -11,6 +11,7 @@ const ModalWhatsapp = ({
   nav,
   setNav,
   username,
+  buyerImage,
   productName,
   productPrice,
   offerPrice,
