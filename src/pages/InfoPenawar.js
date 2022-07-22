@@ -26,6 +26,7 @@ import {
   getDetailProduct,
   getDetailDataProducts,
 } from "../features/productSlice";
+
 import { getUserNotification } from "../features/notificationSlice";
 import { SyncLoader } from "react-spinners";
 import { Helmet } from "react-helmet";
@@ -45,6 +46,7 @@ function InfoPenawar() {
   const rejectedOfferStatus = useSelector(getSellerRejectedOfferStatus);
   const updateProductSoldStatus = useSelector(getUpdateProductToSoldStatus);
   const detailProduct = useSelector(getDetailDataProducts);
+
   console.log(detailOffer.offerStatus);
   console.log(acceptedOfferStatus);
   console.log(rejectedOfferStatus);
@@ -86,6 +88,7 @@ function InfoPenawar() {
         offerId: idPenawaran,
       })
     );
+
     dispatch(getUserNotification());
     dispatch(getDetailProduct(idProduk));
   }, [dispatch, idPenawaran, idProduk]);
