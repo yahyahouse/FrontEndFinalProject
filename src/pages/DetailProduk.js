@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import ProdukImage from "../components/ProdukImage";
 import produkimage from "../assets/img/detailproduk-image.png";
@@ -83,7 +83,7 @@ function DetailProduk() {
   return (
     <div onLoad={checkHasOffered}>
       <Helmet>
-        <title>Secondpedia | Jual Beli Bekas Termurah</title>
+        <title>Secondpedia | Jual Beli Bekas Berkualitas</title>
       </Helmet>
       <div className="hidden md:block">
         <NavigationBar />
@@ -199,9 +199,13 @@ function DetailProduk() {
                 </div>
               </div>
               <div className="container sm:mt-6 w-full">
-                <div className="w-full bg-white h-[90px] mt-3 sm:mt-0 flex mb-10 p-5 rounded-2xl shadow-[0_0_4px_rgba(0,0,0,0.15)] sm:max-w-md">
+                <div className="w-full bg-white h-[90px] mt-3 sm:mt-0 flex gap-1 mb-10 p-5 rounded-2xl shadow-[0_0_4px_rgba(0,0,0,0.15)] sm:max-w-md">
                   <div className="rounded-xl h-[48px] w-[58px] overflow-hidden">
-                    <img src={Image} alt="#" />
+                    <img
+                      src={detailProduct ? detailProduct.urlSeller : Image}
+                      className="w-12 h-12 rounded-xl object-cover"
+                      alt="sellerImage"
+                    />
                   </div>
                   <div className="">
                     <p className="font-semibold">

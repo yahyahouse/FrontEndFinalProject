@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import ProdukImage from "../components/ProdukImage";
-import Image from "../assets/img/image_detailproduk.png";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,6 +10,7 @@ import {
   getAddProductStatus,
   getUpdateProductStatus,
 } from "../features/productSlice";
+import { getUserById, detailUser } from "../features/userSlice";
 import { BeatLoader } from "react-spinners";
 import { Helmet } from "react-helmet";
 
@@ -26,6 +26,8 @@ const PreviewProduk = () => {
 
   const addProductStatus = useSelector(getAddProductStatus);
   const updateProductStatus = useSelector(getUpdateProductStatus);
+  const gettDetailUser = useSelector(detailUser);
+  console.log(gettDetailUser);
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
@@ -55,6 +57,10 @@ const PreviewProduk = () => {
       console.error(error.message);
     }
   };
+
+  useEffect(() => {
+    dispatch(getUserById(user.userId));
+  }, []);
 
   return (
     <div>
@@ -136,13 +142,19 @@ const PreviewProduk = () => {
             </div>
           </div>
           <div className="container sm:mt-6 w-full">
-            <div className="w-full bg-white h-[90px] mt-3 sm:mt-0 flex mb-10 p-5 rounded-2xl shadow-[0_0_4px_rgba(0,0,0,0.15)] sm:max-w-md">
-              <div className="rounded-xl h-[48px] w-[58px] overflow-hidden">
-                <img src={Image} alt="#" />
+            <div className="w-full bg-white h-[90px] mt-3 sm:mt-0 flex gap-1 mb-10 p-5 rounded-2xl shadow-[0_0_4px_rgba(0,0,0,0.15)] sm:max-w-md">
+              <div className="rounded-xl h-[48px] w-[58px] object-cover">
+                <img
+                  src={gettDetailUser.urlUser}
+                  className="w-12 h-12 rounded-xl object-cover"
+                  alt="#"
+                />
               </div>
               <div className="">
                 <p className="font-semibold">{user.username}</p>
-                <p className="font-thin pt-2">Kota</p>
+                <p className="text-[10px] font-normal text-gray-900 pt-2">
+                  {user.city}
+                </p>
               </div>
             </div>
           </div>

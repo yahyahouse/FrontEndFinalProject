@@ -1,13 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import Profile from "../assets/img/profile_infopenawar.png";
-import Card from "../assets/img/card_infopenawar.png";
 import Close from "../assets/img/fi_x.svg";
 
 import { FaWhatsapp } from "react-icons/fa";
 
 const ModalWhatsapp = ({
   offerId,
+  city,
   nav,
   setNav,
   username,
@@ -79,7 +78,7 @@ const ModalWhatsapp = ({
                       <div className=" flex mb-[16px]">
                         <div>
                           <img
-                            src={Profile}
+                            src={buyerImage}
                             className="rounded-xl h-[48px] w-[48px] object-cover"
                             alt="Profile"
                           />
@@ -89,7 +88,7 @@ const ModalWhatsapp = ({
                             {username}
                           </p>
                           <p className="text-[10px] leading-[14px] text-gray-900">
-                            Kota
+                            {city}
                           </p>
                         </div>
                       </div>

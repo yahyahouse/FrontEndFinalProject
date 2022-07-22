@@ -75,6 +75,7 @@ const notificationSlice = createSlice({
     },
   },
   extraReducers: {
+    // get notification
     [getUserNotification.pending]: (state) => {
       state.getUserNotificationStatus = "loading";
     },
@@ -87,6 +88,7 @@ const notificationSlice = createSlice({
     [getUserNotification.rejected]: (state) => {
       state.getUserNotificationStatus = "rejected";
     },
+    // update notification
     [updateUserNotification.pending]: (state) => {
       state.updateUserNotificationStatus = "loading";
     },

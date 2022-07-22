@@ -21,7 +21,7 @@ const DropdownAccount = () => {
   return (
     <div>
       <img
-        src={user ? user.url : profilePicture}
+        src={user ? user.urlUser : profilePicture}
         alt="profilePicture"
         className="block md:hidden m-auto mt-6 md:mt-0"
         width={96}
@@ -44,16 +44,6 @@ const DropdownAccount = () => {
               <div className="pb-4 flex gap-5 border-b border-gray-500">
                 <FiEdit3 className="text-purple-900 text-lg" />{" "}
                 <h3 className="text-sm font-normal text-black">Info Profile</h3>
-              </div>
-            </div>
-          </div>
-        </Link>
-        <Link to="/settingaccount">
-          <div className="hover:bg-gray-500 cursor-pointer">
-            <div className="px-4 pt-4">
-              <div className="pb-4 flex gap-5 border-b border-gray-500">
-                <FiSettings className="text-purple-900 text-lg" />{" "}
-                <h3>Pengaturan Akun</h3>
               </div>
             </div>
           </div>

@@ -28,6 +28,7 @@ import { Helmet } from "react-helmet";
 const { TabPane } = Tabs;
 
 const DaftarJual = () => {
+  // global state
   const dispatch = useDispatch();
   const sellerProducts = useSelector(getSellerProducts);
   console.log(sellerProducts);
@@ -110,8 +111,8 @@ const DaftarJual = () => {
                 seller.city !== "" &&
                 seller.phone &&
                 seller.phone !== "" &&
-                seller.url &&
-                seller.url !== ""
+                seller.urlUser &&
+                seller.urlUser !== ""
                   ? `/infoproduk`
                   : `/infoprofile/${seller.userId}`
               }
@@ -177,8 +178,8 @@ const DaftarJual = () => {
                   seller.city !== "" &&
                   seller.phone &&
                   seller.phone !== "" &&
-                  seller.url &&
-                  seller.url !== ""
+                  seller.urlUser &&
+                  seller.urlUser !== ""
                     ? `/infoproduk`
                     : `/infoprofile/${seller.userId}`
                 }
@@ -251,7 +252,7 @@ const DaftarJual = () => {
           <div className="flex gap-4 items-center">
             <img
               className="w-12 h-12 object-cover rounded-xl"
-              src={seller.url ? seller.url : sellerProfile}
+              src={seller.urlUser ? seller.urlUser : sellerProfile}
               alt="userProfile"
               width={48}
               height={48}
