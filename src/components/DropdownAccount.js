@@ -18,6 +18,7 @@ const DropdownAccount = () => {
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
       : "";
+
   return (
     <div>
       <img

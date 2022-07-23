@@ -68,40 +68,6 @@ const CardProduct = ({ cardWidth, data }) => {
             {data ? data.productPrice : "200000"}
           </h3>
         </div>
-        {/* <div className="flex justify-between">
-          <div>
-            <h3 className="mt-2 text-sm font-normal">
-              {data ? data.productPrice : "200000"}
-            </h3>
-          </div>
-          <div className="self-end align-bottom">
-            {location.pathname === "/daftarJual" && data ? (
-              <div className="flex gap-1">
-                <Link
-                  to={{ pathname: `/updateproduk/${data.productId}` }}
-                  state={{
-                    productName: data.productName,
-                    productPrice: data.productPrice,
-                    productCategory: data.productCategory,
-                    productDescription: data.productDescription,
-                  }}
-                >
-                  <button className="py-1 px-2 text-white rounded-xl bg-purple-700 text-xs">
-                    Ubah
-                  </button>
-                </Link>
-                <button
-                  onClick={handleDeleteProduct}
-                  className="py-1 px-2 text-white rounded-xl bg-[#FA2C5A] text-xs"
-                >
-                  Hapus
-                </button>
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </div> */}
       </div>
     </div>
   );
