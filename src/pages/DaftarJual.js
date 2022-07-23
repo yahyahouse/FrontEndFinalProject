@@ -220,7 +220,7 @@ const DaftarJual = () => {
         <title>Secondpedia | Seller Dashboard</title>
       </Helmet>
       <NavigationBar />
-      {addProductstatus === "Produk berhasil ditambahkan" ? (
+      {addProductstatus === "Produk berhasil diterbitkan" ? (
         <Alert
           message={addProductstatus}
           type="success"
