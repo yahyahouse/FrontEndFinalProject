@@ -83,7 +83,7 @@ const DaftarJual = () => {
       }
     >
       {activeTab === "1" ? (
-        <div className="grid grid-cols-3 justify-between gap-y-6">
+        <div className="grid grid-cols-3 justify-between gap-y-6 gap-x-6">
           {sellerProducts && sellerProducts.length >= 4 ? (
             <button
               disabled
@@ -221,7 +221,7 @@ const DaftarJual = () => {
           type="success"
           closable
           onClose={onClose}
-          className="w-[340px] sm:w-[500px] flex text-center mx-auto mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+          className="w-[340px] sm:w-[500px] flex text-center mx-auto mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%] top-[100px]"
         />
       ) : (
         ""
@@ -233,13 +233,13 @@ const DaftarJual = () => {
           type="success"
           closable
           onClose={onClose}
-          className="w-[340px] sm:w-[500px] flex mx-auto text-center mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%]"
+          className="w-[340px] sm:w-[500px] flex mx-auto text-center mt-2 sm:-mt-3 rounded-xl bg-[#73CA5C] px-6 py-4  text-sm font-medium z-50 fixed left-[50%] -translate-x-[50%] top-[100px]"
         />
       ) : (
         ""
       )}
 
-      <div className="px-4 mt-4 md:px-[236px] md:mt-[120px]">
+      <div className="px-4 mt-4 mx-auto md:mt-[120px] md:w-[996px]">
         <h2 className="hidden md:block text-[20px] font-bold">
           Daftar Jual Saya
         </h2>
