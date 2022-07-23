@@ -18,10 +18,7 @@ import {
   getBuyerOfferHistoryData,
   clearStatusOffer,
 } from "../features/offerSlice";
-import {
-  getUserNotification,
-  checkAllNotificationRead,
-} from "../features/notificationSlice";
+
 import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
 import { Helmet } from "react-helmet";
@@ -67,15 +64,9 @@ function DetailProduk() {
     dispatch(clearStatusOffer());
     if (user) {
       dispatch(getBuyerOfferHistory(user.userId));
-      dispatch(getUserNotification());
-      dispatch(checkAllNotificationRead());
-      dispatch(getUserNotification());
-      dispatch(checkAllNotificationRead());
       checkHasOffered();
     }
     dispatch(getDetailProduct(id));
-
-    // checkHasOffered();
   }, [dispatch, id]);
 
   console.log(hasOffered, "hasoffered");

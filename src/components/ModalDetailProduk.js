@@ -114,7 +114,7 @@ const ModalDetailProduk = ({
                       <p className="text-sm text-justify font-semibold mb-[8px] w-full">
                         Masukkan Harga Tawarmu
                       </p>
-                      <p className="text-sm mt-2 text-justify font-normal text-gray-900 mb-[16px] w-full">
+                      <p className="text-sm mt-2 text-start font-normal text-gray-900 mb-[16px] w-full">
                         Harga tawaranmu akan diketahui penjual, jika penjual
                         cocok kamu akan segera dihubungi penjual.
                       </p>

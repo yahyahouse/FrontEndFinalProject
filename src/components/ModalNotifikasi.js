@@ -6,7 +6,6 @@ import {
   getUserNotification,
   getUserNotificationData,
   updateUserNotification,
-  updateUserNotificationStatus,
 } from "../features/notificationSlice";
 
 import moment from "moment";

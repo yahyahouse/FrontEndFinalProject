@@ -8,6 +8,7 @@ import {
 } from "../features/productSlice";
 import { SyncLoader } from "react-spinners";
 import EmptyData from "../components/EmptyData";
+import { Link } from "react-router-dom";
 
 export const ProdukTerjual = () => {
   const dispatch = useDispatch();
@@ -40,38 +41,42 @@ export const ProdukTerjual = () => {
         <div className="px-4 pt-4 mb-4">
           {sellerProductSold &&
             sellerProductSold.map((item) => (
-              <div
-                className={`flex gap-12 w-full justify-between border-b border-gray-500 pb-4 mb-4`}
-              >
-                <div className="flex gap-6">
-                  <div>
-                    <img
-                      src={item.url}
-                      alt="productImage"
-                      className="w-12 h-12 rounded-xl object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-gray-900">
-                      Transaksi produk
-                    </p>
-                    <h3 className="mt-1 text-sm font-normal text-black">
-                      {item.productName}
-                    </h3>
-                    <h3 className="mt-1 text-sm font-normal text-black">
-                      Rp {item.productPrice}
-                    </h3>
-                    {/* <h3 className="mt-1 text-sm font-normal text-black">
+              <Link to={`/detailproduk/${item.productId}`}>
+                <div
+                  className={`flex gap-12 w-full justify-between border-b border-gray-500 pb-4 mb-4 cursor-pointer`}
+                >
+                  <div className="flex gap-6">
+                    <div>
+                      <img
+                        src={item.url}
+                        alt="productImage"
+                        className="w-12 h-12 rounded-xl object-cover"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-900">
+                        Transaksi produk
+                      </p>
+                      <h3 className="mt-1 text-sm font-normal text-black">
+                        {item.productName}
+                      </h3>
+                      <h3 className="mt-1 text-sm font-normal text-black">
+                        Rp {item.productPrice}
+                      </h3>
+                      {/* <h3 className="mt-1 text-sm font-normal text-black">
                       Ditawar Rp {item.offerPrice}
                     </h3> */}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <p className="text-[10px] text-gray-900">
+                      Berhasil terjual
+                    </p>
+                    <div className="w-2 h-2 rounded bg-purple-700 mt-1"></div>
                   </div>
                 </div>
-
-                <div className="flex gap-2">
-                  <p className="text-[10px] text-gray-900">Berhasil terjual</p>
-                  <div className="w-2 h-2 rounded bg-purple-700 mt-1"></div>
-                </div>
-              </div>
+              </Link>
             ))}
         </div>
       )}
