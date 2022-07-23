@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo from "../assets/img/logo.png";
 import {
   FiSearch,
@@ -20,10 +20,6 @@ import {
   handleSearchQuery,
 } from "../features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getUserNotification,
-  checkAllNotificationRead,
-} from "../features/notificationSlice";
 
 const NavigationBar = () => {
   const location = useLocation();
@@ -48,10 +44,6 @@ const NavigationBar = () => {
   const handleNav = () => {
     setNav(!nav);
   };
-
-  // // check all read notif
-  // const isAllRead = useSelector(allReadStatus);
-  // console.log(isAllRead);
 
   const currentPage = useSelector(getCurrentPage);
   console.log(currentPage);
@@ -84,11 +76,6 @@ const NavigationBar = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(getUserNotification());
-    dispatch(checkAllNotificationRead());
-  }, [dispatch]);
-
   // Navbar Info Profile
   if (location.pathname.includes("/infoprofile")) {
     return (
@@ -98,7 +85,11 @@ const NavigationBar = () => {
         </Link>
         <div className="sm:mr-6">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-32 hidden md:block rounded-xl"
+            />
           </Link>
         </div>
         <p className="font-normal text-sm mr-10 sm:mr-0">Lengkapi Info Akun</p>
@@ -114,7 +105,11 @@ const NavigationBar = () => {
         </Link>
         <div className="sm:mr-6">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-32 hidden md:block rounded-xl"
+            />
           </Link>
         </div>
         <p className="font-normal text-sm flex mr-10 sm:mr-0">
@@ -147,7 +142,7 @@ const NavigationBar = () => {
               <img
                 src={logo}
                 alt="logo"
-                className="w-[164px] hidden md:block"
+                className="w-[164px] hidden md:block rounded-xl"
               />
             </Link>
           </div>
@@ -244,9 +239,6 @@ const NavigationBar = () => {
           </form>
           {/* )} */}
 
-          {/* <p className="text-sm font-normal leading-6">Lengkapi Info Akun</p> */}
-          {/* <div className="w-[100px]" /> */}
-
           {(location.pathname === "/" ||
             location.pathname === "/daftarJual" ||
             location.pathname === "/notifikasi" ||
@@ -260,11 +252,6 @@ const NavigationBar = () => {
                 </button>
               </div>
               <div className="relative">
-                {/* {isAllRead === false ? (
-                  <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1 absolute -top-1 right-1"></div>
-                ) : (
-                  ""
-                )} */}
                 <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1 absolute -top-1 right-1"></div>
                 <button onMouseEnter={(e) => setNotifikasi(true)}>
                   <FiBell className="text-2xl text-purple-900" />
@@ -317,7 +304,11 @@ const NavigationBar = () => {
         </Link>
         <div className="sm:mr-6">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-32 hidden md:block rounded-xl"
+            />
           </Link>
         </div>
         <p className="font-normal text-sm mr-10 sm:mr-0">Pengaturan Akun</p>
@@ -332,7 +323,11 @@ const NavigationBar = () => {
         </Link>
         <div className="sm:mr-6">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-32 hidden md:block rounded-xl"
+            />
           </Link>
         </div>
         <p className="font-normal text-sm mr-10 sm:mr-0">Ubah Produk</p>
@@ -347,7 +342,11 @@ const NavigationBar = () => {
         </Link>
         <div className="sm:mr-6">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-32 hidden md:block rounded-xl"
+            />
           </Link>
         </div>
         <p className="font-normal text-sm mr-10 sm:mr-0">Info Penawar</p>

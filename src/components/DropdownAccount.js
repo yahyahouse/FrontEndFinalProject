@@ -1,5 +1,5 @@
 import React from "react";
-import { FiEdit3, FiSettings, FiDownload } from "react-icons/fi";
+import { FiEdit3, FiDownload } from "react-icons/fi";
 import { BiStoreAlt } from "react-icons/bi";
 import profilePicture from "../assets/img/fi_camera.svg";
 import { Link } from "react-router-dom";
@@ -18,12 +18,13 @@ const DropdownAccount = () => {
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
       : "";
+
   return (
     <div>
       <img
         src={user ? user.urlUser : profilePicture}
         alt="profilePicture"
-        className="block md:hidden m-auto mt-6 md:mt-0"
+        className="block md:hidden m-auto mt-6 md:mt-0 rounded-xl"
         width={96}
         height={96}
       />

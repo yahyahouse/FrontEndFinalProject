@@ -260,7 +260,7 @@ const productSice = createSlice({
       state.addProductStatus = "loading";
     },
     [addProduct.fulfilled]: (state, action) => {
-      state.addProductStatus = "Produk berhasil ditambahkan";
+      state.addProductStatus = "Produk berhasil diterbitkan";
     },
     [addProduct.rejected]: (state) => {
       state.addProductStatus = "rejected";
