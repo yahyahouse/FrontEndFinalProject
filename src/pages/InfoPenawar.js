@@ -98,7 +98,7 @@ function InfoPenawar() {
       <NavigationBar />
       {updateProductSoldStatus === "success" ? (
         <Alert
-          message={"Status Produk Berhasil Diperbaharui"}
+          message={"Status produk berhasil diperbarui"}
           type="success"
           closable
           onClose={onClose}
@@ -109,7 +109,7 @@ function InfoPenawar() {
       )}
       {rejectedOfferStatus === "success" ? (
         <Alert
-          message={"Transaksi Berhasil Dibatalkan"}
+          message={"Transaksi berhasil dibatalkan"}
           type="success"
           closable
           onClose={onClose}

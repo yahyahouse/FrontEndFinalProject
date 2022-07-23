@@ -13,47 +13,38 @@ import { AiOutlineCamera } from "react-icons/ai";
 import { BeatLoader } from "react-spinners";
 import { Alert } from "antd";
 import { Helmet } from "react-helmet";
-
-// import Camera from "../assets/img/fi_camera.svg";
 import Arrowleft from "../assets/img/fi_arrow-left.svg";
 import NavigationBar from "../components/NavigationBar";
 
 const InfoProfile = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   let nama = null;
-  // GET_API START
-  const dispatch = useDispatch();
   const getUser = useSelector(detailUser);
   const userUpdateStatus = useSelector(getuserUpdateStatus);
-
-  useEffect(() => {
-    dispatch(getUserById(id));
-  }, [dispatch, id, userUpdateStatus]);
-  // GET_API END
-  // IMAGE_UPLOADING START
   const [images, setImages] = useState([]);
-  console.log(images, "image");
-  const maxNumber = 1;
-  console.log(getUser, "get data");
-
-  const onChange = (imageList, addUpdateIndex) => {
-    setImages(imageList);
-  };
-  // IMAGE_UPLOADING END
-  // console.log("getUser.full_name_user", getUser.fullNameUser);
-  if (getUser.fullNameUser == null || undefined) {
-    nama = getUser.username;
-  } else {
-    nama = getUser.fullNameUser;
-  }
-
   const [username, setUsername] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  console.log(submitted);
+  const maxNumber = 1;
+
+  console.log(getUser);
+  useEffect(() => {
+    dispatch(getUserById(id));
+  }, [dispatch, id, userUpdateStatus]);
+
+  const onChange = (imageList, addUpdateIndex) => {
+    setImages(imageList);
+  };
+
+  if (getUser.fullNameUser == null || undefined) {
+    nama = getUser.username;
+  } else {
+    nama = getUser.fullNameUser;
+  }
 
   const onClose = (e) => {
     dispatch(clearStatusUpdateProfile());
@@ -75,7 +66,7 @@ const InfoProfile = () => {
 
     try {
       if (
-        (username || getUser.username) &&
+        (username || getUser.username || getUser.fullNameUser) &&
         (address || getUser.address) &&
         (city || getUser.city) &&
         (phone || getUser.phone) &&
@@ -92,6 +83,7 @@ const InfoProfile = () => {
       console.error(error.message, "gagal");
     }
   };
+
   // option
   let render;
   if (getUser.city) {
@@ -101,7 +93,7 @@ const InfoProfile = () => {
       </option>
     );
   }
-  // GET_DATA END
+
   return (
     <div>
       <Helmet>
@@ -110,7 +102,7 @@ const InfoProfile = () => {
       <NavigationBar />
       {userUpdateStatus === "success" ? (
         <Alert
-          message="Data berhasil diperbaharui"
+          message="Data pengguna berhasil diperbarui"
           type="success"
           closable
           onClose={onClose}
@@ -152,7 +144,7 @@ const InfoProfile = () => {
                 </div>
                 {submitted && images.length === 0 ? (
                   <p className="text-[#FA2C5A] text-xs mt-1 text-center">
-                    Foto harus diisi kembali!
+                    Foto harus diisi kembali !
                   </p>
                 ) : (
                   ""
@@ -185,6 +177,16 @@ const InfoProfile = () => {
               onChange={(e) => setUsername(e.target.value)}
               id="username"
             />
+            {submitted &&
+            username === "" &&
+            getUser.username === null &&
+            getUser.fullNameUser === null ? (
+              <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
+                Username harus diisi !
+              </p>
+            ) : (
+              ""
+            )}
           </div>
           <div className="flex flex-col mb-3">
             <label className="mb-1 font-medium">Kota*</label>
@@ -211,6 +213,13 @@ const InfoProfile = () => {
               <option defaultValue="surabaya">Pontianak</option>
               <option defaultValue="bali">Banjarmasin</option>
             </select>
+            {submitted && city === "" && getUser.city === null ? (
+              <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
+                Kota harus diisi !
+              </p>
+            ) : (
+              ""
+            )}
           </div>
           <div className="flex flex-col mb-3">
             <label className="mb-1 font-medium">Alamat*</label>
@@ -222,6 +231,13 @@ const InfoProfile = () => {
               onChange={(e) => setAddress(e.target.value)}
               id="address"
             />
+            {submitted && address === "" && getUser.address === null ? (
+              <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
+                Alamat harus diisi !
+              </p>
+            ) : (
+              ""
+            )}
           </div>
           <div className="flex flex-col mb-3">
             <label className="mb-1 font-medium">No Handphone*</label>
@@ -233,6 +249,13 @@ const InfoProfile = () => {
               onChange={(e) => setPhone(e.target.value)}
               id="phone"
             />
+            {submitted && phone === "" && getUser.phone === null ? (
+              <p className="text-[#FA2C5A] text-xs mt-1 ml-3">
+                No handphone harus diisi !
+              </p>
+            ) : (
+              ""
+            )}
           </div>
           <button
             type="submit"
