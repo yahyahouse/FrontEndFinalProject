@@ -98,7 +98,11 @@ const NavigationBar = () => {
         </Link>
         <div className="sm:mr-6">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-32 hidden md:block rounded-xl"
+            />
           </Link>
         </div>
         <p className="font-normal text-sm mr-10 sm:mr-0">Lengkapi Info Akun</p>
@@ -114,7 +118,11 @@ const NavigationBar = () => {
         </Link>
         <div className="sm:mr-6">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-32 hidden md:block rounded-xl"
+            />
           </Link>
         </div>
         <p className="font-normal text-sm flex mr-10 sm:mr-0">
@@ -147,7 +155,7 @@ const NavigationBar = () => {
               <img
                 src={logo}
                 alt="logo"
-                className="w-[164px] hidden md:block"
+                className="w-[164px] hidden md:block rounded-xl"
               />
             </Link>
           </div>
@@ -317,7 +325,11 @@ const NavigationBar = () => {
         </Link>
         <div className="sm:mr-6">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-32 hidden md:block rounded-xl"
+            />
           </Link>
         </div>
         <p className="font-normal text-sm mr-10 sm:mr-0">Pengaturan Akun</p>
@@ -332,7 +344,11 @@ const NavigationBar = () => {
         </Link>
         <div className="sm:mr-6">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-32 hidden md:block rounded-xl"
+            />
           </Link>
         </div>
         <p className="font-normal text-sm mr-10 sm:mr-0">Ubah Produk</p>
@@ -347,7 +363,11 @@ const NavigationBar = () => {
         </Link>
         <div className="sm:mr-6">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-32 hidden md:block" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-32 hidden md:block rounded-xl"
+            />
           </Link>
         </div>
         <p className="font-normal text-sm mr-10 sm:mr-0">Info Penawar</p>

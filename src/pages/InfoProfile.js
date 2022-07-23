@@ -160,7 +160,12 @@ const InfoProfile = () => {
                         onClick={() => onImageRemove(index)}
                         className="absolute hover:bg-black opacity-30 w-[96px] h-[96px]"
                       />
-                      <img src={image["data_url"]} alt="" width="100" />
+                      <img
+                        src={image["data_url"]}
+                        alt=""
+                        width="100"
+                        className="rounded-xl"
+                      />
                     </div>
                   ))}
                 </div>
