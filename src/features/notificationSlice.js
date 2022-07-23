@@ -52,7 +52,7 @@ const initialState = {
   userNotification: [],
   getUserNotificationStatus: "",
   updateUserNotificationStatus: "",
-  isAllRead: false,
+  isAllRead: "",
   error: "",
 };
 
@@ -62,6 +62,7 @@ const notificationSlice = createSlice({
   reducers: {
     clearStatusNotification: (state) => {
       state.updateUserNotificationStatus = "";
+      state.isAllRead = "";
     },
     checkAllNotificationRead: (state) => {
       const unread = state.userNotification.filter(
@@ -70,8 +71,8 @@ const notificationSlice = createSlice({
       console.log(unread);
 
       unread.length === 0
-        ? (state.isAllRead = true)
-        : (state.isAllRead = false);
+        ? (state.isAllRead = "readed")
+        : (state.isAllRead = "unread");
     },
   },
   extraReducers: {

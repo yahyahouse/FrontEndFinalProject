@@ -21,6 +21,12 @@ import {
   getProductBySeller,
   getSellerProducts,
 } from "../features/productSlice";
+import {
+  getUserNotification,
+  checkAllNotificationRead,
+  allReadStatus,
+  clearStatusNotification,
+} from "../features/notificationSlice";
 
 import { SyncLoader } from "react-spinners";
 import { Helmet } from "react-helmet";
@@ -46,6 +52,7 @@ const Home = () => {
   const searchQuery = useSelector(getSearchQuery);
   console.log(searchQuery);
   const sellerProducts = useSelector(getSellerProducts);
+  const isAllRead = useSelector(allReadStatus);
   console.log(sellerProducts);
 
   // data user setelah login
@@ -69,6 +76,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    dispatch(clearStatusNotification());
     if (searchQuery === "") {
       dispatch(
         getAllProducts({
@@ -88,6 +96,8 @@ const Home = () => {
         })
       );
     }
+    dispatch(getUserNotification({ userId: user.userId }));
+    dispatch(checkAllNotificationRead());
     dispatch(getProductBySeller(user.userId));
   }, [dispatch, category, page]);
 

@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getUserNotification,
   checkAllNotificationRead,
+  allReadStatus,
 } from "../features/notificationSlice";
 
 const NavigationBar = () => {
@@ -54,6 +55,7 @@ const NavigationBar = () => {
   // console.log(isAllRead);
 
   const currentPage = useSelector(getCurrentPage);
+  const isAllRead = useSelector(allReadStatus);
   console.log(currentPage);
 
   // menerima setiap perubahan yang diinput
@@ -85,9 +87,9 @@ const NavigationBar = () => {
   };
 
   useEffect(() => {
-    dispatch(getUserNotification());
+    dispatch(getUserNotification({ userId: userLogged.userId }));
     dispatch(checkAllNotificationRead());
-  }, [dispatch]);
+  }, [dispatch, userLogged.userId, isAllRead]);
 
   // Navbar Info Profile
   if (location.pathname.includes("/infoprofile")) {
@@ -268,12 +270,12 @@ const NavigationBar = () => {
                 </button>
               </div>
               <div className="relative">
-                {/* {isAllRead === false ? (
+                {isAllRead === "unread" ? (
                   <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1 absolute -top-1 right-1"></div>
                 ) : (
                   ""
-                )} */}
-                <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1 absolute -top-1 right-1"></div>
+                )}
+                {/* <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1 absolute -top-1 right-1"></div> */}
                 <button onMouseEnter={(e) => setNotifikasi(true)}>
                   <FiBell className="text-2xl text-purple-900" />
                 </button>

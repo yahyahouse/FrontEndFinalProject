@@ -22,6 +22,7 @@ import {
 import {
   getUserNotification,
   checkAllNotificationRead,
+  allReadStatus,
 } from "../features/notificationSlice";
 import { getUserById } from "../features/userSlice";
 import { Helmet } from "react-helmet";
@@ -35,7 +36,7 @@ const DaftarJual = () => {
   const addProductstatus = useSelector(getAddProductStatus);
   console.log(addProductstatus);
   const updateProductStatus = useSelector(getUpdateProductStatus);
-
+  const isAllRead = useSelector(allReadStatus);
   const seller =
     localStorage.getItem("user") !== null
       ? JSON.parse(localStorage.getItem("user"))
@@ -53,9 +54,9 @@ const DaftarJual = () => {
   useEffect(() => {
     dispatch(getUserById(seller.userId));
     dispatch(getProductBySeller(seller.userId));
-    dispatch(getUserNotification());
+    dispatch(getUserNotification({ userId: seller.userId }));
     dispatch(checkAllNotificationRead());
-  }, [dispatch, seller.userId]);
+  }, [dispatch, seller.userId, isAllRead]);
 
   // Tabs untuk dekstop view
   const customDekstopTabPane = ({

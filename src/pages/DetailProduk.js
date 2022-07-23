@@ -21,6 +21,7 @@ import {
 import {
   getUserNotification,
   checkAllNotificationRead,
+  allReadStatus,
 } from "../features/notificationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
@@ -38,6 +39,7 @@ function DetailProduk() {
   const detailProductStatus = useSelector(getDetailProductStatus);
   const addOfferStatus = useSelector(getAddOfferStatus);
   const buyerOfferHistory = useSelector(getBuyerOfferHistoryData);
+  const isAllRead = useSelector(allReadStatus);
   console.log(addOfferStatus, "add offer status");
   console.log(detailProduct, "detail produk");
   console.log(buyerOfferHistory, "buyer offer");
@@ -67,9 +69,7 @@ function DetailProduk() {
     dispatch(clearStatusOffer());
     if (user) {
       dispatch(getBuyerOfferHistory(user.userId));
-      dispatch(getUserNotification());
-      dispatch(checkAllNotificationRead());
-      dispatch(getUserNotification());
+      dispatch(getUserNotification({ userId: user.userId }));
       dispatch(checkAllNotificationRead());
       checkHasOffered();
     }
