@@ -157,7 +157,18 @@ function DetailProduk() {
                       ? detailProduct.productPrice
                       : "Price kosong"}
                   </p>
-                  {detailProduct && user ? (
+                  {detailProduct &&
+                  user &&
+                  user.fullNameUser &&
+                  user.fullNameUser !== null &&
+                  user.address &&
+                  user.address !== null &&
+                  user.city &&
+                  user.city !== null &&
+                  user.phone &&
+                  user.phone !== null &&
+                  user.urlUser &&
+                  user.urlUser !== null ? (
                     addOfferStatus === "success" ||
                     hasOffered ||
                     user.userId === detailProduct.userId ? (
@@ -180,6 +191,18 @@ function DetailProduk() {
                         Saya tertarik dan ingin nego
                       </button>
                     )
+                  ) : detailProduct &&
+                    user &&
+                    (user.fullNameUser === null ||
+                      user.address === null ||
+                      user.city === null ||
+                      user.phone === null ||
+                      user.urlUser === null) ? (
+                    <Link to={`/infoprofile/${user.userId}`}>
+                      <button className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white hidden sm:block ">
+                        Saya tertarik dan ingin nego
+                      </button>
+                    </Link>
                   ) : (
                     <Link to={"/login"}>
                       <button className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white hidden sm:block ">
@@ -221,7 +244,18 @@ function DetailProduk() {
             </div>
           </div>
           <div className="flex justify-center">
-            {detailProduct && user ? (
+            {detailProduct &&
+            user &&
+            user.fullNameUser &&
+            user.fullNameUser !== null &&
+            user.address &&
+            user.address !== null &&
+            user.city &&
+            user.city !== null &&
+            user.phone &&
+            user.phone !== null &&
+            user.urlUser &&
+            user.urlUser !== null ? (
               addOfferStatus === "success" ||
               hasOffered ||
               user.userId === detailProduct.userId ? (
@@ -244,6 +278,19 @@ function DetailProduk() {
                   Saya Tertarik dan ingin nego
                 </button>
               )
+            ) : detailProduct &&
+              user &&
+              (user.fullNameUser === null ||
+                user.address === null ||
+                user.city === null ||
+                user.phone === null ||
+                user.urlUser === null) ? (
+              <button
+                onClick={() => navigate(`/infoprofile/${user.userId}`)}
+                className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white fixed bottom-5 sm:hidden z-40"
+              >
+                Saya Tertarik dan ingin nego
+              </button>
             ) : (
               <button
                 onClick={() => navigate("/login")}

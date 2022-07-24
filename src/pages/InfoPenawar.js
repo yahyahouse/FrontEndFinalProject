@@ -229,12 +229,12 @@ function InfoPenawar() {
                     >
                       Status
                     </button>
-                    <button
-                      onClick={() => setNav(!nav)}
-                      className="sm:ml-5 w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 hover:bg-purple-900 flex justify-center items-center text-sm font-medium text-white duration-[1s] "
-                    >
-                      Hubungi di <FaWhatsapp className="ml-2" />
-                    </button>
+                    <a href="https://wa.me/+085232723635" target="blank">
+                      <button className="sm:ml-5 w-[156px] h-[36px] border-2 rounded-2xl bg-purple-700 hover:bg-purple-900 flex justify-center items-center text-sm font-medium text-white duration-[1s] ">
+                        Hubungi di <FaWhatsapp className="ml-2" />
+                      </button>
+                    </a>
+
                     <ModalStatus
                       productId={idProduk}
                       offerId={idPenawaran}
