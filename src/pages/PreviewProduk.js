@@ -10,6 +10,10 @@ import {
   getAddProductStatus,
   getUpdateProductStatus,
 } from "../features/productSlice";
+import {
+  checkAllNotificationRead,
+  getUserNotification,
+} from "../features/notificationSlice";
 import { getUserById, detailUser } from "../features/userSlice";
 import { BeatLoader } from "react-spinners";
 import { Helmet } from "react-helmet";
@@ -51,7 +55,8 @@ const PreviewProduk = () => {
             })
           )
         : await dispatch(addProduct({ id: user.userId, dataProduct: data }));
-
+      dispatch(getUserNotification({ userId: user.userId }));
+      dispatch(checkAllNotificationRead());
       navigate("/daftarJual");
     } catch (error) {
       console.error(error.message);

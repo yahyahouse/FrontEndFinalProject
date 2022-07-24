@@ -19,7 +19,10 @@ import {
   getUpdateProductStatus,
   clearStatusProduct,
 } from "../features/productSlice";
-
+import {
+  checkAllNotificationRead,
+  getUserNotification,
+} from "../features/notificationSlice";
 import { getUserById } from "../features/userSlice";
 import { Helmet } from "react-helmet";
 const { TabPane } = Tabs;
@@ -50,6 +53,8 @@ const DaftarJual = () => {
   useEffect(() => {
     dispatch(getUserById(seller.userId));
     dispatch(getProductBySeller(seller.userId));
+    dispatch(getUserNotification({ userId: seller.userId }));
+    dispatch(checkAllNotificationRead());
   }, [dispatch, seller.userId]);
 
   // Tabs untuk dekstop view

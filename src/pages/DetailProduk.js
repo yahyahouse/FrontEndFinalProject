@@ -18,7 +18,10 @@ import {
   getBuyerOfferHistoryData,
   clearStatusOffer,
 } from "../features/offerSlice";
-
+import {
+  checkAllNotificationRead,
+  getUserNotification,
+} from "../features/notificationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
 import { Helmet } from "react-helmet";
@@ -67,6 +70,8 @@ function DetailProduk() {
       checkHasOffered();
     }
     dispatch(getDetailProduct(id));
+    dispatch(getUserNotification({ userId: user.userId }));
+    dispatch(checkAllNotificationRead());
   }, [dispatch, id]);
 
   console.log(hasOffered, "hasoffered");

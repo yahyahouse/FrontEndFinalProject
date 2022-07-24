@@ -70,8 +70,8 @@ const notificationSlice = createSlice({
       console.log(unread);
 
       unread.length === 0
-        ? (state.isAllRead = true)
-        : (state.isAllRead = false);
+        ? localStorage.setItem("isAllReadNotification", JSON.stringify(true))
+        : localStorage.setItem("isAllReadNotification", JSON.stringify(false));
     },
   },
   extraReducers: {

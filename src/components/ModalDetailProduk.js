@@ -1,9 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Close from "../assets/img/fi_x.svg";
 import { useDispatch } from "react-redux/es/exports";
 import { addOffer } from "../features/offerSlice";
-
+import {
+  checkAllNotificationRead,
+  getUserNotification,
+} from "../features/notificationSlice";
 const ModalDetailProduk = ({
   isOpen,
   setIsOpen,
@@ -45,6 +48,8 @@ const ModalDetailProduk = ({
         })
       );
       setIsOpen(!isOpen);
+      dispatch(getUserNotification({ userId: user.userId }));
+      dispatch(checkAllNotificationRead());
     }
     setSubmitted(true);
   };

@@ -21,7 +21,10 @@ import {
   getProductBySeller,
   getSellerProducts,
 } from "../features/productSlice";
-
+import {
+  checkAllNotificationRead,
+  getUserNotification,
+} from "../features/notificationSlice";
 import { SyncLoader } from "react-spinners";
 import { Helmet } from "react-helmet";
 
@@ -88,6 +91,8 @@ const Home = () => {
         })
       );
     }
+    dispatch(getUserNotification({ userId: user.userId }));
+    dispatch(checkAllNotificationRead());
     dispatch(getProductBySeller(user.userId));
   }, [dispatch, category, page]);
 

@@ -40,6 +40,12 @@ const NavigationBar = () => {
       ? JSON.parse(localStorage.getItem("user"))
       : "";
 
+  // cek apakah notifikasi sudah terbaca semua
+  const isAllReadNotification =
+    localStorage.getItem("isAllReadNotification") !== null
+      ? JSON.parse(localStorage.getItem("isAllReadNotification"))
+      : "";
+
   // setting show hide side menu navbar
   const handleNav = () => {
     setNav(!nav);
@@ -252,7 +258,12 @@ const NavigationBar = () => {
                 </button>
               </div>
               <div className="relative">
-                <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1 absolute -top-1 right-1"></div>
+                {isAllReadNotification === false ? (
+                  <div className="w-2 h-2 rounded bg-[#FA2C5A] mt-1 absolute -top-1 right-1"></div>
+                ) : (
+                  ""
+                )}
+
                 <button onMouseEnter={(e) => setNotifikasi(true)}>
                   <FiBell className="text-2xl text-purple-900" />
                 </button>

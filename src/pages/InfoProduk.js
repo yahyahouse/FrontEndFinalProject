@@ -9,6 +9,10 @@ import NavigationBar from "../components/NavigationBar";
 import { addProduct, getAddProductStatus } from "../features/productSlice";
 import { BeatLoader } from "react-spinners";
 import { Helmet } from "react-helmet";
+import {
+  checkAllNotificationRead,
+  getUserNotification,
+} from "../features/notificationSlice";
 
 const InfoProduk = () => {
   const dispatch = useDispatch();
@@ -93,6 +97,8 @@ const InfoProduk = () => {
       (dataProduct && dataProduct.state !== null && images.length !== 0)
     ) {
       await dispatch(addProduct({ id: user.userId, dataProduct: data }));
+      dispatch(getUserNotification({ userId: user.userId }));
+      dispatch(checkAllNotificationRead());
       navigate("/daftarJual");
     }
     setSubmitted(true);
