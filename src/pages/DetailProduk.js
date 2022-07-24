@@ -157,6 +157,7 @@ function DetailProduk() {
                       ? detailProduct.productPrice
                       : "Price kosong"}
                   </p>
+                  {/* ketika user login dan data user lengkap */}
                   {detailProduct &&
                   user &&
                   user.fullNameUser &&
@@ -191,7 +192,8 @@ function DetailProduk() {
                         Saya tertarik dan ingin nego
                       </button>
                     )
-                  ) : detailProduct &&
+                  ) : // ketika user login tapi data belum lengkap
+                  detailProduct &&
                     user &&
                     (user.fullNameUser === null ||
                       user.address === null ||
@@ -204,6 +206,7 @@ function DetailProduk() {
                       </button>
                     </Link>
                   ) : (
+                    // ketika user belum login
                     <Link to={"/login"}>
                       <button className="duration-[1s] w-[300px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white hidden sm:block ">
                         Saya tertarik dan ingin nego
@@ -244,6 +247,7 @@ function DetailProduk() {
             </div>
           </div>
           <div className="flex justify-center">
+            {/* ketika user login dan data sudah lengkap */}
             {detailProduct &&
             user &&
             user.fullNameUser &&
@@ -278,7 +282,8 @@ function DetailProduk() {
                   Saya Tertarik dan ingin nego
                 </button>
               )
-            ) : detailProduct &&
+            ) : // ketika user login dan data user belum lengkap
+            detailProduct &&
               user &&
               (user.fullNameUser === null ||
                 user.address === null ||
@@ -292,6 +297,7 @@ function DetailProduk() {
                 Saya Tertarik dan ingin nego
               </button>
             ) : (
+              // ketika user belum login
               <button
                 onClick={() => navigate("/login")}
                 className="sm:ml-20 duration-[1s] w-[350px] rounded-2xl px-6 py-[14px] bg-purple-700 hover:bg-purple-900 items-center text-white fixed bottom-5 sm:hidden z-40"
